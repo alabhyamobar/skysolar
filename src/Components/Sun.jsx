@@ -3,7 +3,7 @@ import React, { forwardRef, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 
 const Sun = forwardRef((props, ref) => {
-  const texture = useTexture("/textures/sun3.png");
+  const texture = useTexture(`${import.meta.env.BASE_URL}textures/sun3.png`)
 
   const meshRef = useRef();
   const lightRef = useRef();
