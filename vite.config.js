@@ -7,4 +7,5 @@ export default defineConfig({
     tailwindcss(),
     glsl()
   ],
+  base:"/skysolar"
 })
