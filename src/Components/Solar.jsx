@@ -3,7 +3,7 @@ import { useGLTF } from "@react-three/drei";
 import { materialOpacity } from "three/tsl";
 
 const Solar = forwardRef((props, ref) => {
-  const { scene } = useGLTF("/models/solarpanel.glb");
+  const { scene } = useGLTF(`${import.meta.env.BASE_URL}/models/solarpanel.glb`);
 
   return (
     <primitive

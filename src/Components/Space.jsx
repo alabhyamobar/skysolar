@@ -6,8 +6,8 @@ import { useTexture } from "@react-three/drei";
 export default function Space() {
   const meshRef = useRef();
 
-  // ✅ correct loader for HDR
-  const texture = useTexture("/textures/stars2.jpg");
+ 
+  const texture = useTexture(`${import.meta.env.BASE_URL}/textures/stars2.jpg`);
 
   useFrame((state) => {
     const time = state.clock.getElapsedTime();

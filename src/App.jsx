@@ -8,7 +8,7 @@ import { Routes ,Route} from 'react-router-dom'
 
 const App = () => {
   return (
-    <div className='w-screen h-screen'>
+    <div className='w-screen h-screen bg-black'>
       <NAV/>
       <Routes>
         <Route path='/' element={<Landing/>}/>

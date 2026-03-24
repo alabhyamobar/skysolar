@@ -3,7 +3,7 @@ import { useFrame } from "@react-three/fiber";
 import React, { forwardRef, useRef } from "react";
 
 const Earth = forwardRef((props, ref) => {
-  const earthTexture = useTexture("/textures/earth5.png");
+  const earthTexture = useTexture(`${import.meta.env.BASE_URL}/textures/earth5.png`)
 
   earthTexture.center.set(0.5, 0.5);
   earthTexture.rotation = -Math.PI / 1;
