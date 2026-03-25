@@ -13,6 +13,10 @@ import GUI from "lil-gui";
 import { Link } from "react-router-dom";
 import { div } from "three/tsl";
 import Services from "./Services";
+import { Suspense } from "react";
+import Loader from "../Components/Loader";
+import { useProgress } from "@react-three/drei";
+
 
 const Landing = () => {
   const textRef = useRef(null);
@@ -29,6 +33,7 @@ const Landing = () => {
   const text = "SKY Renewable Energy";
   const isMobile = window.innerWidth < 768;
   const isLowEnd = navigator.hardwareConcurrency <= 4;
+  const { active } = useProgress();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -209,7 +214,7 @@ const Landing = () => {
               duration: 1.5,
               ease: "power3.out",
             },
-            "b-=0.8", 
+            "b-=0.8",
           );
 
           tl1.fromTo(
@@ -294,6 +299,7 @@ const Landing = () => {
   return (
     <div>
       <div ref={containerRef} className="w-full h-screen relative">
+        {active && <Loader />}
         <Canvas
           dpr={isMobile ? 1 : [1, 1.5]}
           style={{
@@ -305,10 +311,12 @@ const Landing = () => {
           }}
           camera={{ position: [0, 0, 5], fov: 50 }}
         >
-          <Sun ref={sunRef} />
-          <Space />
-          <Earth ref={earthRef} />
-          <Solar ref={solarRef} />
+          <Suspense fallback={null}>
+            <Sun ref={sunRef} />
+            <Space />
+            <Earth ref={earthRef} />
+            <Solar ref={solarRef} />
+          </Suspense>
           <ambientLight intensity={0.03} />
           <EffectComposer>
             {!isMobile && (
