@@ -17,7 +17,7 @@ const Sun = forwardRef((props, ref) => {
   let scale;
   if (isLowEnd) scale = 0.4;
   else if (isMobile) scale = 0.55;
-  else scale = 1;
+  else scale = 1.01;
 
  
   const position = isMobile ? [-0.8, 2, 0] : [-4.5, 2, 0];
