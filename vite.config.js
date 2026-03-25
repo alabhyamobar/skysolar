@@ -7,5 +7,10 @@ export default defineConfig({
     tailwindcss(),
     glsl()
   ],
+  server: {
+    host: true,       
+    port: 5173,      
+  }
+  ,
   base:"/skysolar"
 })

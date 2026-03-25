@@ -3,19 +3,29 @@ import React, { forwardRef, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 
 const Sun = forwardRef((props, ref) => {
-  const texture = useTexture(`${import.meta.env.BASE_URL}/textures/sun3.png`)
+  const texture = useTexture(
+    `${import.meta.env.BASE_URL}/textures/sun3.png`
+  );
 
   const meshRef = useRef();
   const lightRef = useRef();
 
 
   const isMobile = window.innerWidth < 768;
+  const isLowEnd = navigator.hardwareConcurrency <= 4;
 
+  let scale;
+  if (isLowEnd) scale = 0.4;
+  else if (isMobile) scale = 0.55;
+  else scale = 1;
 
-  const position = isMobile ? [-0.9, 2.2, 0] : [-4.5, 2, 0];
-  const scale = isMobile ? 0.5 : 1; 
+ 
+  const position = isMobile ? [-0.8, 2, 0] : [-4.5, 2, 0];
 
   useFrame((state) => {
+
+    if (isLowEnd && state.clock.elapsedTime % 0.05 > 0.016) return;
+
     const time = state.clock.getElapsedTime();
 
     if (meshRef.current) {
@@ -38,11 +48,23 @@ const Sun = forwardRef((props, ref) => {
         scale={[scale, scale, scale]}
         {...props}
       >
-        <sphereGeometry args={[1.1, 32, 32]} />
+
+        <sphereGeometry
+          args={[
+            1.1,
+            isMobile ? 24 : 32,
+            isMobile ? 24 : 32,
+          ]}
+        />
+
         <meshBasicMaterial map={texture} />
       </mesh>
 
-      <directionalLight ref={lightRef} intensity={4} />
+  
+      <directionalLight
+        ref={lightRef}
+        intensity={isLowEnd ? 2 : 4}
+      />
     </>
   );
 });

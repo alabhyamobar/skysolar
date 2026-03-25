@@ -157,7 +157,7 @@ const Landing = () => {
           scrollTrigger: {
             trigger: containerRef.current,
             start: "top top",
-            end: "+=1000",
+            end: "+=2000",
             scrub: 2,
             pin: true,
           },
@@ -201,6 +201,17 @@ const Landing = () => {
             },
             "b",
           );
+
+          tl1.to(
+            solarRef.current.position,
+            {
+              x: isMobile ? -0.5 : -2,
+              duration: 1.5,
+              ease: "power3.out",
+            },
+            "b-=0.8", 
+          );
+
           tl1.fromTo(
             storyRef.current,
             {
@@ -240,7 +251,7 @@ const Landing = () => {
           const scaleObj = { scale: ref.scale.x };
 
           folder
-            .add(scaleObj, "scale", 0.1, 10, 0.1)
+            .add(scaleObj, "scale", 0.00000000000001, 10, 0.1)
             .name("scale")
             .onChange((v) => {
               ref.scale.set(v, v, v);
@@ -321,14 +332,14 @@ const Landing = () => {
 
           <h2
             ref={secondryRef}
-            className="text-lg sm:text-xl lg:text-2xl text-gray-300 mb-4"
+            className="text-lg sm:text-xl lg:text-2xl text-gray-300 mb-4 opacity-0"
           >
             Your last stop for sustainable energy
           </h2>
 
           <p
             ref={aboutRef}
-            className="text-base sm:text-lg lg:text-xl max-w-full sm:max-w-xl lg:max-w-2xl text-gray-300"
+            className="text-base sm:text-lg lg:text-xl max-w-full sm:max-w-xl lg:max-w-2xl text-gray-300 opacity-0"
           >
             “Pioneering the future of sustainable energy with advanced solar
             solutions that help you save more, gain energy independence, and
@@ -337,7 +348,7 @@ const Landing = () => {
 
           <button
             ref={butonRef}
-            className="mt-8 px-6 py-3 sm:px-8 sm:py-4 bg-white/20 hover:bg-white/30 text-white rounded-xl w-full sm:w-fit"
+            className="mt-8 px-6 py-3 sm:px-8 sm:py-4 bg-white/20 hover:bg-white/30 text-white rounded-xl w-full sm:w-fit opacity-0"
           >
             Contact Us
           </button>
