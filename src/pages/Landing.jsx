@@ -11,6 +11,8 @@ import Solar from "../Components/Solar";
 gsap.registerPlugin(ScrollTrigger);
 import GUI from "lil-gui";
 import { Link } from "react-router-dom";
+import { div } from "three/tsl";
+import Services from "./Services";
 
 const Landing = () => {
   const textRef = useRef(null);
@@ -26,6 +28,7 @@ const Landing = () => {
 
   const text = "SKY Renewable Energy";
   const isMobile = window.innerWidth < 768;
+  const isLowEnd = navigator.hardwareConcurrency <= 4;
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -154,8 +157,9 @@ const Landing = () => {
           scrollTrigger: {
             trigger: containerRef.current,
             start: "top top",
-            end: "bottom 40%",
+            end: "+=3000",
             scrub: 2,
+            pin: true,
           },
         });
         tl1.to(textRef.current, { x: "150vw" }, "a");
@@ -191,7 +195,7 @@ const Landing = () => {
           tl1.to(
             sunRef.current.position,
             {
-              x: isMobile?1: 4,
+              x: isMobile ? 1 : 4,
               duration: 2,
               ease: "power2.out",
             },
@@ -216,7 +220,7 @@ const Landing = () => {
   }, []);
 
   useEffect(() => {
-    const ENABLE_GUI = true; // 🔥 turn this off when not needed
+    const ENABLE_GUI = false; // 🔥 turn this off when not needed
     if (!ENABLE_GUI) return;
 
     const interval = setInterval(() => {
@@ -277,109 +281,96 @@ const Landing = () => {
   }, []);
 
   return (
-    <div ref={containerRef} className="w-full h-[500vh] bg-red-500 relative">
-      <Canvas
-        style={{
-          width: "100vw",
-          height: "100vh",
-          background: "black",
-          position: "fixed",
-          top: 0,
-          left: 0,
-        }}
-        camera={{ position: [0, 0, 5], fov: 50 }}
-      >
-        <Sun ref={sunRef} />
-        <Space />
-        <Earth ref={earthRef} />
-        <Solar ref={solarRef} />
-        <ambientLight intensity={0.03} />
-        <EffectComposer>
-          <Bloom
-            intensity={2.9}
-            luminanceThreshold={0.01}
-            luminanceSmoothing={0.9}
-          />
-        </EffectComposer>
-      </Canvas>
-      <div className="anime min-h-screen w-full fixed top-0 left-0 z-10 flex flex-col justify-center px-6 py-10 sm:px-10 lg:px-20 lg:mt-10">
-        <h1
-          ref={textRef}
-          className="text-3xl sm:text-5xl lg:text-7xl text-white mb-4 font-bold leading-tight"
+    <div>
+      <div ref={containerRef} className="w-full h-screen relative">
+        <Canvas
+          dpr={isMobile ? 1 : [1, 1.5]}
+          style={{
+            width: "100vw",
+            height: "100vh",
+            background: "black",
+            top: 0,
+            left: 0,
+          }}
+          camera={{ position: [0, 0, 5], fov: 50 }}
         >
-          {text.split("").map((char, i) => (
-            <span key={i} className="inline-block opacity-0">
-              {char === " " ? "\u00A0" : char}
-            </span>
-          ))}
-        </h1>
+          <Sun ref={sunRef} />
+          <Space />
+          <Earth ref={earthRef} />
+          <Solar ref={solarRef} />
+          <ambientLight intensity={0.03} />
+          <EffectComposer>
+            {!isMobile && (
+              <EffectComposer>
+                <Bloom intensity={2.5} />
+              </EffectComposer>
+            )}
+          </EffectComposer>
+        </Canvas>
+        <div className="anime min-h-screen w-full fixed top-0 left-0 z-10 flex flex-col justify-center px-6 py-10 sm:px-10 lg:px-20 lg:mt-10">
+          <h1
+            ref={textRef}
+            className="text-3xl sm:text-5xl lg:text-7xl text-white mb-4 font-bold leading-tight"
+          >
+            {text.split("").map((char, i) => (
+              <span key={i} className="inline-block opacity-0">
+                {char === " " ? "\u00A0" : char}
+              </span>
+            ))}
+          </h1>
 
-        <h2
-          ref={secondryRef}
-          className="text-lg sm:text-xl lg:text-2xl text-gray-300 mb-4"
-        >
-          Your last stop for sustainable energy
-        </h2>
+          <h2
+            ref={secondryRef}
+            className="text-lg sm:text-xl lg:text-2xl text-gray-300 mb-4"
+          >
+            Your last stop for sustainable energy
+          </h2>
 
-        <p
-          ref={aboutRef}
-          className="text-base sm:text-lg lg:text-xl max-w-full sm:max-w-xl lg:max-w-2xl text-gray-300"
-        >
-          “Pioneering the future of sustainable energy with advanced solar
-          solutions that help you save more, gain energy independence, and build
-          a cleaner, brighter future for generations to come.”
-        </p>
+          <p
+            ref={aboutRef}
+            className="text-base sm:text-lg lg:text-xl max-w-full sm:max-w-xl lg:max-w-2xl text-gray-300"
+          >
+            “Pioneering the future of sustainable energy with advanced solar
+            solutions that help you save more, gain energy independence, and
+            build a cleaner, brighter future for generations to come.”
+          </p>
 
-        <button
-          ref={butonRef}
-          className="mt-8 px-6 py-3 sm:px-8 sm:py-4 bg-white/20 hover:bg-white/30 text-white rounded-xl w-full sm:w-fit"
+          <button
+            ref={butonRef}
+            className="mt-8 px-6 py-3 sm:px-8 sm:py-4 bg-white/20 hover:bg-white/30 text-white rounded-xl w-full sm:w-fit"
+          >
+            Contact Us
+          </button>
+        </div>
+        <div
+          ref={storyRef}
+          className="w-[90%] sm:w-full max-w-md lg:max-w-xl px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
+          lg:left-auto lg:right-20 lg:top-1/2 lg:-translate-y-1/2 lg:translate-x-0 z-30  flex flex-col items-center lg:items-start text-center lg:text-left bg-transparent lg:bg-white/5 backdrop-blur-none lg:backdrop-blur-xl border-none lg:border lg:border-white/10 rounded-none lg:rounded-2xl shadow-none lg:shadow-[0_0_40px_rgba(255,255,255,0.05)] opacity-0 "
         >
-          Contact Us
-        </button>
+          <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl text-white font-bold mb-4 sm:mb-6">
+            Our Story
+          </h2>
+
+          <p className="text-sm sm:text-base md:text-lg lg:text-xl text-zinc-300 leading-relaxed mb-6 sm:mb-8">
+            Sky Solar was founded with a simple vision—to make clean, renewable
+            energy accessible to everyone. What started as a mission to reduce
+            dependence on traditional power sources has grown into a commitment
+            to delivering reliable, efficient, and affordable solar solutions.
+            Over time, we have evolved into a trusted partner for homes and
+            businesses seeking energy independence, combining advanced
+            technology with expert installation and ongoing support.
+          </p>
+
+          <Link
+            to="/gallery"
+            className="px-6 py-3 sm:px-8 sm:py-4 rounded-xl font-semibold bg-white text-black hover:scale-105 hover:bg-white/90 transition-all duration-300
+            text-sm sm:text-base "
+          >
+            View Gallery
+          </Link>
+        </div>
       </div>
-      <div
-        ref={storyRef}
-        className="
-    w-full max-w-2xl
-    px-4 sm:px-8
-    mx-auto
-    fixed
-    
-    bottom-80  lg:bottom-40 lg:left-240
-    lg:top-70
-    left-1/2 -translate-x-1/2
-    z-30
-    flex flex-col items-center justify-center
-    text-center
-    opacity-0
-    
-  "
-      >
-        <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl text-white font-bold mb-6 sm:mb-10">
-          Our Story
-        </h2>
-
-        {/* Paragraph */}
-        <p className="text-sm sm:text-base md:text-lg lg:text-xl text-zinc-200 leading-relaxed mb-8">
-          Sky Solar was founded with a simple vision—to make clean, renewable
-          energy accessible to everyone. What started as a mission to reduce
-          dependence on traditional power sources has grown into a commitment to
-          delivering reliable, efficient, and affordable solar solutions. Over
-          time, we have evolved into a trusted partner for homes and businesses
-          seeking energy independence, combining advanced technology with expert
-          installation and ongoing support. Our goal is not just to provide
-          solar systems, but to create long-term value by helping our customers
-          save on energy costs while contributing to a cleaner, greener planet.
-        </p>
-
-        <Link
-          to="/gallery"
-          className="px-6 py-3 sm:px-8 sm:py-4  rounded-xl font-semibold 
-          bg-white/20 hover:bg-white/30 text-white transition text-sm sm:text-base"
-        >
-          View Gallery
-        </Link>
-      </div>
+      <Services />
     </div>
   );
 };

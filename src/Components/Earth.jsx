@@ -3,13 +3,14 @@ import { useFrame } from "@react-three/fiber";
 import React, { forwardRef, useRef } from "react";
 
 const Earth = forwardRef((props, ref) => {
-  const earthTexture = useTexture(`${import.meta.env.BASE_URL}/textures/earth5.png`)
+  const earthTexture = useTexture(
+    `${import.meta.env.BASE_URL}/textures/earth5.png`,
+  );
 
   earthTexture.center.set(0.5, 0.5);
   earthTexture.rotation = -Math.PI / 1;
 
   const rotationRef = useRef();
-
 
   const isMobile = window.innerWidth < 768;
 
@@ -34,7 +35,10 @@ const Earth = forwardRef((props, ref) => {
       scale={[scale, scale, scale]}
       {...props}
     >
-      <sphereGeometry args={[1.6, 64, 64]} />
+      <sphereGeometry
+        sphereGeometry
+        args={[1.6, isMobile ? 24 : 64, isMobile ? 24 : 64]}
+      />
       <meshStandardMaterial
         map={earthTexture}
         roughness={1}
