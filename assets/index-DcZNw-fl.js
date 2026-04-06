@@ -82,7 +82,7 @@ Please change the parent <Route path="${T}"> to <Route path="${T==="/"?"*":`${T}
         shadow-xl p-8 space-y-6`},k.createElement("div",{className:"grid md:grid-cols-2 gap-6"},k.createElement("div",null,k.createElement("label",{className:"text-white/80 block mb-2"},"Monthly Units (kWh)"),k.createElement("input",{type:"number",placeholder:"e.g. 300",value:t,onChange:f=>e(f.target.value),className:`w-full p-4 rounded-xl \r
               bg-white/10 border border-white/20 \r
               text-white placeholder-white/50 \r
-              outline-none focus:ring-2 focus:ring-orange-400`})),k.createElement("div",null,k.createElement("label",{className:"text-white/80 block mb-2"},"OR Monthly Bill (₹)"),k.createElement("input",{type:"number",placeholder:"e.g. 2400",value:i,onChange:f=>r(f.target.value),className:`w-full p-4 rounded-xl \r
+              outline-none focus:ring-2 focus:ring-orange-400`})),k.createElement("div",null,k.createElement("label",{className:"text-white/80 block mb-2"},"OR ",k.createElement("br",null)," Monthly Bill (₹)"),k.createElement("input",{type:"number",placeholder:"e.g. 2400",value:i,onChange:f=>r(f.target.value),className:`w-full p-4 rounded-xl \r
               bg-white/10 border border-white/20 \r
               text-white placeholder-white/50 \r
               outline-none focus:ring-2 focus:ring-orange-400`}))),k.createElement("button",{onClick:u,className:`w-full py-4 px-2 rounded-xl \r
