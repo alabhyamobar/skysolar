@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 
 const navItems = [
   { name: "Home", path: "/" },
@@ -11,165 +11,141 @@ const navItems = [
 const NAV = () => {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
 
+  // HERO VISIBILITY
   useEffect(() => {
+    const hero = document.querySelector("#hero-section");
+    if (!hero) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setScrolled(!entry.isIntersecting),
+      { threshold: 0.2 }
+    );
+
+    observer.observe(hero);
+    return () => observer.disconnect();
+  }, []);
+
+  // SCROLL DIRECTION
+  useEffect(() => {
+    let lastScroll = window.scrollY;
+
     const handleScroll = () => {
-      setScrolled(window.scrollY > 40);
+      const currentScroll = window.scrollY;
+
+      if (currentScroll > lastScroll && currentScroll > 100) {
+        setHidden(true);
+      } else {
+        setHidden(false);
+      }
+
+      lastScroll = currentScroll;
     };
+
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
     <motion.nav
-      initial={{ y: -60, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
-      className="fixed top-0 left-0 w-full z-50 px-4 py-4"
+      initial={{ y: -80, opacity: 0 }}
+      animate={{ y: hidden ? -100 : 0, opacity: hidden ? 0 : 1 }}
+      transition={{ duration: 0.35, ease: "easeInOut" }}
+      className="fixed top-4 left-0 w-full z-50 px-4"
     >
-      {/* 🌤️ NAV CONTAINER */}
       <div
         className={`
-        max-w-7xl mx-auto flex items-center justify-between
+        relative max-w-7xl mx-auto flex items-center justify-between
         px-6 py-3 rounded-2xl transition-all duration-500
 
         ${
           scrolled
-            ? `
-              bg-white/70 backdrop-blur-xl
-              border border-black/5
-              shadow-[0_8px_30px_rgba(0,0,0,0.06)]
-            `
-            : `
-              bg-white/40 backdrop-blur-lg
-              border border-white/30
-            `
+            ? "bg-white/80 backdrop-blur-2xl border border-black/10 shadow-[0_10px_40px_rgba(0,0,0,0.1)]"
+            : "bg-white/10 backdrop-blur-2xl border border-white/20 shadow-[0_20px_80px_rgba(0,0,0,0.3)]"
         }
       `}
       >
-        {/* 🔷 LOGO */}
-        <NavLink
-          to="/"
-          className="text-xl font-semibold tracking-tight text-gray-900"
-        >
-          SKY Energy
-        </NavLink>
+        {/* GLOW */}
+        <div className="absolute inset-0 rounded-2xl pointer-events-none">
+          <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-500/10 via-transparent to-orange-400/10 blur-xl opacity-70" />
+        </div>
 
-        {/* 💻 DESKTOP NAV */}
-        <div className="hidden md:flex items-center gap-2 relative">
+        <Link to="/" className="z-10 flex items-center">
+          <img
+            src="/skysolar/images/logo.png"
+            alt="Sky Energy Logo"
+            className="h-8 w-auto object-contain"
+          />
+        </Link>
+
+        {/* NAV ITEMS */}
+        <div className="hidden md:flex items-center gap-2 z-10">
           {navItems.map((item) => (
             <NavLink key={item.path} to={item.path}>
               {({ isActive }) => (
                 <div className="relative px-4 py-2 rounded-xl text-sm font-medium">
-                  {/* Active pill */}
                   {isActive && (
                     <motion.div
                       layoutId="nav-pill"
                       className="absolute inset-0 rounded-xl bg-blue-500/10 border border-blue-500/20"
-                      transition={{
-                        type: "spring",
-                        stiffness: 120,
-                        damping: 20,
-                      }}
                     />
                   )}
 
-                  <motion.span
-                    whileHover={{ y: -1 }}
-                    className={`
-                      relative z-10 transition-colors duration-300
-                      ${
-                        isActive
-                          ? "text-blue-600"
-                          : "text-gray-700 hover:text-gray-900"
-                      }
-                    `}
+                  <span
+                    className={
+                      isActive
+                        ? "text-blue-500"
+                        : scrolled
+                        ? "text-gray-700 hover:text-black"
+                        : "text-white/80 hover:text-white"
+                    }
                   >
                     {item.name}
-                  </motion.span>
+                  </span>
                 </div>
               )}
             </NavLink>
           ))}
         </div>
 
-        {/* 💎 CTA BUTTON */}
-        <NavLink to="/contact">
-          <motion.button
-            whileHover={{ scale: 1.04 }}
-            whileTap={{ scale: 0.96 }}
-            className="
-              hidden md:block px-5 py-2 rounded-xl text-sm font-medium
-              bg-black text-white
-              shadow-[0_6px_20px_rgba(0,0,0,0.15)]
-              hover:shadow-[0_10px_30px_rgba(0,0,0,0.2)]
-              transition-all duration-300
-            "
+        {/* CTA */}
+        <NavLink to="/contact" className="z-10">
+          <button
+            className={`px-5 py-2 rounded-xl text-sm font-medium transition ${
+              scrolled ? "bg-black text-white" : "bg-white text-black"
+            }`}
           >
             Contact
-          </motion.button>
+          </button>
         </NavLink>
 
-        {/* 📱 MOBILE MENU BUTTON */}
+        {/* MOBILE BTN */}
         <button
           onClick={() => setOpen(!open)}
-          className="md:hidden text-2xl text-gray-900"
+          className={`md:hidden text-2xl z-10 ${
+            scrolled ? "text-black" : "text-white"
+          }`}
         >
           {open ? "✕" : "☰"}
         </button>
       </div>
 
-      {/* 📱 MOBILE MENU */}
+      {/* MOBILE MENU */}
       <AnimatePresence>
         {open && (
-          <>
-            {/* Overlay */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setOpen(false)}
-              className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40"
-            />
-
-            {/* Menu */}
-            <motion.div
-              initial={{ y: -20, opacity: 0, scale: 0.96 }}
-              animate={{ y: 0, opacity: 1, scale: 1 }}
-              exit={{ y: -20, opacity: 0 }}
-              className="absolute top-full left-0 w-full mt-3 z-50"
-            >
-              <div className="mx-auto max-w-7xl px-4">
-                <div className="
-                  rounded-2xl bg-white/80 backdrop-blur-xl
-                  border border-black/5
-                  shadow-[0_10px_40px_rgba(0,0,0,0.08)]
-                  p-6 flex flex-col gap-5
-                ">
-                  {navItems.map((item) => (
-                    <NavLink
-                      key={item.path}
-                      to={item.path}
-                      onClick={() => setOpen(false)}
-                      className="text-lg font-medium text-gray-800 hover:text-blue-600 transition"
-                    >
-                      {item.name}
-                    </NavLink>
-                  ))}
-
-                  <NavLink to="/contact" onClick={() => setOpen(false)}>
-                    <button className="
-                      mt-4 px-5 py-3 rounded-xl
-                      bg-black text-white
-                      hover:opacity-90 transition
-                    ">
-                      Contact
-                    </button>
-                  </NavLink>
-                </div>
-              </div>
-            </motion.div>
-          </>
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            className="mt-3 mx-auto max-w-7xl bg-white/90 backdrop-blur-xl rounded-2xl p-6"
+          >
+            {navItems.map((item) => (
+              <NavLink key={item.path} to={item.path}>
+                <div className="py-2 text-gray-800">{item.name}</div>
+              </NavLink>
+            ))}
+          </motion.div>
         )}
       </AnimatePresence>
     </motion.nav>

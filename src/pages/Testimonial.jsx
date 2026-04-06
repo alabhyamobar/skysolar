@@ -7,7 +7,10 @@ import {
   useTransform,
 } from "framer-motion";
 
-/* 🔥 Card Component (NO HOOK ERRORS) */
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+
+/* 🔥 CARD */
 const TestimonialCard = ({ item, index }) => {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -34,15 +37,25 @@ const TestimonialCard = ({ item, index }) => {
       transition={{ delay: index * 0.08 }}
       className="relative group"
     >
-      {/* Glow */}
-      <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-500 via-indigo-400 to-cyan-400 opacity-0 group-hover:opacity-30 blur-xl transition duration-500" />
+      {/* ✨ Glow */}
+      <div className="absolute inset-0 rounded-2xl 
+        bg-gradient-to-r from-blue-400 via-indigo-400 to-orange-300 
+        opacity-0 group-hover:opacity-20 
+        blur-2xl transition duration-500" />
 
-      {/* Card */}
-      <div className="relative p-6 rounded-2xl border border-gray-200 bg-white/80 backdrop-blur-xl shadow-lg group-hover:shadow-2xl transition">
-        <p className="text-gray-700 leading-relaxed mb-4">
+      {/* 💎 Glass Card */}
+      <div className="relative p-6 rounded-2xl 
+        border border-white/20 
+        bg-white/10 backdrop-blur-2xl 
+        shadow-xl 
+        transition duration-300 
+        group-hover:shadow-2xl"
+      >
+        <p className="text-white/90 leading-relaxed mb-4">
           “{item.text}”
         </p>
-        <h4 className="text-sm font-semibold text-blue-600">
+
+        <h4 className="text-sm font-semibold text-white/70">
           — {item.name}
         </h4>
       </div>
@@ -50,6 +63,7 @@ const TestimonialCard = ({ item, index }) => {
   );
 };
 
+/* 🔥 MAIN */
 const Testimonial = () => {
   const [testimonials, setTestimonials] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -63,7 +77,7 @@ const Testimonial = () => {
     text: "",
   });
 
-  /* 🔥 FETCH TESTIMONIALS */
+  /* 📦 FETCH */
   useEffect(() => {
     const fetchTestimonials = async () => {
       try {
@@ -116,20 +130,23 @@ const Testimonial = () => {
   };
 
   return (
-    <div className="relative w-full min-h-screen py-24 px-6 sm:px-10 lg:px-20">
+    <div className="relative w-full py-20 px-6 sm:px-10 lg:px-20">
 
-      {/* 🔥 Heading */}
-      <div className="text-center mb-20">
-        <h2 className="text-5xl sm:text-7xl font-semibold tracking-tight">
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-indigo-500 to-cyan-500">
+      {/* 🔥 HEADING */}
+      <div className="text-center mb-16">
+        <h2 className="text-4xl sm:text-6xl font-semibold tracking-tight">
+          <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-indigo-400 to-orange-300">
             Testimonials
           </span>
         </h2>
 
-        {/* Toggle Form */}
         <button
           onClick={() => setShowForm((prev) => !prev)}
-          className="mt-6 px-6 py-3 rounded-xl bg-blue-600 text-white hover:bg-blue-700 transition shadow-lg"
+          className="mt-6 px-6 py-3 rounded-xl 
+          bg-white/10 backdrop-blur-xl 
+          border border-white/20 
+          text-white hover:bg-white/20 
+          transition shadow-lg"
         >
           {showForm ? "Close" : "Add Testimonial"}
         </button>
@@ -143,7 +160,10 @@ const Testimonial = () => {
             initial={{ opacity: 0, y: -40 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="max-w-2xl mx-auto mb-16 p-6 rounded-2xl border border-gray-200 bg-white/80 backdrop-blur-xl shadow-xl space-y-4"
+            className="max-w-2xl mx-auto mb-16 p-6 rounded-2xl 
+            border border-white/20 
+            bg-white/10 backdrop-blur-xl 
+            shadow-xl space-y-4"
           >
             <input
               type="text"
@@ -152,7 +172,10 @@ const Testimonial = () => {
               onChange={(e) =>
                 setForm({ ...form, name: e.target.value })
               }
-              className="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none"
+              className="w-full p-3 rounded-lg 
+              bg-white/10 border border-white/20 
+              text-white placeholder-white/60 
+              focus:ring-2 focus:ring-blue-400 outline-none"
             />
 
             <textarea
@@ -161,13 +184,19 @@ const Testimonial = () => {
               onChange={(e) =>
                 setForm({ ...form, text: e.target.value })
               }
-              className="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none"
+              className="w-full p-3 rounded-lg 
+              bg-white/10 border border-white/20 
+              text-white placeholder-white/60 
+              focus:ring-2 focus:ring-blue-400 outline-none"
             />
 
             <button
               type="submit"
               disabled={submitting}
-              className="px-6 py-2 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 transition disabled:opacity-50"
+              className="px-6 py-2 rounded-lg 
+              bg-gradient-to-r from-blue-500 to-indigo-500 
+              text-white hover:opacity-90 
+              transition disabled:opacity-50"
             >
               {submitting ? "Submitting..." : "Submit"}
             </button>
@@ -177,30 +206,47 @@ const Testimonial = () => {
 
       {/* 💎 STATES */}
       {loading && (
-        <p className="text-center text-gray-500">Loading...</p>
+        <p className="text-center text-white/60">Loading...</p>
       )}
 
       {error && (
-        <p className="text-center text-red-500">{error}</p>
+        <p className="text-center text-red-400">{error}</p>
       )}
 
-      {/* 💎 GRID */}
+      {/* 💎 CONTENT */}
       {!loading && !error && (
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-          {testimonials.length === 0 ? (
-            <p className="text-center col-span-full text-gray-500">
-              No testimonials yet
-            </p>
-          ) : (
-            testimonials.map((item, index) => (
-              <TestimonialCard
-                key={item._id || item.name + index}
-                item={item}
-                index={index}
-              />
-            ))
-          )}
-        </div>
+        <>
+          {/* 🖥️ DESKTOP GRID */}
+          <div className="hidden md:grid sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+            {testimonials.length === 0 ? (
+              <p className="text-center col-span-full text-white/60">
+                No testimonials yet
+              </p>
+            ) : (
+              testimonials.map((item, index) => (
+                <TestimonialCard
+                  key={item._id || item.name + index}
+                  item={item}
+                  index={index}
+                />
+              ))
+            )}
+          </div>
+
+          {/* 📱 MOBILE SWIPER */}
+          <div className="md:hidden max-w-md mx-auto">
+            <Swiper
+              spaceBetween={20}
+              slidesPerView={1.1}
+            >
+              {testimonials.map((item, index) => (
+                <SwiperSlide key={item._id || item.name + index}>
+                  <TestimonialCard item={item} index={index} />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
+        </>
       )}
     </div>
   );
