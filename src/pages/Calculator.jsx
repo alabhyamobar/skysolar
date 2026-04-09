@@ -29,7 +29,7 @@ const Calculator = () => {
   return (
     <div className="w-full min-h-screen px-6 sm:px-10 lg:px-20 py-20 flex flex-col items-center justify-center">
       <div className="text-center mb-16">
-        <h1 className="text-4xl sm:text-6xl font-semibold text-white mb-4">
+        <h1 className="bg-clip-text text-5xl font-bold mb-5 md:text-xl text-transparent bg-gradient-to-r from-orange-400 via-yellow-300 to-blue-400">
           Solar Calculator
         </h1>
         <p className="text-white/70 max-w-xl mx-auto">
