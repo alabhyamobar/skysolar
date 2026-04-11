@@ -35,7 +35,7 @@ const Services = () => {
     return () => window.removeEventListener("resize", check);
   }, []);
 
-  // 🔥 CONTAINER VARIANT (controls all cards)
+
   const containerVariants = {
     hidden: {},
     show: {
@@ -57,7 +57,6 @@ const Services = () => {
         </span>
       </h2>
 
-      {/* 🔥 SECTION TRIGGER */}
       <motion.div
         variants={containerVariants}
         initial="hidden"
@@ -123,7 +122,7 @@ const Services = () => {
 
           const fromLeft = index % 2 === 0;
 
-          // 🔥 CARD VARIANT (individual animation)
+
           const cardVariants = {
             hidden: {
               opacity: 0,
@@ -171,13 +170,12 @@ const Services = () => {
               className="relative group h-full"
             >
 
-              {/* GLOW */}
+   
               <motion.div
                 className="absolute -inset-[1px] rounded-[18px] sm:rounded-[22px] opacity-70 blur-md"
                 style={{ background: borderGlow }}
               />
 
-              {/* CARD */}
               <div className="relative h-full flex flex-col justify-between rounded-[16px] sm:rounded-[20px] p-4 sm:p-6 overflow-hidden
                 backdrop-blur-2xl bg-white/10 border border-white/20
                 shadow-[0_10px_30px_rgba(0,0,0,0.3)]
