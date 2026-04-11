@@ -29,44 +29,50 @@ const Services = () => {
   }, []);
 
   return (
-    <div className="min-h-screen w-full py-20 px-6 sm:px-10 lg:px-20">
+    <div className="min-h-screen w-full py-16 px-4 sm:px-10 lg:px-20">
 
       {/* HEADING */}
-      <h2 className="text-4xl sm:text-6xl font-semibold text-center mb-20">
+      <h2 className="text-3xl sm:text-6xl font-semibold text-center mb-14 sm:mb-20">
         <span className="bg-clip-text text-transparent bg-gradient-to-r from-orange-400 via-yellow-300 to-blue-400">
           Our Services
         </span>
       </h2>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+      {/* GRID */}
+      <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-8 items-stretch">
         {services.map((service, index) => {
           const x = useMotionValue(0);
           const y = useMotionValue(0);
 
-          const rippleX = useMotionValue(50);
-          const rippleY = useMotionValue(50);
-          const rippleScale = useMotionValue(0);
-
-          const moveX = useSpring(useTransform(x, [-100, 100], [-8, 8]), {
-            stiffness: 140,
-            damping: 18,
+          const moveX = useSpring(useTransform(x, [-100, 100], [-6, 6]), {
+            stiffness: 120,
+            damping: 20,
           });
 
-          const moveY = useSpring(useTransform(y, [-100, 100], [-8, 8]), {
-            stiffness: 140,
-            damping: 18,
+          const moveY = useSpring(useTransform(y, [-100, 100], [-6, 6]), {
+            stiffness: 120,
+            damping: 20,
           });
 
-          const rotateX = useTransform(y, [-100, 100], [8, -8]);
-          const rotateY = useTransform(x, [-100, 100], [-8, 8]);
+          const rotateX = useTransform(y, [-100, 100], [6, -6]);
+          const rotateY = useTransform(x, [-100, 100], [-6, 6]);
 
           const lightX = useTransform(x, (v) => v + 150);
           const lightY = useTransform(y, (v) => v + 150);
 
+          const glowX = useTransform(x, (v) => v + 200);
+          const glowY = useTransform(y, (v) => v + 200);
+
           const background = useMotionTemplate`
             radial-gradient(circle at ${lightX}px ${lightY}px,
-              rgba(255,200,120,0.2),
-              rgba(120,180,255,0.2),
+              rgba(255,255,255,0.15),
+              transparent 60%)
+          `;
+
+          const borderGlow = useMotionTemplate`
+            radial-gradient(circle at ${glowX}px ${glowY}px,
+              rgba(255,180,100,0.6),
+              rgba(120,160,255,0.6),
               transparent 70%)
           `;
 
@@ -75,18 +81,6 @@ const Services = () => {
             const centerY = rect.top + rect.height / 2;
             x.set(clientX - centerX);
             y.set(clientY - centerY);
-          };
-
-          const handleRipple = (clientX, clientY, rect) => {
-            const rx = ((clientX - rect.left) / rect.width) * 100;
-            const ry = ((clientY - rect.top) / rect.height) * 100;
-
-            rippleX.set(rx);
-            rippleY.set(ry);
-            rippleScale.set(0);
-
-            requestAnimationFrame(() => rippleScale.set(3));
-            setTimeout(() => rippleScale.set(0), 600);
           };
 
           return (
@@ -101,22 +95,12 @@ const Services = () => {
                 const touch = e.touches[0];
                 handleMove(touch.clientX, touch.clientY, e.currentTarget.getBoundingClientRect());
               }}
-              onClick={(e) => {
-                handleRipple(e.clientX, e.clientY, e.currentTarget.getBoundingClientRect());
-              }}
-              onTouchStart={(e) => {
-                const touch = e.touches[0];
-                handleRipple(touch.clientX, touch.clientY, e.currentTarget.getBoundingClientRect());
-              }}
               onMouseLeave={() => {
                 x.set(0);
                 y.set(0);
               }}
-              whileTap={{ scale: 0.96 }}
-              animate={{
-                scale: 1.03,
-                y: -4,
-              }}
+              whileTap={{ scale: 0.97 }}
+              animate={{ scale: 1.02 }}
               style={{
                 rotateX,
                 rotateY,
@@ -124,51 +108,47 @@ const Services = () => {
                 y: moveY,
                 transformPerspective: 1200,
               }}
-              className="relative group cursor-pointer will-change-transform"
+              className="relative group h-full"
             >
-              {/* 🔥 EXACT FAQ STYLE CARD */}
-              <div className="relative rounded-[20px] p-6 overflow-hidden border border-white/20 backdrop-blur-xl saturate-150
-                shadow-[0_10px_30px_rgba(0,0,0,0.25),inset_0_1px_0_rgba(255,255,255,0.15)]
-                hover:shadow-[0_25px_70px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.25)]
-                transition-all duration-500
-                bg-[linear-gradient(135deg,
-                  rgba(251,146,60,0.35),
-                  rgba(236,72,153,0.25),
-                  rgba(59,130,246,0.35)
-                )]">
 
-                {/* COLOR BLOBS */}
-                <div className="absolute inset-0 opacity-70 pointer-events-none">
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_40%,rgba(255,180,100,0.4),transparent_40%),
-                                                      radial-gradient(circle_at_70%_60%,rgba(120,160,255,0.4),transparent_50%)]" />
-                </div>
+              {/* GLOW BORDER */}
+              <motion.div
+                className="absolute -inset-[1px] rounded-[18px] sm:rounded-[22px] opacity-70 blur-md"
+                style={{ background: borderGlow }}
+              />
 
-                {/* RIPPLE */}
-                <motion.div
-                  className="absolute inset-0 pointer-events-none"
-                  style={{
-                    background: useMotionTemplate`
-                      radial-gradient(circle at ${rippleX}% ${rippleY}%,
-                        rgba(255,255,255,0.25),
-                        transparent 60%)
-                    `,
-                    scale: rippleScale,
-                    opacity: rippleScale,
-                  }}
-                />
+              {/* CARD */}
+              <div className="relative h-full flex flex-col justify-between rounded-[16px] sm:rounded-[20px] p-4 sm:p-6 overflow-hidden
+                backdrop-blur-2xl bg-white/10 border border-white/20
+                shadow-[0_10px_30px_rgba(0,0,0,0.3)]
+                hover:shadow-[0_25px_80px_rgba(0,0,0,0.6)]
+                transition-all duration-500">
 
-                {/* LIGHT */}
+                {/* NOISE TEXTURE */}
+                <div className="absolute inset-0 opacity-[0.08] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
+
+                {/* LIGHT FOLLOW */}
                 <motion.div
                   className="absolute inset-0 pointer-events-none"
                   style={{ background }}
                 />
 
                 {/* CONTENT */}
-                <div className="relative z-10 text-white">
-                  <div className="text-4xl mb-4">{service.icon}</div>
-                  <h3 className="text-lg font-semibold mb-2">{service.title}</h3>
-                  <p className="text-sm text-white/80">{service.desc}</p>
+                <div className="relative z-10 text-white flex flex-col h-full">
+                  <div>
+                    <div className="text-2xl sm:text-4xl mb-2 sm:mb-4">
+                      {service.icon}
+                    </div>
+                    <h3 className="text-sm sm:text-lg font-semibold mb-1 sm:mb-2">
+                      {service.title}
+                    </h3>
+                  </div>
+
+                  <p className="text-xs sm:text-sm text-white/80 leading-relaxed mt-auto">
+                    {service.desc}
+                  </p>
                 </div>
+
               </div>
             </motion.div>
           );
