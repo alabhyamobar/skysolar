@@ -183,8 +183,8 @@ const Landing = () => {
       </div>
 
       {/* MOBILE */}
-      <div className="block md:hidden mt-6">
-        <div className="relative w-full h-[85vh] rounded-2xl overflow-hidden">
+      <div className="block md:hidden mt-30">
+        <div className="relative w-full h-[55vh] rounded-2xl overflow-hidden">
 
           <Swiper
             modules={[Pagination, Autoplay]}
