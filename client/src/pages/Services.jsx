@@ -31,14 +31,13 @@ const Services = () => {
   return (
     <div className="min-h-screen w-full py-16 px-4 sm:px-10 lg:px-20">
 
-      {/* HEADING */}
+
       <h2 className="text-3xl sm:text-6xl font-semibold text-center mb-14 sm:mb-20">
         <span className="bg-clip-text text-transparent bg-gradient-to-r from-orange-400 via-yellow-300 to-blue-400">
           Our Services
         </span>
       </h2>
 
-      {/* GRID */}
       <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-8 items-stretch">
         {services.map((service, index) => {
           const x = useMotionValue(0);
@@ -111,29 +110,24 @@ const Services = () => {
               className="relative group h-full"
             >
 
-              {/* GLOW BORDER */}
+
               <motion.div
                 className="absolute -inset-[1px] rounded-[18px] sm:rounded-[22px] opacity-70 blur-md"
                 style={{ background: borderGlow }}
               />
 
-              {/* CARD */}
               <div className="relative h-full flex flex-col justify-between rounded-[16px] sm:rounded-[20px] p-4 sm:p-6 overflow-hidden
                 backdrop-blur-2xl bg-white/10 border border-white/20
                 shadow-[0_10px_30px_rgba(0,0,0,0.3)]
                 hover:shadow-[0_25px_80px_rgba(0,0,0,0.6)]
                 transition-all duration-500">
-
-                {/* NOISE TEXTURE */}
                 <div className="absolute inset-0 opacity-[0.08] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
 
-                {/* LIGHT FOLLOW */}
                 <motion.div
                   className="absolute inset-0 pointer-events-none"
                   style={{ background }}
                 />
 
-                {/* CONTENT */}
                 <div className="relative z-10 text-white flex flex-col h-full">
                   <div>
                     <div className="text-2xl sm:text-4xl mb-2 sm:mb-4">
