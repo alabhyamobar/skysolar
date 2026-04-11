@@ -42,3 +42,11 @@
 .animate-floatFast {
   animation: floatFast 10s ease-in-out infinite;
 }
+
+html.lenis {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto;
+}

@@ -22,23 +22,29 @@ const App = () => {
 
   useEffect(() => {
     const lenis = new Lenis({
-      duration: 1.4,
-      easing: (t) => 1 - Math.pow(1 - t, 4),
+      duration: 1.2,
+      easing: (t) => 1 - Math.pow(1 - t, 3),
       smooth: true,
-      smoothTouch: false,
+      smoothTouch: true,
+      syncTouch: true,
     });
 
     lenisRef.current = lenis;
 
-    // 🔥 SYNC LENIS WITH GSAP
+    gsap.ticker.add((time) => {
+      lenis.raf(time * 1000);
+    });
+
+    gsap.ticker.lagSmoothing(0);
+
     lenis.on("scroll", ScrollTrigger.update);
 
     ScrollTrigger.scrollerProxy(document.body, {
       scrollTop(value) {
         if (arguments.length) {
-          lenis.scrollTo(value);
+          lenis.scrollTo(value, { immediate: true });
         }
-        return lenis.scroll.instance.scroll.y;
+        return lenis.scroll;
       },
       getBoundingClientRect() {
         return {
@@ -50,17 +56,12 @@ const App = () => {
       },
     });
 
-    // RAF LOOP
-    function raf(time) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-    requestAnimationFrame(raf);
-
     ScrollTrigger.addEventListener("refresh", () => lenis.resize());
     ScrollTrigger.refresh();
 
+
     return () => {
+      gsap.ticker.remove(lenis.raf);
       lenis.destroy();
     };
   }, []);
@@ -68,9 +69,11 @@ const App = () => {
   return (
     <div className="w-screen overflow-x-hidden">
       <NAV />
+
       <div className="fixed inset-0 -z-10">
         <GradientBG />
       </div>
+
       <Routes>
         <Route
           path="/"
@@ -80,13 +83,13 @@ const App = () => {
               <Services />
               <Faq />
               <Testimonial />
-              <Footer/>
+              <Footer />
             </div>
           }
         />
         <Route path="/gallery" element={<Gallary />} />
         <Route path="/calculator" element={<Calculator />} />
-        <Route path="/contact"  element={<Contact />} />
+        <Route path="/contact" element={<Contact />} />
       </Routes>
     </div>
   );
