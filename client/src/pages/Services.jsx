@@ -31,7 +31,6 @@ const Services = () => {
   return (
     <div className="min-h-screen w-full py-16 px-4 sm:px-10 lg:px-20">
 
-
       <h2 className="text-3xl sm:text-6xl font-semibold text-center mb-14 sm:mb-20">
         <span className="bg-clip-text text-transparent bg-gradient-to-r from-orange-400 via-yellow-300 to-blue-400">
           Our Services
@@ -82,9 +81,30 @@ const Services = () => {
             y.set(clientY - centerY);
           };
 
+
+          const fromLeft = index % 2 === 0;
+
           return (
             <motion.div
               key={index}
+
+              initial={
+                isMobile
+                  ? { opacity: 0, x: fromLeft ? -80 : 80 }
+                  : false
+              }
+              whileInView={
+                isMobile
+                  ? { opacity: 1, x: 0 }
+                  : {}
+              }
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{
+                duration: 0.5,
+                ease: "easeOut",
+                delay: isMobile ? index * 0.08 : 0,
+              }}
+
               onMouseMove={(e) => {
                 if (isMobile) return;
                 handleMove(e.clientX, e.clientY, e.currentTarget.getBoundingClientRect());
@@ -121,6 +141,7 @@ const Services = () => {
                 shadow-[0_10px_30px_rgba(0,0,0,0.3)]
                 hover:shadow-[0_25px_80px_rgba(0,0,0,0.6)]
                 transition-all duration-500">
+
                 <div className="absolute inset-0 opacity-[0.08] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
 
                 <motion.div
