@@ -50,7 +50,7 @@ const Locations = () => {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
-          start: isMobile ? `top -20%` : `top top`,
+          start: isMobile ? `top top` : `top top`,
           end: isMobile ? `+=1000` : `+=1200`,
           scrub: true,
           pin: true,
@@ -79,14 +79,14 @@ const Locations = () => {
       ref={containerRef}
       className="min-h-screen w-screen flex flex-col items-center justify-center bg-[radial-gradient(circle_at_top,_#fff7ed,_#ffedd5,_#fed7aa)] p-10"
     >
-      <h1 className="text-4xl font-bold text-gray-800 mb-8">Our Locations</h1>
+      <h1 className="text-4xl lg:text-6xl font-bold  text-gray-800 mb-8">Our Locations</h1>
       <div className="relative w-[95vw] lg:w-[90vw] h-[90vh] lg:h-[85vh] overflow-hidden rounded-xl bg-white shadow-xl">
 
         {locations.map((location, index) => (
           <div
             key={index}
             ref={(el) => (cardsRef.current[index] = el)}
-            className="absolute inset-0 w-full h-full flex flex-col lg:flex-row"
+            className="absolute inset-0 w-full h-full flex flex-col-reverse lg:flex-row"
           >
             <div className="w-full lg:w-1/2 flex flex-col justify-center px-6 sm:px-10 lg:px-16 py-8 sm:py-10 bg-[#f3f3f3]">
               

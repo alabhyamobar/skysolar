@@ -30,16 +30,11 @@ const servicesData = [
     desc: "Servicing and monitoring for maximum efficiency.",
     icon: "🛠️",
   },
-  {
-    title: "Financing",
-    desc: "Easy EMI options to make solar affordable.",
-    icon: "💳",
-  },
-  {
-    title: "Battery Solutions",
-    desc: "Store energy with advanced battery systems.",
-    icon: "🔋",
-  },
+  // {
+  //   title: "Financing",
+  //   desc: "Easy EMI options to make solar affordable.",
+  //   icon: "💳",
+  // },
 ];
 
 const images = [
@@ -78,21 +73,14 @@ const Services = () => {
           display: "none",
           ease: "power3.inOut",
         });
-
-        ScrollTrigger.create({
-          trigger: serviceRef.current,
-          start: "top top",
-          end: "+=1000",
-          scrub: true,
-          pin: true,
-          onUpdate: (self) => {
-            const progress = self.progress; // 0 → 1
-
-            const index = Math.floor(progress * images.length);
-            const clampedIndex = Math.min(images.length - 1, index);
-
-            setCurrentImage(clampedIndex);
-          },
+        servicesRef.current.forEach((el, index) => {
+          ScrollTrigger.create({
+            trigger: el,
+            start: "top center",
+            end: "bottom center",
+            onEnter: () => setCurrentImage(index),
+            onEnterBack: () => setCurrentImage(index),
+          });
         });
 
         gsap.fromTo(
@@ -100,7 +88,6 @@ const Services = () => {
           { opacity: 0, y: 100 },
           {
             opacity: 1,
-            y: 0,
             stagger: 0.4,
             ease: "power3.out",
             scrollTrigger: {
@@ -109,23 +96,66 @@ const Services = () => {
               end: "bottom center",
               scrub: true,
             },
-          },"a",
-        );
-        gsap.to(imageRef2.current, {
-          display: "block",
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: serviceRef.current,
-            start: "top center",
-            end: "bottom center",
-            scrub: true,
           },
-        },"a");
+          "a",
+        );
+        gsap.to(
+          imageRef2.current,
+          {
+            display: "block",
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: serviceRef.current,
+              start: "top center",
+              end: "bottom center",
+              scrub: true,
+            },
+          },
+          "a",
+        );
       });
 
       mm.add("(max-width: 1023px)", () => {
+        // reset desktop styles
         gsap.set(imageRef.current, { clearProps: "all" });
-        gsap.set(servicesRef.current, { opacity: 1, y: 0 });
+
+        ScrollTrigger.create({
+          trigger: serviceRef.current,
+          start: "top top",
+          end: "+=500",
+          pin: true,
+          scrub: true,
+        });
+
+        servicesRef.current.forEach((el, index) => {
+          const tl = gsap.timeline({
+            scrollTrigger: {
+              trigger: el,
+              start: "top center",
+              end: "bottom center",
+              scrub: true,
+            },
+          });
+
+          tl.fromTo(
+            el,
+            { opacity: 0, y: 40 },
+            { opacity: 1, y: 0, duration: 0.3 },
+          ).to(el, {
+            opacity: 0,
+            y: -40,
+            duration: 0.3,
+          });
+
+          // 🔥 IMAGE CHANGE SYNC
+          ScrollTrigger.create({
+            trigger: el,
+            start: "top center",
+            end: "bottom center",
+            onEnter: () => setCurrentImage(index),
+            onEnterBack: () => setCurrentImage(index),
+          });
+        });
       });
     }, containerRef);
 

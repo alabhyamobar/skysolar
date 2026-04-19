@@ -74,11 +74,7 @@ const App = () => {
             <div className="w-full overflow-x-hidden">
               <Landing />
               <About/>
-              {/* <Services />
-              <Faq />
-              <Location/>
-              <Testimonial />
-              <Footer /> */}
+              
             </div>
           }
         />

@@ -20,8 +20,6 @@ const Gallary = () => {
       </h2>
 
       <div className="relative w-full overflow-hidden">
-
-        {/* TRACK */}
         <div className="flex gap-6 w-max animate-marquee">
 
           {[...images, ...images].map((src, index) => (
@@ -36,7 +34,6 @@ const Gallary = () => {
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               />
 
-              {/* OVERLAY */}
               <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-500
                 bg-[linear-gradient(135deg,
                   rgba(251,146,60,0.35),
@@ -56,7 +53,6 @@ const Gallary = () => {
         </div>
       </div>
 
-      {/* 🔥 CSS */}
       <style jsx>{`
         .animate-marquee {
           animation: marquee 30s linear infinite;
@@ -67,7 +63,7 @@ const Gallary = () => {
             transform: translateX(0);
           }
           100% {
-            transform: translateX(-50%);
+            transform: translateX(-150%);
           }
         }
       `}</style>
