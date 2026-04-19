@@ -1,214 +1,187 @@
-import React, { useEffect, useState, useRef } from "react";
-import {
-  motion,
-  useMotionValue,
-  useTransform,
-  useSpring,
-  useMotionTemplate,
-  useScroll,
-} from "framer-motion";
+import React, { useEffect, useRef, useState } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-const services = [
-  { title: "Residential Solar", desc: "Install rooftop solar systems for homes and reduce electricity bills.", icon: "🏠" },
-  { title: "Commercial Solar", desc: "Custom solar solutions for businesses and industries.", icon: "🏢" },
-  { title: "Solar Consultation", desc: "Expert guidance on system size, cost, and savings.", icon: "📊" },
-  { title: "Subsidy Assistance", desc: "We help you apply for government subsidies.", icon: "💰" },
-  { title: "Installation (EPC)", desc: "End-to-end solar installation with high-quality components.", icon: "🔧" },
-  { title: "Maintenance", desc: "Servicing and monitoring for maximum efficiency.", icon: "🛠️" },
-  { title: "Financing", desc: "Easy EMI options to make solar affordable.", icon: "💳" },
-  { title: "Battery Solutions", desc: "Store energy with advanced battery systems.", icon: "🔋" },
+gsap.registerPlugin(ScrollTrigger);
+
+const servicesData = [
+  {
+    title: "Residential Solar",
+    desc: "Install rooftop solar systems for homes and reduce electricity bills.",
+    icon: "🏠",
+  },
+  {
+    title: "Commercial Solar",
+    desc: "Custom solar solutions for businesses and industries.",
+    icon: "🏢",
+  },
+  {
+    title: "Subsidy Assistance",
+    desc: "We help you apply for government subsidies.",
+    icon: "💰",
+  },
+  {
+    title: "Installation (EPC)",
+    desc: "End-to-end solar installation with high-quality components.",
+    icon: "🔧",
+  },
+  {
+    title: "Maintenance",
+    desc: "Servicing and monitoring for maximum efficiency.",
+    icon: "🛠️",
+  },
+  {
+    title: "Financing",
+    desc: "Easy EMI options to make solar affordable.",
+    icon: "💳",
+  },
+  {
+    title: "Battery Solutions",
+    desc: "Store energy with advanced battery systems.",
+    icon: "🔋",
+  },
+];
+
+const images = [
+  "skysolar/images/service1.png",
+  "skysolar/images/service2.png",
+  "skysolar/images/service3.png",
 ];
 
 const Services = () => {
-  const [isMobile, setIsMobile] = useState(false);
-  const sectionRef = useRef(null);
-
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end start"],
-  });
+  const containerRef = useRef(null);
+  const imageRef = useRef(null);
+  const imageRef2 = useRef(null);
+  const servicesRef = useRef([]);
+  const serviceRef = useRef(null);
+  const [currentImage, setCurrentImage] = useState(0);
 
   useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 768);
-    check();
-    window.addEventListener("resize", check);
-    return () => window.removeEventListener("resize", check);
+    const ctx = gsap.context(() => {
+      const mm = gsap.matchMedia();
+
+      mm.add("(min-width: 1024px)", () => {
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top 10%",
+            end: "top -40%",
+            scrub: true,
+          },
+        });
+
+        tl.to(imageRef.current, {
+          y: "80vh",
+          x: "41vw",
+          display: "none",
+          ease: "power3.inOut",
+        });
+
+        ScrollTrigger.create({
+          trigger: serviceRef.current,
+          start: "top top",
+          end: "+=1000",
+          scrub: true,
+          pin: true,
+          onUpdate: (self) => {
+            const progress = self.progress; // 0 → 1
+
+            const index = Math.floor(progress * images.length);
+            const clampedIndex = Math.min(images.length - 1, index);
+
+            setCurrentImage(clampedIndex);
+          },
+        });
+
+        gsap.fromTo(
+          servicesRef.current,
+          { opacity: 0, y: 100 },
+          {
+            opacity: 1,
+            y: 0,
+            stagger: 0.4,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: serviceRef.current,
+              start: "top center",
+              end: "top 20%",
+              scrub: true,
+            },
+          },
+        );
+        gsap.to(imageRef2.current, {
+          display: "block",
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: serviceRef.current,
+            start: "top 10%",
+            end: "top 20%",
+            scrub: true,
+          },
+        });
+      });
+
+      mm.add("(max-width: 1023px)", () => {
+        gsap.set(imageRef.current, { clearProps: "all" });
+        gsap.set(servicesRef.current, { opacity: 1, y: 0 });
+      });
+    }, containerRef);
+
+    return () => ctx.revert();
   }, []);
-
-
-  const containerVariants = {
-    hidden: {},
-    show: {
-      transition: {
-        staggerChildren: 0.12,
-        delayChildren: 0.1,
-      },
-    },
-  };
 
   return (
     <div
-      ref={sectionRef}
-      className="min-h-screen w-full py-16 px-4 sm:px-10 lg:px-20"
+      ref={containerRef}
+      className="w-screen relative bg-black text-white overflow-x-hidden"
     >
-      <h2 className="text-3xl sm:text-6xl font-semibold text-center mb-14 sm:mb-20">
-        <span className="bg-clip-text text-transparent bg-gradient-to-r from-orange-400 via-yellow-300 to-blue-400">
-          Our Services
+      <div className="lg:h-[70vh] flex items-center lg:justify-end jusitify-start  lg:p-70 ">
+        <span className="text-7xl lg:text-9xl w-[70vh]  font-bold sm:ml-20">
+          What we offer?
         </span>
-      </h2>
-
-      <motion.div
-        variants={containerVariants}
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true, margin: "-100px" }}
-        className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-8 items-stretch"
+      </div>
+      <div
+        ref={imageRef}
+        className="w-full hidden lg:block  lg:absolute h-[40vh] top-10 lg:w-[60%] lg:h-[70vh] p-10"
       >
-        {services.map((service, index) => {
-          const x = useMotionValue(0);
-          const y = useMotionValue(0);
+        <img
+          src="skysolar/images/service1.png"
+          alt="Solar"
+          className="w-full h-full object-contain"
+        />
+      </div>
 
-          const depth = (index % 4) * 20 + 20;
-
-          const parallaxY = useTransform(
-            scrollYProgress,
-            [0, 1],
-            isMobile ? [0, 0] : [depth, -depth]
-          );
-
-          const smoothParallax = useSpring(parallaxY, {
-            stiffness: 60,
-            damping: 20,
-          });
-
-          const moveX = useSpring(useTransform(x, [-100, 100], [-6, 6]), {
-            stiffness: 120,
-            damping: 20,
-          });
-
-          const moveY = useSpring(useTransform(y, [-100, 100], [-6, 6]), {
-            stiffness: 120,
-            damping: 20,
-          });
-
-          const rotateX = useTransform(y, [-100, 100], [6, -6]);
-          const rotateY = useTransform(x, [-100, 100], [-6, 6]);
-
-          const lightX = useTransform(x, (v) => v + 150);
-          const lightY = useTransform(y, (v) => v + 150);
-
-          const glowX = useTransform(x, (v) => v + 200);
-          const glowY = useTransform(y, (v) => v + 200);
-
-          const background = useMotionTemplate`
-            radial-gradient(circle at ${lightX}px ${lightY}px,
-              rgba(255,255,255,0.15),
-              transparent 60%)
-          `;
-
-          const borderGlow = useMotionTemplate`
-            radial-gradient(circle at ${glowX}px ${glowY}px,
-              rgba(255,180,100,0.6),
-              rgba(120,160,255,0.6),
-              transparent 70%)
-          `;
-
-          const handleMove = (clientX, clientY, rect) => {
-            const centerX = rect.left + rect.width / 2;
-            const centerY = rect.top + rect.height / 2;
-            x.set(clientX - centerX);
-            y.set(clientY - centerY);
-          };
-
-          const fromLeft = index % 2 === 0;
-
-
-          const cardVariants = {
-            hidden: {
-              opacity: 0,
-              x: isMobile ? (fromLeft ? -80 : 80) : 0,
-              y: 40,
-              scale: 0.95,
-            },
-            show: {
-              opacity: 1,
-              x: 0,
-              y: 0,
-              scale: 1,
-              transition: {
-                duration: 0.5,
-                ease: "easeOut",
-              },
-            },
-          };
-
-          return (
-            <motion.div
+      <div
+        ref={serviceRef}
+        className="w-full h-screen sm:mobile lg:pl-30 lg:flex lg:items-center lg:justify-between gap-10 mt-10"
+      >
+        <div className="flex flex-col justify-content">
+          {servicesData.map((service, index) => (
+            <div
               key={index}
-              variants={cardVariants}
-
-              onMouseMove={(e) => {
-                if (isMobile) return;
-                handleMove(e.clientX, e.clientY, e.currentTarget.getBoundingClientRect());
-              }}
-              onMouseLeave={() => {
-                x.set(0);
-                y.set(0);
-              }}
-
-              whileTap={{ scale: 0.97 }}
-
-              style={{
-                rotateX,
-                rotateY,
-                x: moveX,
-                y: moveY,
-                translateY: smoothParallax,
-                transformPerspective: 1200,
-              }}
-
-              className="relative group h-full"
+              ref={(el) => (servicesRef.current[index] = el)}
+              className="max-w-xl"
             >
-
-   
-              <motion.div
-                className="absolute -inset-[1px] rounded-[18px] sm:rounded-[22px] opacity-70 blur-md"
-                style={{ background: borderGlow }}
-              />
-
-              <div className="relative h-full flex flex-col justify-between rounded-[16px] sm:rounded-[20px] p-4 sm:p-6 overflow-hidden
-                backdrop-blur-2xl bg-white/10 border border-white/20
-                shadow-[0_10px_30px_rgba(0,0,0,0.3)]
-                hover:shadow-[0_25px_80px_rgba(0,0,0,0.6)]
-                transition-all duration-500">
-
-                <div className="absolute inset-0 opacity-[0.08] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
-
-                <motion.div
-                  className="absolute inset-0 pointer-events-none"
-                  style={{ background }}
-                />
-
-                <div className="relative z-10 text-white flex flex-col h-full">
-                  <div>
-                    <div className="text-2xl sm:text-4xl mb-2 sm:mb-4">
-                      {service.icon}
-                    </div>
-                    <h3 className="text-sm sm:text-lg font-semibold mb-1 sm:mb-2">
-                      {service.title}
-                    </h3>
-                  </div>
-
-                  <p className="text-xs sm:text-sm text-white/80 leading-relaxed mt-auto">
-                    {service.desc}
-                  </p>
-                </div>
-
+              <div className="flex items-center text-xl lg:text-2xl font-bold">
+                <span className="text-3xl mr-3">{service.icon}</span>
+                {service.title}
               </div>
-            </motion.div>
-          );
-        })}
-      </motion.div>
+
+              <p className="text-gray-400 mt-2 ml-10">{service.desc}</p>
+            </div>
+          ))}
+        </div>
+        <div
+          ref={imageRef2}
+          className="w-full block lg:hidden h-[40vh] lg:w-[60%] lg:h-[70vh] p-10"
+        >
+          <img
+            src={images[currentImage]}
+            alt="Solar"
+            className="w-full h-full object-contain"
+          />
+        </div>
+      </div>
     </div>
   );
 };

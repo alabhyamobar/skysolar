@@ -35,9 +35,7 @@ export default function Faq() {
   };
 
   return (
-    <div className="relative w-full min-h-screen py-24 px-6 sm:px-10 lg:px-20">
-
-
+    <div className="relative w-full min-h-screen py-10 px-6 sm:px-10 lg:px-20">
       <div className="text-center mb-20">
         <h2 className="text-5xl sm:text-7xl font-semibold tracking-tight">
           <span className="text-white">

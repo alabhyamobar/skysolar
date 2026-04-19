@@ -2,8 +2,6 @@ import React, { useEffect, useRef } from "react";
 import Lenis from "@studio-freight/lenis";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-import GradientBG from "./Components/GradientBg";
 import Services from "./pages/Services";
 import Faq from "./pages/Faq";
 import Landing from "./pages/Landing";
@@ -12,8 +10,7 @@ import { Route, Routes } from "react-router-dom";
 import Gallary from "./pages/Gallary";
 import Calculator from "./pages/Calculator";
 import Contact from "./pages/Contact";
-import Testimonial from "./pages/Testimonial";
-import Footer from "./pages/Footer";
+import About from "./pages/About";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -70,20 +67,18 @@ const App = () => {
     <div className="w-screen overflow-x-hidden">
       <NAV />
 
-      <div className="fixed inset-0 -z-10">
-        <GradientBG />
-      </div>
-
       <Routes>
         <Route
           path="/"
           element={
             <div className="w-full overflow-x-hidden">
               <Landing />
-              <Services />
+              <About/>
+              {/* <Services />
               <Faq />
+              <Location/>
               <Testimonial />
-              <Footer />
+              <Footer /> */}
             </div>
           }
         />
