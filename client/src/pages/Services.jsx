@@ -46,6 +46,8 @@ const images = [
   "skysolar/images/service1.png",
   "skysolar/images/service2.png",
   "skysolar/images/service3.png",
+  "skysolar/images/service4.png",
+  "skysolar/images/service5.png",
 ];
 
 const Services = () => {
@@ -104,21 +106,21 @@ const Services = () => {
             scrollTrigger: {
               trigger: serviceRef.current,
               start: "top center",
-              end: "top 20%",
+              end: "bottom center",
               scrub: true,
             },
-          },
+          },"a",
         );
         gsap.to(imageRef2.current, {
           display: "block",
           ease: "power3.out",
           scrollTrigger: {
             trigger: serviceRef.current,
-            start: "top 10%",
-            end: "top 20%",
+            start: "top center",
+            end: "bottom center",
             scrub: true,
           },
-        });
+        },"a");
       });
 
       mm.add("(max-width: 1023px)", () => {
@@ -153,7 +155,7 @@ const Services = () => {
 
       <div
         ref={serviceRef}
-        className="w-full h-screen sm:mobile lg:pl-30 lg:flex lg:items-center lg:justify-between gap-10 mt-10"
+        className="w-full h-screen flex flex-col-reverse lg:pl-30 lg:flex-row lg:items-center lg:justify-between gap-10 mt-10"
       >
         <div className="flex flex-col justify-content">
           {servicesData.map((service, index) => (
@@ -173,7 +175,7 @@ const Services = () => {
         </div>
         <div
           ref={imageRef2}
-          className="w-full block lg:hidden h-[40vh] lg:w-[60%] lg:h-[70vh] p-10"
+          className="w-full block lg:hidden h-[40vh] lg:w-[60%] lg:h-[70vh] "
         >
           <img
             src={images[currentImage]}

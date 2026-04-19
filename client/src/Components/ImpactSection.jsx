@@ -176,8 +176,6 @@ const ImpactSection = () => {
                   <p className="relative mt-4 text-sm font-medium text-gray-600 tracking-wider uppercase">
                     {stat.label}
                   </p>
-
-                  <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 w-32 h-20 bg-gradient-to-t from-orange-400/40 to-transparent blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 </div>
               </div>
             </motion.div>

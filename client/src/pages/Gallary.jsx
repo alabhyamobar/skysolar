@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import React from "react";
 
 const images = [
   "https://images.unsplash.com/photo-1509395176047-4a66953fd231",
@@ -12,118 +11,66 @@ const images = [
   "https://images.unsplash.com/photo-1501785888041-af3ef285b470",
 ];
 
-const container = {
-  hidden: {},
-  show: {
-    transition: {
-      staggerChildren: 0.12,
-    },
-  },
-};
-
-const item = {
-  hidden: {
-    opacity: 0,
-    y: 60,
-    scale: 0.95,
-  },
-  show: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: {
-      duration: 0.6,
-      ease: "easeOut",
-    },
-  },
-};
-
 const Gallary = () => {
-  const [activeIndex, setActiveIndex] = useState(null);
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 768);
-    check();
-    window.addEventListener("resize", check);
-    return () => window.removeEventListener("resize", check);
-  }, []);
-
   return (
-    <div className="min-h-screen w-full py-20 px-6 sm:px-10 lg:px-20">
+    <div className="min-h-screen bg-[radial-gradient(circle_at_top,_#fff7ed,_#ffedd5,_#fed7aa)] w-full py-20  overflow-hidden">
 
       <h2 className="text-4xl sm:text-6xl font-semibold text-center mb-16">
-        <span className="bg-clip-text text-transparent bg-gradient-to-r from-orange-400 via-yellow-300 to-blue-400">
-          Our Work Gallery
-        </span>
+        Our Work Gallery
       </h2>
 
-      <motion.div
-        variants={container}
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true, margin: "-100px" }}
-        className="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6"
-      >
-        {images.map((src, index) => {
-          const isActive = activeIndex === index;
+      <div className="relative w-full overflow-hidden">
 
-          return (
-            <motion.div
+        {/* TRACK */}
+        <div className="flex gap-6 w-max animate-marquee">
+
+          {[...images, ...images].map((src, index) => (
+            <div
               key={index}
-              variants={item}
-              onClick={() => {
-                if (isMobile) {
-                  setActiveIndex(isActive ? null : index);
-                }
-              }}
-              className="relative break-inside-avoid rounded-2xl overflow-hidden group cursor-pointer"
+              className="min-w-[250px] sm:min-w-[300px] lg:min-w-[350px] h-[300px] sm:h-[350px] rounded-2xl overflow-hidden relative group"
             >
-              <motion.img
+              <img
                 src={src}
                 alt="gallery"
                 loading="lazy"
-                whileTap={{ scale: 0.97 }}
-                className={`w-full h-full object-cover transition-all duration-700 
-                  ${!isMobile ? "group-hover:scale-110" : ""}
-                  blur-sm scale-105`}
-                onLoad={(e) => {
-                  e.target.classList.remove("blur-sm", "scale-105");
-                }}
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               />
 
               {/* OVERLAY */}
-              <div
-                className={`absolute inset-0 transition duration-500
-                  ${isMobile
-                    ? isActive
-                      ? "opacity-100"
-                      : "opacity-0"
-                    : "opacity-0 group-hover:opacity-100"
-                  }
-                  bg-[linear-gradient(135deg,
-                    rgba(251,146,60,0.35),
-                    rgba(236,72,153,0.25),
-                    rgba(59,130,246,0.35)
-                  )]
-                  backdrop-blur-xl border border-white/20`}
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-500
+                bg-[linear-gradient(135deg,
+                  rgba(251,146,60,0.35),
+                  rgba(236,72,153,0.25),
+                  rgba(59,130,246,0.35)
+                )]
+                backdrop-blur-xl border border-white/20"
               >
-                {/* LIGHT BLOBS */}
-                <div className="absolute inset-0">
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_40%,rgba(255,180,100,0.4),transparent_40%),
-                                                      radial-gradient(circle_at_70%_60%,rgba(120,160,255,0.4),transparent_50%)]" />
-                </div>
-
-                {/* TEXT */}
-                <div className="absolute bottom-4 left-4 right-4 text-white z-10">
+                <div className="absolute bottom-4 left-4 text-white">
                   <h3 className="text-lg font-semibold">Solar Installation</h3>
                   <p className="text-sm text-white/80">Clean energy project</p>
                 </div>
               </div>
-            </motion.div>
-          );
-        })}
-      </motion.div>
+            </div>
+          ))}
+
+        </div>
+      </div>
+
+      {/* 🔥 CSS */}
+      <style jsx>{`
+        .animate-marquee {
+          animation: marquee 30s linear infinite;
+        }
+
+        @keyframes marquee {
+          0% {
+            transform: translateX(0);
+          }
+          100% {
+            transform: translateX(-50%);
+          }
+        }
+      `}</style>
     </div>
   );
 };

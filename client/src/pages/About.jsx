@@ -2,6 +2,9 @@ import React from "react";
 import { motion } from "framer-motion";
 import Services from "./Services";
 import { Stats } from "./Stats";
+import Locations from "./Locations";
+import Gallary from "./Gallary";
+import Testimonial from "./Testimonial";
 
 const About = () => {
   // Wave animation (headings)
@@ -124,6 +127,9 @@ const About = () => {
       </div>
       <Services />
       <Stats/>
+      <Locations/>
+      <Testimonial/>
+      <Gallary/>
     </div>
   );
 };
