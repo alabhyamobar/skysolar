@@ -101,7 +101,7 @@ const About = () => {
             className="lg:mt-20 shadow-2xl"
           >
             <img
-              src="skysolar/images/hero1.webp"
+              src="/images/hero1.webp"
               alt="About Us"
               className="w-full h-auto mt-8 rounded-lg shadow-lg"
             />

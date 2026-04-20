@@ -36,7 +36,7 @@ const Landing = () => {
           className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
             currentVideo === 1 ? "opacity-100" : "opacity-0"
           }`}
-          src="skysolar/video/skymobile1.mp4"
+          src="/video/skymobile1.mp4"
           autoPlay
           muted
           playsInline
@@ -48,7 +48,7 @@ const Landing = () => {
           className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
             currentVideo === 2 ? "opacity-100" : "opacity-0"
           }`}
-          src="skysolar/video/skymobile2.mp4"
+          src="/video/skymobile2.mp4"
           muted
           playsInline
           loop
@@ -96,8 +96,6 @@ const Landing = () => {
           >
             Harness the power of the sun with our cutting-edge solar solutions.
           </p>
-
-          {/* 🔥 CONTACT BUTTON */}
           <button
             onClick={() => {
               document

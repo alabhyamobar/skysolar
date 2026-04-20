@@ -33,11 +33,11 @@ const servicesData = [
 ];
 
 const images = [
-  "skysolar/images/service1.png",
-  "skysolar/images/service2.png",
-  "skysolar/images/service3.png",
-  "skysolar/images/service4.png",
-  "skysolar/images/service5.png",
+  "/images/service1.png",
+  "/images/service2.png",
+  "/images/service3.png",
+  "/images/service4.png",
+  "/images/service5.png",
 ];
 
 const Services = () => {
