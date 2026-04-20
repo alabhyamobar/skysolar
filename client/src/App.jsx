@@ -11,11 +11,10 @@ import About from "./pages/About";
 import Lenis from "@studio-freight/lenis";
 
 const App = () => {
-
   useEffect(() => {
     const lenis = new Lenis({
       smooth: true,
-      lerp: 0.08, 
+      lerp: 0.08,
       wheelMultiplier: 1,
       touchMultiplier: 1.2,
       infinite: false,
@@ -27,7 +26,10 @@ const App = () => {
     }
 
     requestAnimationFrame(raf);
-
+    
+    lenis.on("scroll", () => {
+      window.dispatchEvent(new Event("scroll"));
+    });
     return () => {
       lenis.destroy();
     };

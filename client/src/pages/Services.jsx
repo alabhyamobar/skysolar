@@ -160,7 +160,7 @@ const Services = () => {
       ref={containerRef}
       className="w-screen relative bg-black text-white overflow-x-hidden"
     >
-      <div className="lg:h-[70vh] flex items-center lg:justify-end jusitify-start  lg:p-70 ">
+      <div className="lg:h-[70vh] flex items-center lg:justify-end jusitify-start  lg:p-70 mb-10 ">
         <span className="text-7xl lg:text-9xl w-[70vh]  font-bold sm:ml-20">
           What we offer?
         </span>
@@ -178,7 +178,7 @@ const Services = () => {
 
       <div
         ref={serviceRef}
-        className="w-full h-screen flex flex-col-reverse lg:pl-30 lg:flex-row lg:items-center lg:justify-between gap-10 mt-10"
+        className="w-full h-screen flex flex-col-reverse lg:pl-30 lg:flex-row lg:items-center lg:justify-between gap-10 "
       >
         <div className="flex flex-col justify-content">
           {servicesData.map((service, index) => (
