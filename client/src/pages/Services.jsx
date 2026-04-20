@@ -30,11 +30,6 @@ const servicesData = [
     desc: "Servicing and monitoring for maximum efficiency.",
     icon: "🛠️",
   },
-  // {
-  //   title: "Financing",
-  //   desc: "Easy EMI options to make solar affordable.",
-  //   icon: "💳",
-  // },
 ];
 
 const images = [
@@ -203,7 +198,7 @@ const Services = () => {
         </div>
         <div
           ref={imageRef2}
-          className="w-full block lg:hidden h-[40vh] lg:w-[60%] lg:h-[70vh] "
+          className="w-full block mt-2 lg:hidden h-[40vh] lg:w-[60%] lg:h-[70vh] "
         >
           <img
             src={images[currentImage]}
