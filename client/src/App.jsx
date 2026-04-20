@@ -18,47 +18,61 @@ const App = () => {
   const lenisRef = useRef(null);
 
   useEffect(() => {
+    const isMobile = window.innerWidth < 768;
+
     const lenis = new Lenis({
-      duration: 1.2,
-      // easing: (t) => 1 - Math.pow(1 - t, 3),
+      duration: isMobile ? 1.1 : 1.6, 
+      easing: (t) => 1 - Math.pow(1 - t, 3),
+
       smooth: true,
-      smoothTouch: true,
-      syncTouch: true,
+
+  
+      smoothTouch: false,
+      syncTouch: false, 
+
+      touchMultiplier: 1, 
     });
 
     lenisRef.current = lenis;
 
-    gsap.ticker.add((time) => {
-      lenis.raf(time * 1000);
-    });
+    function raf(time) {
+      lenis.raf(time); 
+    }
 
+    gsap.ticker.add(raf);
     gsap.ticker.lagSmoothing(0);
 
     lenis.on("scroll", ScrollTrigger.update);
 
-    ScrollTrigger.scrollerProxy(document.body, {
-      scrollTop(value) {
-        if (arguments.length) {
-          lenis.scrollTo(value, { immediate: true });
-        }
-        return lenis.scroll;
-      },
-      getBoundingClientRect() {
-        return {
-          top: 0,
-          left: 0,
-          width: window.innerWidth,
-          height: window.innerHeight,
-        };
-      },
-    });
+
+    if (!isMobile) {
+      ScrollTrigger.scrollerProxy(document.body, {
+        scrollTop(value) {
+          if (arguments.length) {
+            lenis.scrollTo(value, { immediate: true });
+          }
+          return lenis.scroll;
+        },
+        getBoundingClientRect() {
+          return {
+            top: 0,
+            left: 0,
+            width: window.innerWidth,
+            height: window.innerHeight,
+          };
+        },
+      });
+
+      ScrollTrigger.defaults({
+        scroller: document.body,
+      });
+    }
 
     ScrollTrigger.addEventListener("refresh", () => lenis.resize());
     ScrollTrigger.refresh();
 
-
     return () => {
-      gsap.ticker.remove(lenis.raf);
+      gsap.ticker.remove(raf);
       lenis.destroy();
     };
   }, []);
@@ -73,8 +87,7 @@ const App = () => {
           element={
             <div className="w-full overflow-x-hidden">
               <Landing />
-              <About/>
-              
+              <About />
             </div>
           }
         />
