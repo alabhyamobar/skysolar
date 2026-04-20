@@ -29,7 +29,6 @@ export const Stats = () => {
         },
       });
 
-      // 🌞 MASK ANIMATION
       tl.fromTo(
         maskRef.current,
         { scale: 0, rotate: 0 },
@@ -41,7 +40,6 @@ export const Stats = () => {
         },
       );
 
-      // 🔢 COUNTER FUNCTION
       function animateValue(id, end, duration = 2) {
         let obj = { val: 0 };
 

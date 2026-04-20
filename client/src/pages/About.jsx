@@ -22,7 +22,6 @@ const About = () => {
     },
   };
 
-  // Slide from left (text)
   const slideLeft = {
     hidden: { opacity: 0, x: -60 },
     visible: (i = 1) => ({
@@ -42,7 +41,7 @@ const About = () => {
         <div className="h-screen w-screen"></div>
         <div className="pointer-events-none absolute bottom-0 left-0 w-full h-32 bg-gradient-to-b from-transparent to-black/60" />
       </div>
-      <div className="w-screen bg-[radial-gradient(circle_at_top,_#fff7ed,_#ffedd5,_#fed7aa)] min-h-screen relative z-10 shadow-[0_-20px_60px_rgba(0,0,0,0.5)] px-6 md:px-24 py-16 flex flex-col md:flex-row gap-12">
+      <div className="w-screen bg-[radial-gradient(circle_at_top,_#fff7ed,_#ffedd5,_#fed7aa)] min-h-screen relative z-10 shadow-[0_-20px_60px_rgba(0,0,0,0.5)] px-6 md:px-24 py-16 flex flex-col md:flex-row gap-12 overflow-x-hidden">
         <Brand/>
         <div className="flex-1 mt-10 max-w-xl">
           <motion.h2

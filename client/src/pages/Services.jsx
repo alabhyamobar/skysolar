@@ -116,15 +116,14 @@ const Services = () => {
       });
 
       mm.add("(max-width: 1023px)", () => {
-        // reset desktop styles
         gsap.set(imageRef.current, { clearProps: "all" });
 
         ScrollTrigger.create({
           trigger: serviceRef.current,
           start: "top top",
-          end: "+=500",
+          end: "bottom center",
           pin: true,
-          scrub: true,
+          scrub: 2,
         });
 
         servicesRef.current.forEach((el, index) => {
@@ -133,7 +132,7 @@ const Services = () => {
               trigger: el,
               start: "top center",
               end: "bottom center",
-              scrub: true,
+              scrub: 2,
             },
           });
 
@@ -142,12 +141,11 @@ const Services = () => {
             { opacity: 0, y: 40 },
             { opacity: 1, y: 0, duration: 0.3 },
           ).to(el, {
-            opacity: 0,
+            opacity: 1,
             y: -40,
             duration: 0.3,
           });
 
-          // 🔥 IMAGE CHANGE SYNC
           ScrollTrigger.create({
             trigger: el,
             start: "top center",
@@ -185,7 +183,7 @@ const Services = () => {
 
       <div
         ref={serviceRef}
-        className="w-full h-screen flex flex-col-reverse lg:pl-30 lg:flex-row lg:items-center lg:justify-between gap-10 mt-10"
+        className="w-full h-screen flex flex-col-reverse lg:pl-30 lg:flex-row lg:items-center lg:justify-between gap-10 mt-10 bg-rose-600"
       >
         <div className="flex flex-col justify-content">
           {servicesData.map((service, index) => (

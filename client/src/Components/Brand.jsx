@@ -11,7 +11,7 @@ const brands = [
 
 const Brand = () => {
   return (
-    <div className="w-full absolute top-0   overflow-hidden">
+    <div className="w-full absolute top-0 overflow-hidden">
       <div className="relative w-full overflow-hidden">
         <div className="flex w-max gap-12 animate-marquee items-center">
 
