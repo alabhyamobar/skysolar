@@ -130,7 +130,7 @@ const Services = () => {
           const tl = gsap.timeline({
             scrollTrigger: {
               trigger: el,
-              start: "top center",
+              start: "top 40%",
               end: "bottom center",
               scrub: 2,
             },
@@ -183,7 +183,7 @@ const Services = () => {
 
       <div
         ref={serviceRef}
-        className="w-full h-screen flex flex-col-reverse lg:pl-30 lg:flex-row lg:items-center lg:justify-between gap-10 mt-10 bg-rose-600"
+        className="w-full h-screen flex flex-col-reverse lg:pl-30 lg:flex-row lg:items-center lg:justify-between gap-10 mt-10"
       >
         <div className="flex flex-col justify-content">
           {servicesData.map((service, index) => (
