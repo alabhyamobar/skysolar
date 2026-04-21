@@ -17,7 +17,7 @@ export const Stats = () => {
         scrollTrigger: {
           trigger: containerRef.current,
           start: "top top",
-          end: "+=2000",
+          end: "+=1000",
           scrub: true,
           pin: true,
           onUpdate: (self) => {

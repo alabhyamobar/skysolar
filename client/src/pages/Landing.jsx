@@ -30,7 +30,7 @@ const Landing = () => {
   };
 
   return (
-    <div className="h-screen w-screen fixed top-0">
+    <div id="Home" className="h-screen w-screen fixed top-0">
       <>
         <video
           ref={video1Ref}

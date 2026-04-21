@@ -36,7 +36,7 @@ const About = () => {
   };
 
   return (
-    <div className="w-screen min-h-screen absolute top-0 z-20 ">
+    <div  className="w-screen min-h-screen absolute top-0 z-20 ">
       <div className="relative">
         <div className="h-screen w-screen"></div>
         <div className="pointer-events-none absolute bottom-0 left-0 w-full h-32 bg-gradient-to-b from-transparent to-black/60" />

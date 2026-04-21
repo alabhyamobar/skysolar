@@ -1,21 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { NavLink, Link } from "react-router-dom";
 
 const navItems = [
-  { name: "Home", path: "/" },
-  { name: "Gallery", path: "/gallery" },
-  { name: "Solar Calculator", path: "/calculator" },
+  { name: "Home", id: "home" },
+  { name: "About", id: "about" },
+  { name: "Services", id: "services" },
+  { name: "Gallery", id: "gallery" },
+  { name: "Solar Calculator", id: "calculator" },
 ];
 
 const NAV = () => {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
+  const [active, setActive] = useState("Home");
 
-  // HERO VISIBILITY
+  // Detect hero visibility (for glass effect)
   useEffect(() => {
-    const hero = document.querySelector("#hero-section");
+    const hero = document.querySelector("#home");
     if (!hero) return;
 
     const observer = new IntersectionObserver(
@@ -27,7 +29,7 @@ const NAV = () => {
     return () => observer.disconnect();
   }, []);
 
-  // SCROLL DIRECTION
+  // Hide navbar on scroll down
   useEffect(() => {
     let lastScroll = window.scrollY;
 
@@ -47,6 +49,51 @@ const NAV = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // ScrollSpy (auto active on scroll)
+  useEffect(() => {
+    const sections = navItems.map((item) =>
+      document.getElementById(item.id)
+    );
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const id = entry.target.id;
+            const current = navItems.find((i) => i.id === id);
+            if (current) setActive(current.name);
+          }
+        });
+      },
+      {
+        threshold: 0.6,
+      }
+    );
+
+    sections.forEach((section) => {
+      if (section) observer.observe(section);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+  // Smooth scroll with offset
+  const handleClick = (item) => {
+    setActive(item.name);
+    setOpen(false);
+
+    const section = document.getElementById(item.id);
+    if (section) {
+      const yOffset = -100; // adjust to navbar height
+      const y =
+        section.getBoundingClientRect().top +
+        window.pageYOffset +
+        yOffset;
+
+      window.scrollTo({ top: y, behavior: "smooth" });
+    }
+  };
+
   return (
     <motion.nav
       initial={{ y: -80, opacity: 0 }}
@@ -55,72 +102,72 @@ const NAV = () => {
       className="fixed top-4 left-0 w-full z-50 px-4"
     >
       <div
-        className={`
-        relative max-w-7xl mx-auto flex items-center justify-between
+        className={`relative max-w-7xl mx-auto flex items-center justify-between
         px-6 py-3 rounded-2xl transition-all duration-500
-
         ${
           scrolled
             ? "bg-white/80 backdrop-blur-2xl border border-black/10 shadow-[0_10px_40px_rgba(0,0,0,0.1)]"
             : "bg-white/10 backdrop-blur-2xl border border-white/20 shadow-[0_20px_80px_rgba(0,0,0,0.3)]"
-        }
-      `}
+        }`}
       >
-        {/* GLOW */}
+        {/* Glow */}
         <div className="absolute inset-0 rounded-2xl pointer-events-none">
           <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-500/10 via-transparent to-orange-400/10 blur-xl opacity-70" />
         </div>
 
-        <Link to="/" className="z-10 flex items-center">
+        {/* Logo */}
+        <div
+          onClick={() => handleClick({ name: "Home", id: "home" })}
+          className="z-10 flex items-center cursor-pointer"
+        >
           <img
             src="/skysolar/images/logo.png"
             alt="Sky Energy Logo"
             className="h-8 w-auto object-contain"
           />
-        </Link>
+        </div>
 
-        {/* NAV ITEMS */}
+        {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-2 z-10">
           {navItems.map((item) => (
-            <NavLink key={item.path} to={item.path}>
-              {({ isActive }) => (
-                <div className="relative px-4 py-2 rounded-xl text-sm font-medium">
-                  {isActive && (
-                    <motion.div
-                      layoutId="nav-pill"
-                      className="absolute inset-0 rounded-xl bg-blue-500/10 border border-blue-500/20"
-                    />
-                  )}
-
-                  <span
-                    className={
-                      isActive
-                        ? "text-blue-500"
-                        : scrolled
-                        ? "text-gray-700 hover:text-black"
-                        : "text-white/80 hover:text-white"
-                    }
-                  >
-                    {item.name}
-                  </span>
-                </div>
+            <div
+              key={item.name}
+              onClick={() => handleClick(item)}
+              className="relative px-4 py-2 rounded-xl text-sm font-medium cursor-pointer"
+            >
+              {active === item.name && (
+                <motion.div
+                  layoutId="nav-pill"
+                  className="absolute inset-0 rounded-xl bg-blue-500/10 border border-blue-500/20"
+                />
               )}
-            </NavLink>
+
+              <span
+                className={
+                  active === item.name
+                    ? "text-blue-500"
+                    : scrolled
+                    ? "text-gray-700 hover:text-black"
+                    : "text-white/80 hover:text-white"
+                }
+              >
+                {item.name}
+              </span>
+            </div>
           ))}
         </div>
 
         {/* CTA */}
-        <NavLink to="/contact" className="z-10">
-          <button
-            className={`px-5 py-2 rounded-xl text-sm font-medium transition ${
-              scrolled ? "bg-black text-white" : "bg-white text-black"
-            }`}
-          >
-            Contact
-          </button>
-        </NavLink>
+        <button
+          onClick={() => handleClick({ name: "Contact", id: "contact" })}
+          className={`z-10 px-5 py-2 rounded-xl text-sm font-medium transition ${
+            scrolled ? "bg-black text-white" : "bg-white text-black"
+          }`}
+        >
+          Contact
+        </button>
 
-        {/* MOBILE BTN */}
+        {/* Mobile Button */}
         <button
           onClick={() => setOpen(!open)}
           className={`md:hidden text-2xl z-10 ${
@@ -131,7 +178,7 @@ const NAV = () => {
         </button>
       </div>
 
-      {/* MOBILE MENU */}
+      {/* Mobile Menu */}
       <AnimatePresence>
         {open && (
           <motion.div
@@ -141,9 +188,13 @@ const NAV = () => {
             className="mt-3 mx-auto max-w-7xl bg-white/90 backdrop-blur-xl rounded-2xl p-6"
           >
             {navItems.map((item) => (
-              <NavLink key={item.path} to={item.path}>
-                <div className="py-2 text-gray-800">{item.name}</div>
-              </NavLink>
+              <div
+                key={item.name}
+                onClick={() => handleClick(item)}
+                className="py-2 text-gray-800 cursor-pointer"
+              >
+                {item.name}
+              </div>
             ))}
           </motion.div>
         )}
