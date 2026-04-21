@@ -50,7 +50,7 @@ const Footer = () => {
             </a>
 
             <a
-              href="https://instagram.com"
+              href="https://www.instagram.com/skyrenewableenergies?igsh=MTk5dGNhaW5iMDEybw=="
               target="_blank"
               rel="noopener noreferrer"
               className="group w-10 h-10 flex items-center justify-center rounded-lg bg-white/10 border border-white/20 hover:bg-gradient-to-br hover:from-pink-500 hover:to-yellow-400 transition-all duration-300"
@@ -67,7 +67,7 @@ const Footer = () => {
               <FaXTwitter className="w-5 h-5 text-white group-hover:text-black" />
             </a>
             <a
-              href="https://facebook.com"
+              href="https://www.facebook.com/share/1CkpoymTfz/"
               target="_blank"
               rel="noopener noreferrer"
               className="group w-10 h-10 flex items-center justify-center rounded-lg bg-white/10 border border-white/20 hover:bg-[#1877f2] transition-all duration-300"
