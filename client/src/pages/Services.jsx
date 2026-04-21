@@ -33,11 +33,11 @@ const servicesData = [
 ];
 
 const images = [
-  "/images/service1.png",
-  "/images/service2.png",
-  "/images/service3.png",
-  "/images/service4.png",
-  "/images/service5.png",
+  `${import.meta.env.BASE_URL}/images/service1.png`,
+  `${import.meta.env.BASE_URL}/images/service2.png`,
+  `${import.meta.env.BASE_URL}/images/service3.png`,
+  `${import.meta.env.BASE_URL}/images/service4.png`,
+  `${import.meta.env.BASE_URL}/images/service5.png`,
 ];
 
 const Services = () => {
@@ -115,7 +115,7 @@ const Services = () => {
 
         ScrollTrigger.create({
           trigger: serviceRef.current,
-          start: "top top",
+          start: "top 10%",
           end: "bottom center",
           pin: true,
           scrub: 2,
@@ -170,7 +170,7 @@ const Services = () => {
         className="w-full hidden lg:block  lg:absolute h-[40vh] top-10 lg:w-[60%] lg:h-[70vh] p-10"
       >
         <img
-          src="skysolar/images/service1.png"
+          src={`${import.meta.env.BASE_URL}/images/service1.png`}
           alt="Solar"
           className="w-full h-full object-contain"
         />
@@ -198,7 +198,7 @@ const Services = () => {
         </div>
         <div
           ref={imageRef2}
-          className="w-full block mt-2 lg:hidden h-[40vh] lg:w-[60%] lg:h-[70vh] "
+          className="w-full block mt-2  lg:hidden h-[40vh] lg:w-[60%] lg:h-[70vh] "
         >
           <img
             src={images[currentImage]}

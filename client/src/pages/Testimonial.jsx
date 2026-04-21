@@ -26,7 +26,7 @@ const Testimonial = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[radial-gradient(circle_at_top,_#fff7ed,_#ffedd5,_#fed7aa)] py-20 overflow-hidden">
+    <div className="lg:min-h-screen bg-[radial-gradient(circle_at_top,_#fff7ed,_#ffedd5,_#fed7aa)] py-20 overflow-hidden">
 
       {/* HEADING */}
       <h2 className="text-4xl sm:text-6xl font-semibold text-center mb-16 px-4">
@@ -84,10 +84,9 @@ const Testimonial = () => {
         </div>
       )}
 
-      {/* ANIMATION */}
       <style jsx>{`
         .animate-marquee {
-          animation: marquee 20s linear infinite;
+          animation: marquee 20s linear  infinite;
         }
 
         .animate-marquee:hover {
@@ -96,10 +95,10 @@ const Testimonial = () => {
 
         @keyframes marquee {
           0% {
-            transform: translateX(0);
+            transform: translateX(-150%);
           }
           100% {
-            transform: translateX(-150%);
+            transform: translateX(0%);
           }
         }
       `}</style>

@@ -6,6 +6,7 @@ const Landing = () => {
 
   const video1Ref = useRef(null);
   const video2Ref = useRef(null);
+  console.log(import.meta.env.BASE_URL);
 
   useEffect(() => {
     const checkDevice = () => {
@@ -36,7 +37,7 @@ const Landing = () => {
           className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
             currentVideo === 1 ? "opacity-100" : "opacity-0"
           }`}
-          src="/video/skymobile1.mp4"
+          src={`${import.meta.env.BASE_URL}/video/skymobile1.mp4`}
           autoPlay
           muted
           playsInline
@@ -48,7 +49,7 @@ const Landing = () => {
           className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
             currentVideo === 2 ? "opacity-100" : "opacity-0"
           }`}
-          src="/video/skymobile2.mp4"
+          src={`${import.meta.env.BASE_URL}/video/skymobile2.mp4`}
           muted
           playsInline
           loop

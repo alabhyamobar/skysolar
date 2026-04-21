@@ -119,7 +119,7 @@ const ImpactSection = () => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.8 }}
-        className="relative text-5xl sm:text-6xl lg:text-7xl font-semibold bg-gradient-to-r from-gray-900 via-gray-700 to-gray-900 bg-clip-text text-transparent text-center tracking-tight"
+        className="relative text-8xl sm:text-6xl lg:text-7xl font-semibold bg-gradient-to-r from-gray-900 via-gray-700 to-gray-900 bg-clip-text text-transparent text-center tracking-tight"
       >
         Our Impact
       </motion.h1>

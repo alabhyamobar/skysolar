@@ -8,19 +8,19 @@ const locations = [
   {
     name: "Prayagraj",
     info: "A historic and spiritual city known for the Triveni Sangam and the grand Kumbh Mela.",
-    image: "skysolar/images/pryagraj.jpg",
+    image: `${import.meta.env.BASE_URL}/images/pryagraj.jpg`,
     services: ["TRIVENI SANGAM", "KUMBH MELA", "SPIRITUAL TOURISM", "HERITAGE SITES"],
   },
   {
     name: "Lucknow",
     info: "The capital of Uttar Pradesh, famous for its Nawabi culture and architecture.",
-    image: "skysolar/images/lucknow.avif",
+    image: `${import.meta.env.BASE_URL}/images/lucknow.avif`,
     services: ["BARA IMAMBARA", "NAWABI CULTURE", "FOOD & CUISINE", "HERITAGE WALK"],
   },
   {
     name: "Kanpur",
     info: "An important industrial city known for leather production and education.",
-    image: "skysolar/images/kanpur.jpg",
+    image: `${import.meta.env.BASE_URL}/images/kanpur.jpg`,
     services: ["INDUSTRIAL HUB", "LEATHER MARKET", "EDUCATION CENTERS", "RIVERFRONT"],
   },
   {
@@ -32,7 +32,7 @@ const locations = [
   {
     name: "Gorakhpur",
     info: "A growing city known for Gorakhnath Temple and rapid development.",
-    image: "skysolar/images/gorakhpur.jpg",
+    image: `${import.meta.env.BASE_URL}/images/gorakhpur.jpg`,
     services: ["GORAKHNATH TEMPLE", "CULTURAL ROOTS", "RAILWAY HUB", "URBAN GROWTH"],
   },
 ];

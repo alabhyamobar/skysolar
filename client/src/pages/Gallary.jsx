@@ -13,7 +13,7 @@ const images = [
 
 const Gallary = () => {
   return (
-    <div className="min-h-screen bg-[radial-gradient(circle_at_top,_#fff7ed,_#ffedd5,_#fed7aa)] w-full py-20  overflow-hidden">
+    <div className="lg:min-h-screen  bg-[radial-gradient(circle_at_top,_#fff7ed,_#ffedd5,_#fed7aa)] w-full py-20  overflow-hidden">
 
       <h2 className="text-4xl sm:text-6xl font-semibold text-center mb-16">
         Our Work Gallery
