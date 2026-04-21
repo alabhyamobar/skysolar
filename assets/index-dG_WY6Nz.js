@@ -33,7 +33,7 @@ Error generating stack: `+o.message+`
               opacity-80\r
               drop-shadow-[0_0_40px_rgba(0,255,255,0.35)]\r
               lg:text-9xl text-4xl\r
-            `},"Energy"),C.createElement("p",{className:"text-white/80 mt-4 max-w-md",style:{fontSize:"clamp(0.9rem, 2.5vw, 1.2rem)"}},"Harness the power of the sun with our cutting-edge solar solutions."),C.createElement("button",{onClick:()=>{document.getElementById("contact")?.scrollIntoView({behavior:"smooth"})},className:`\r
+            `},"Energies"),C.createElement("p",{className:"text-white/80 mt-4 max-w-md",style:{fontSize:"clamp(0.9rem, 2.5vw, 1.2rem)"}},"Harness the power of the sun with our cutting-edge solar solutions."),C.createElement("button",{onClick:()=>{document.getElementById("contact")?.scrollIntoView({behavior:"smooth"})},className:`\r
               mt-6 px-6 py-3 rounded-full\r
               bg-gradient-to-r from-cyan-400 to-teal-400\r
               text-black font-semibold\r
