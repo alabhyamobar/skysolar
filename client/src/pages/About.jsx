@@ -101,7 +101,7 @@ const About = () => {
             className="lg:mt-20 shadow-2xl"
           >
             <img
-              src="skysolar/images/hero1.webp"
+              src={`${import.meta.env.BASE_URL}/images/hero1.webp`}
               alt="About Us"
               className="w-full h-auto mt-8 rounded-lg shadow-lg"
             />
@@ -118,7 +118,7 @@ const About = () => {
           <div className="w-full md:w-[90%] h-[300px] md:h-[600px] lg:h-[1000px] rounded-xl overflow-hidden shadow-lg">
             <video
               className="w-full h-full object-cover"
-              src="skysolar/video/skymobile1.mp4"
+              src={`${import.meta.env.BASE_URL}/video/skymobile1.mp4`}
               autoPlay
               loop
               muted
