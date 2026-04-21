@@ -75,7 +75,7 @@ const Landing = () => {
               drop-shadow-[0_0_40px_rgba(0,255,255,0.35)]
             "
           >
-            Sky Renewable
+            Sky Renewable 
           </h1>
 
           <h2
@@ -88,7 +88,7 @@ const Landing = () => {
               lg:text-9xl text-4xl
             "
           >
-            Energy
+            Energies
           </h2>
 
           <p
