@@ -1,12 +1,12 @@
 import React from "react";
 
 const brands = [
-  "skysolar/images/tata-logo.webp",
-  "skysolar/images/Adani Electricity.webp",
-  "skysolar/images/LuminousLogoBlue.webp",
-  "skysolar/images/tata-logo.webp",
-  "skysolar/images/Adani Electricity.webp",
-  "skysolar/images/LuminousLogoBlue.webp",
+  `${import.meta.env.BASE_URL}/images/tata-logo.webp`,
+  `${import.meta.env.BASE_URL}/images/Adani Electricity.webp`,
+  `${import.meta.env.BASE_URL}/images/LuminousLogoBlue.webp`,
+  `${import.meta.env.BASE_URL}/images/tata-logo.webp`,
+  `${import.meta.env.BASE_URL}/images/Adani Electricity.webp`,
+  `${import.meta.env.BASE_URL}/images/LuminousLogoBlue.webp`,
 ];
 
 const Brand = () => {
