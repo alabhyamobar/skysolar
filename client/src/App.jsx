@@ -9,30 +9,28 @@ import Calculator from "./pages/Calculator";
 import Contact from "./pages/Contact";
 import About from "./pages/About";
 import Lenis from "@studio-freight/lenis";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
+gsap.registerPlugin(ScrollTrigger);
 const App = () => {
   useEffect(() => {
     const lenis = new Lenis({
+      lerp: 0.05,
       smooth: true,
-      lerp: 0.08,
-      wheelMultiplier: 1,
-      touchMultiplier: 1.2,
-      infinite: false,
     });
 
     function raf(time) {
       lenis.raf(time);
+      ScrollTrigger.update(); // 🔥 THIS FIXES JITTER
       requestAnimationFrame(raf);
     }
 
     requestAnimationFrame(raf);
-    
-    lenis.on("scroll", () => {
-      window.dispatchEvent(new Event("scroll"));
-    });
-    return () => {
-      lenis.destroy();
-    };
+
+    lenis.on("scroll", ScrollTrigger.update);
+
+    return () => lenis.destroy();
   }, []);
 
   return (

@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import ImpactSection from "../Components/ImpactSection";
@@ -8,6 +8,7 @@ gsap.registerPlugin(ScrollTrigger);
 export const Stats = () => {
   const maskRef = useRef(null);
   const containerRef = useRef(null);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -17,9 +18,11 @@ export const Stats = () => {
         scrollTrigger: {
           trigger: containerRef.current,
           start: "top top",
-          end: "+=1000",
-          scrub: true,
+          end: "+=2000",
+          scrub: 0.8,
           pin: true,
+          invalidateOnRefresh: true,
+          anticipatePin: 1,
           onUpdate: (self) => {
             if (self.progress > 0.25 && !countersStarted) {
               countersStarted = true;
@@ -33,8 +36,8 @@ export const Stats = () => {
         maskRef.current,
         { scale: 0, rotate: 0 },
         {
-          scale: 10,
-          rotate: 360,
+          scale: 6,
+          rotate: 180,
           ease: "none",
           svgOrigin: "1024 1024",
         },
@@ -86,6 +89,7 @@ export const Stats = () => {
               style={{
                 transformBox: "fill-box",
                 transformOrigin: "center",
+                willChange: "transform",
               }}
             >
               <path d="M 1008.27 584.172 C 1241.33 575.332 1437.59 756.767 1447.05 989.804 C 1456.5 1222.84 1275.58 1419.58 1042.57 1429.65 C 808.688 1439.75 611.057 1258.01 601.568 1024.1 C 592.079 790.196 774.34 593.045 1008.27 584.172 z" />
@@ -199,7 +203,7 @@ export const Stats = () => {
           height="2048"
           mask="url(#sunMask)"
         >
-          <ImpactSection/>
+          <ImpactSection />
         </foreignObject>
       </svg>
     </div>
