@@ -36,7 +36,7 @@ const NAV = () => {
     const handleScroll = () => {
       const currentScroll = window.scrollY;
 
-      if (currentScroll > lastScroll && currentScroll > 100) {
+      if (currentScroll > lastScroll && currentScroll > 50) {
         setHidden(true);
       } else {
         setHidden(false);
