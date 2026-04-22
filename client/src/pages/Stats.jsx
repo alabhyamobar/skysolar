@@ -17,10 +17,9 @@ export const Stats = () => {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
-          start: "top top",
+          start: "top 20%",
           end: "+=2000",
           scrub: 0.8,
-          pin: true,
           invalidateOnRefresh: true,
           anticipatePin: 1,
           onUpdate: (self) => {
@@ -30,6 +29,15 @@ export const Stats = () => {
             }
           },
         },
+      });
+
+      ScrollTrigger.create({
+        trigger: containerRef.current,
+        start: "top top",
+        end: "+=1500",
+        pin: true,
+        scrub: 0.8,
+        anticipatePin: 1,
       });
 
       tl.fromTo(

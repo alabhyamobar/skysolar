@@ -122,24 +122,29 @@ const Services = () => {
         });
 
         servicesRef.current.forEach((el, index) => {
+          const isEven = index % 2 === 0;
+
           const tl = gsap.timeline({
             scrollTrigger: {
               trigger: el,
-              start: "top 40%",
-              end: "bottom center",
-              scrub: 2,
+              start: "top 70%",
+              end: "top 40%",
+              scrub: 1.2,
             },
           });
 
           tl.fromTo(
             el,
-            { opacity: 0, y: 40 },
-            { opacity: 1, y: 0, duration: 0.3 },
-          ).to(el, {
-            opacity: 1,
-            y: -40,
-            duration: 0.3,
-          });
+            {
+              opacity: 0,
+              x: isEven ? 80 : -80, 
+            },
+            {
+              opacity: 1,
+              x: 0,
+              ease: "power3.out",
+            },
+          );
 
           ScrollTrigger.create({
             trigger: el,
@@ -161,7 +166,7 @@ const Services = () => {
       className="w-screen relative bg-black text-white overflow-x-hidden"
     >
       <div className="lg:h-[70vh] flex items-center lg:justify-end jusitify-start  lg:p-70 mb-10 ">
-        <span className="text-7xl lg:text-9xl w-[70vh]  font-bold sm:ml-20">
+        <span className="text-7xl lg:text-9xl w-[70vh]  font-bold lg:p-0 p-5">
           What we offer?
         </span>
       </div>
@@ -180,7 +185,7 @@ const Services = () => {
         ref={serviceRef}
         className="w-full h-screen flex flex-col-reverse lg:pl-30 lg:flex-row lg:items-center lg:justify-between gap-10  "
       >
-        <div className="flex flex-col justify-content h-[60vh] ">
+        <div className="flex flex-col justify-content h-[70vh] ">
           {servicesData.map((service, index) => (
             <div
               key={index}
@@ -192,7 +197,7 @@ const Services = () => {
                 {service.title}
               </div>
 
-              <p className="text-gray-400 mt-2 ml-10">{service.desc}</p>
+              <p className="text-gray-400 mt-2 ml-10 w-[80%]">{service.desc}</p>
             </div>
           ))}
         </div>
