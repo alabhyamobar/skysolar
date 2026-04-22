@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useContext } from "react";
+import { ScrollProvider } from "../Context/ScrollContext";
+import { useRef } from "react";
 
 const navItems = [
-  { name: "Home", id: "home" },
-  { name: "About", id: "about" },
-  { name: "Services", id: "services" },
-  { name: "Gallery", id: "gallery" },
-  { name: "Solar Calculator", id: "calculator" },
+  { name: "Home", refKey: "home" },
+  { name: "About", refKey: "about" },
+  { name: "Services", refKey: "services" },
+  { name: "Testimonials", refKey: "testimonials" },
+  { name: "Gallery", refKey: "gallery" },
+  { name: "Solar Calculator", refKey: "calculator" },
 ];
 
 const NAV = () => {
@@ -14,86 +19,83 @@ const NAV = () => {
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [active, setActive] = useState("Home");
+  const location = useLocation();
+  const navigate = useNavigate();
+  const isHome = location.pathname === "/" || location.pathname === "/skysolar/";
 
-  // Detect hero visibility (for glass effect)
+    const {
+    homeRef,
+    aboutRef,
+    serviceRef,
+    testimonialRef,
+    contactRef,
+    galleryRef,
+    calculatorRef,
+    scrollToView,
+  } = useContext(ScrollProvider);
+
+  const refMap = {
+    home: homeRef,
+    about: aboutRef,
+    services: serviceRef,
+    testimonials: testimonialRef,
+    contact: contactRef,
+    gallery: galleryRef,
+    calculator: calculatorRef,
+  };
+
   useEffect(() => {
-    const hero = document.querySelector("#home");
-    if (!hero) return;
+    if(!homeRef?.current) return;
 
     const observer = new IntersectionObserver(
-      ([entry]) => setScrolled(!entry.isIntersecting),
+      ([entry])=> setScrolled(!entry.isIntersecting),
       { threshold: 0.2 }
     );
 
-    observer.observe(hero);
-    return () => observer.disconnect();
-  }, []);
+    observer.observe(homeRef.current);
+    return ()=> observer.disconnect();
+  }, [homeRef]);
 
-  // Hide navbar on scroll down
   useEffect(() => {
     let lastScroll = window.scrollY;
 
-    const handleScroll = () => {
+    const handleScroll = () =>{
       const currentScroll = window.scrollY;
-
-      if (currentScroll > lastScroll && currentScroll > 50) {
+      if(currentScroll > lastScroll && currentScroll > 100){
         setHidden(true);
-      } else {
+      }else{
         setHidden(false);
       }
-
       lastScroll = currentScroll;
-    };
+    }
 
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    return ()=> window.removeEventListener("scroll", handleScroll);
+  },[])
 
-  // ScrollSpy (auto active on scroll)
   useEffect(() => {
-    const sections = navItems.map((item) =>
-      document.getElementById(item.id)
-    );
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const id = entry.target.id;
-            const current = navItems.find((i) => i.id === id);
-            if (current) setActive(current.name);
-          }
-        });
-      },
-      {
-        threshold: 0.6,
+    if(location.hash){
+      const key  = location.hash.replace("#", "");
+      const ref = refMap[key];
+      if(ref?.current){
+        setTimeout(()=>{
+          scrollToView(ref);
+        },100);
       }
-    );
-
-    sections.forEach((section) => {
-      if (section) observer.observe(section);
-    });
-
-    return () => observer.disconnect();
-  }, []);
-
-  // Smooth scroll with offset
-  const handleClick = (item) => {
-    setActive(item.name);
-    setOpen(false);
-
-    const section = document.getElementById(item.id);
-    if (section) {
-      const yOffset = -100; // adjust to navbar height
-      const y =
-        section.getBoundingClientRect().top +
-        window.pageYOffset +
-        yOffset;
-
-      window.scrollTo({ top: y, behavior: "smooth" });
     }
-  };
+  },[location])
 
+  const handleClick = (item)=>{
+    setActive(item.name);
+    const ref = refMap[item.refKey];
+    if(isHome){
+      if(ref?.current){
+        scrollToView(ref);
+      }
+    }else{
+      navigate(`/#${item.refKey}`);
+    }
+  }
   return (
     <motion.nav
       initial={{ y: -80, opacity: 0 }}
@@ -110,14 +112,17 @@ const NAV = () => {
             : "bg-white/10 backdrop-blur-2xl border border-white/20 shadow-[0_20px_80px_rgba(0,0,0,0.3)]"
         }`}
       >
-        {/* Glow */}
+
         <div className="absolute inset-0 rounded-2xl pointer-events-none">
           <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-500/10 via-transparent to-orange-400/10 blur-xl opacity-70" />
         </div>
 
-        {/* Logo */}
+
         <div
-          onClick={() => handleClick({ name: "Home", id: "home" })}
+          onClick={() =>{
+            navigate("/");
+            setOpen(false);
+          }}
           className="z-10 flex items-center cursor-pointer"
         >
           <img
@@ -127,7 +132,7 @@ const NAV = () => {
           />
         </div>
 
-        {/* Desktop Nav */}
+
         <div className="hidden md:flex items-center gap-2 z-10">
           {navItems.map((item) => (
             <div
@@ -157,9 +162,8 @@ const NAV = () => {
           ))}
         </div>
 
-        {/* CTA */}
         <button
-          onClick={() => handleClick({ name: "Contact", id: "contact" })}
+          onClick={() => handleClick({ name: "Contact", refKey: "contact" })}
           className={`z-10 px-5 py-2 rounded-xl text-sm font-medium transition ${
             scrolled ? "bg-black text-white" : "bg-white text-black"
           }`}
@@ -167,7 +171,7 @@ const NAV = () => {
           Contact
         </button>
 
-        {/* Mobile Button */}
+
         <button
           onClick={() => setOpen(!open)}
           className={`md:hidden text-2xl z-10 ${
@@ -178,7 +182,7 @@ const NAV = () => {
         </button>
       </div>
 
-      {/* Mobile Menu */}
+
       <AnimatePresence>
         {open && (
           <motion.div
@@ -190,7 +194,9 @@ const NAV = () => {
             {navItems.map((item) => (
               <div
                 key={item.name}
-                onClick={() => handleClick(item)}
+                onClick={() => {
+                  handleClick(item)
+                  setOpen(false)}}
                 className="py-2 text-gray-800 cursor-pointer"
               >
                 {item.name}

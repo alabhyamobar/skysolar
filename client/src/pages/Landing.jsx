@@ -1,4 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useContext } from "react";
+import { ScrollProvider } from "../Context/ScrollContext";
 
 const Landing = () => {
   const [isMobile, setIsMobile] = useState(false);
@@ -6,7 +7,9 @@ const Landing = () => {
 
   const video1Ref = useRef(null);
   const video2Ref = useRef(null);
-  console.log(import.meta.env.BASE_URL);
+
+  // ✅ CONTEXT REFS
+  const { homeRef, contactRef, scrollToView } = useContext(ScrollProvider);
 
   useEffect(() => {
     const checkDevice = () => {
@@ -30,7 +33,10 @@ const Landing = () => {
   };
 
   return (
-    <div id="Home" className="h-screen w-screen fixed top-0">
+    <div
+      ref={homeRef} // ✅ NAVBAR SCROLL TARGET (HOME)
+      className="h-screen w-screen fixed top-0"
+    >
       <>
         <video
           ref={video1Ref}
@@ -75,7 +81,7 @@ const Landing = () => {
               drop-shadow-[0_0_40px_rgba(0,255,255,0.35)]
             "
           >
-            Sky Renewable 
+            Sky Renewable
           </h1>
 
           <h2
@@ -97,12 +103,9 @@ const Landing = () => {
           >
             Harness the power of the sun with our cutting-edge solar solutions.
           </p>
+
           <button
-            onClick={() => {
-              document
-                .getElementById("contact")
-                ?.scrollIntoView({ behavior: "smooth" });
-            }}
+            onClick={() => scrollToView(contactRef)} // ✅ FIXED
             className="
               mt-6 px-6 py-3 rounded-full
               bg-gradient-to-r from-cyan-400 to-teal-400

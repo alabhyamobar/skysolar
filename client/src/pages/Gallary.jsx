@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
+import { ScrollProvider } from "../Context/ScrollContext";
 
 const images = [
   "https://images.unsplash.com/photo-1509395176047-4a66953fd231",
@@ -12,16 +13,19 @@ const images = [
 ];
 
 const Gallary = () => {
-  return (
-    <div className="lg:min-h-screen  bg-[radial-gradient(circle_at_top,_#fff7ed,_#ffedd5,_#fed7aa)] w-full py-20  overflow-hidden">
+  const { gallaryRef } = useContext(ScrollProvider);
 
+  return (
+    <div
+      ref={gallaryRef} 
+      className="lg:min-h-screen bg-[radial-gradient(circle_at_top,_#fff7ed,_#ffedd5,_#fed7aa)] w-full py-20 overflow-hidden"
+    >
       <h2 className="text-4xl sm:text-6xl font-semibold text-center mb-16">
         Our Work Gallery
       </h2>
 
       <div className="relative w-full overflow-hidden">
         <div className="flex gap-6 w-max animate-marquee">
-
           {[...images, ...images].map((src, index) => (
             <div
               key={index}
@@ -34,7 +38,8 @@ const Gallary = () => {
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               />
 
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-500
+              <div
+                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-500
                 bg-[linear-gradient(135deg,
                   rgba(251,146,60,0.35),
                   rgba(236,72,153,0.25),
@@ -43,13 +48,16 @@ const Gallary = () => {
                 backdrop-blur-xl border border-white/20"
               >
                 <div className="absolute bottom-4 left-4 text-white">
-                  <h3 className="text-lg font-semibold">Solar Installation</h3>
-                  <p className="text-sm text-white/80">Clean energy project</p>
+                  <h3 className="text-lg font-semibold">
+                    Solar Installation
+                  </h3>
+                  <p className="text-sm text-white/80">
+                    Clean energy project
+                  </p>
                 </div>
               </div>
             </div>
           ))}
-
         </div>
       </div>
 

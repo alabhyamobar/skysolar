@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { motion } from "framer-motion";
 import Services from "./Services";
 import { Stats } from "./Stats";
@@ -7,9 +7,14 @@ import Gallary from "./Gallary";
 import Testimonial from "./Testimonial";
 import Footer from "./Footer";
 import Brand from "../Components/Brand";
+import { ScrollProvider } from "../Context/ScrollContext";
 
 const About = () => {
-  // Wave animation (headings)
+  // ✅ GET REF FROM CONTEXT
+  const { aboutRef } = useContext(ScrollProvider);
+  const {homeRef} = useContext(ScrollProvider);
+
+  // animations (unchanged)
   const waveVariant = {
     hidden: { opacity: 0, y: 60 },
     visible: {
@@ -36,13 +41,18 @@ const About = () => {
   };
 
   return (
-    <div  className="w-screen min-h-screen absolute top-0 z-20 ">
-      <div className="relative">
+    <div className="w-screen min-h-screen absolute top-0 z-20">
+      <div ref={homeRef} className="relative">
         <div className="h-screen w-screen"></div>
         <div className="pointer-events-none absolute bottom-0 left-0 w-full h-32 bg-gradient-to-b from-transparent to-black/60" />
       </div>
-      <div className="w-screen bg-[radial-gradient(circle_at_top,_#fff7ed,_#ffedd5,_#fed7aa)] min-h-screen relative z-10 shadow-[0_-20px_60px_rgba(0,0,0,0.5)] px-6 md:px-24 py-16 flex flex-col md:flex-row gap-12 overflow-x-hidden">
-        <Brand/>
+
+      <div
+        ref={aboutRef} // 👈 NAVBAR WILL SCROLL HERE
+        className="w-screen bg-[radial-gradient(circle_at_top,_#fff7ed,_#ffedd5,_#fed7aa)] min-h-screen relative z-10 shadow-[0_-20px_60px_rgba(0,0,0,0.5)] px-6 md:px-24 py-16 flex flex-col md:flex-row gap-12 overflow-x-hidden"
+      >
+        <Brand />
+
         <div className="flex-1 mt-10 max-w-xl">
           <motion.h2
             variants={waveVariant}
@@ -52,7 +62,8 @@ const About = () => {
             className="text-4xl md:text-6xl font-bold text-black leading-tight"
           >
             Who are we?
-          </motion.h2>  
+          </motion.h2>
+
           <motion.p
             variants={slideLeft}
             custom={1}
@@ -63,6 +74,7 @@ const About = () => {
           >
             Sky Renewable Energy provides reliable solar solutions that make clean power simple and accessible, helping homes and businesses reduce costs and transition to a sustainable future.
           </motion.p>
+
           <motion.h3
             variants={waveVariant}
             initial="hidden"
@@ -72,6 +84,7 @@ const About = () => {
           >
             Our work helps you:
           </motion.h3>
+
           <div className="mt-6 space-y-4 text-gray-800 text-base lg:text-xl">
             {[
               "Convert better",
@@ -92,6 +105,7 @@ const About = () => {
               </motion.p>
             ))}
           </div>
+
           <motion.div
             variants={slideLeft}
             custom={5}
@@ -107,6 +121,7 @@ const About = () => {
             />
           </motion.div>
         </div>
+
         <motion.div
           variants={slideLeft}
           custom={2}
@@ -127,12 +142,13 @@ const About = () => {
           </div>
         </motion.div>
       </div>
+
       <Services />
-      <Stats/>
-      <Locations/>
-      <Testimonial/>
-      <Gallary/>
-      <Footer/>
+      <Stats />
+      <Locations />
+      <Testimonial />
+      <Gallary />
+      <Footer />
     </div>
   );
 };

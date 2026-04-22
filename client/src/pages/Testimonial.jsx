@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import { ScrollProvider } from "../Context/ScrollContext";
 
 const testimonials = [
   {
@@ -18,6 +19,8 @@ const testimonials = [
 const Testimonial = () => {
   const [isMobile, setIsMobile] = useState(false);
 
+  const { testimonialRef } = useContext(ScrollProvider);
+
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768);
     check();
@@ -26,18 +29,17 @@ const Testimonial = () => {
   }, []);
 
   return (
-    <div className="lg:min-h-screen bg-[radial-gradient(circle_at_top,_#fff7ed,_#ffedd5,_#fed7aa)] py-20 overflow-hidden">
-
-      {/* HEADING */}
+    <div
+      ref={testimonialRef} 
+      className="lg:min-h-screen bg-[radial-gradient(circle_at_top,_#fff7ed,_#ffedd5,_#fed7aa)] py-20 overflow-hidden"
+    >
       <h2 className="text-4xl sm:text-6xl font-semibold text-center mb-16 px-4">
         What People Say
       </h2>
 
-      {/* MOBILE → MARQUEE */}
       {isMobile ? (
         <div className="relative w-full overflow-hidden">
           <div className="flex gap-6 w-max animate-marquee">
-
             {[...testimonials, ...testimonials].map((item, index) => (
               <div
                 key={index}
@@ -58,11 +60,10 @@ const Testimonial = () => {
                 </div>
               </div>
             ))}
-
           </div>
         </div>
       ) : (
-        /* DESKTOP */
+
         <div className="flex flex-wrap justify-center gap-8 max-w-6xl mx-auto px-6">
           {testimonials.map((item, index) => (
             <div
@@ -86,7 +87,7 @@ const Testimonial = () => {
 
       <style jsx>{`
         .animate-marquee {
-          animation: marquee 20s linear  infinite;
+          animation: marquee 20s linear infinite;
         }
 
         .animate-marquee:hover {
