@@ -1,9 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useContext } from "react";
 import { ScrollProvider } from "../Context/ScrollContext";
-import { useRef } from "react";
 
 const navItems = [
   { name: "Home", refKey: "home" },
@@ -19,11 +17,13 @@ const NAV = () => {
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [active, setActive] = useState("Home");
+
   const location = useLocation();
   const navigate = useNavigate();
-  const isHome = location.pathname === "/" || location.pathname === "/skysolar/";
+  const isHome =
+    location.pathname === "/" || location.pathname === "/skysolar/";
 
-    const {
+  const {
     homeRef,
     aboutRef,
     serviceRef,
@@ -45,57 +45,64 @@ const NAV = () => {
   };
 
   useEffect(() => {
-    if(!homeRef?.current) return;
+    if (!homeRef?.current) return;
 
     const observer = new IntersectionObserver(
-      ([entry])=> setScrolled(!entry.isIntersecting),
+      ([entry]) => setScrolled(!entry.isIntersecting),
       { threshold: 0.2 }
     );
 
     observer.observe(homeRef.current);
-    return ()=> observer.disconnect();
+    return () => observer.disconnect();
   }, [homeRef]);
 
   useEffect(() => {
     let lastScroll = window.scrollY;
 
-    const handleScroll = () =>{
+    const handleScroll = () => {
       const currentScroll = window.scrollY;
-      if(currentScroll > lastScroll && currentScroll > 100){
+
+      if (currentScroll > lastScroll && currentScroll > 100) {
         setHidden(true);
-      }else{
+      } else {
         setHidden(false);
       }
+
       lastScroll = currentScroll;
-    }
+    };
 
     window.addEventListener("scroll", handleScroll);
-    return ()=> window.removeEventListener("scroll", handleScroll);
-  },[])
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   useEffect(() => {
-    if(location.hash){
-      const key  = location.hash.replace("#", "");
+    if (location.hash) {
+      const key = location.hash.replace("#", "");
       const ref = refMap[key];
-      if(ref?.current){
-        setTimeout(()=>{
+
+      if (ref?.current) {
+        setTimeout(() => {
           scrollToView(ref);
-        },100);
+        }, 100);
       }
     }
-  },[location])
+  }, [location]);
 
-  const handleClick = (item)=>{
+  const handleClick = (item) => {
     setActive(item.name);
+    setOpen(false);
+
     const ref = refMap[item.refKey];
-    if(isHome){
-      if(ref?.current){
+
+    if (isHome) {
+      if (ref?.current) {
         scrollToView(ref);
       }
-    }else{
+    } else {
       navigate(`/#${item.refKey}`);
     }
-  }
+  };
+
   return (
     <motion.nav
       initial={{ y: -80, opacity: 0 }}
@@ -108,18 +115,15 @@ const NAV = () => {
         px-6 py-3 rounded-2xl transition-all duration-500
         ${
           scrolled
-            ? "bg-white/80 backdrop-blur-2xl border border-black/10 shadow-[0_10px_40px_rgba(0,0,0,0.1)]"
-            : "bg-white/10 backdrop-blur-2xl border border-white/20 shadow-[0_20px_80px_rgba(0,0,0,0.3)]"
+            ? "bg-[#f5e9dc]/90 backdrop-blur-2xl border border-[#d6c2a8]/40 shadow-[0_10px_40px_rgba(0,0,0,0.08)]"
+            : "bg-[#f5e9dc]/40 backdrop-blur-2xl border border-[#f5e9dc]/30 shadow-[0_20px_80px_rgba(0,0,0,0.15)]"
         }`}
       >
-
         <div className="absolute inset-0 rounded-2xl pointer-events-none">
-          <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-500/10 via-transparent to-orange-400/10 blur-xl opacity-70" />
+          <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-[#d6c2a8]/20 via-transparent to-[#c4a484]/20 blur-xl opacity-70" />
         </div>
-
-
         <div
-          onClick={() =>{
+          onClick={() => {
             navigate("/");
             setOpen(false);
           }}
@@ -131,57 +135,59 @@ const NAV = () => {
             className="h-8 w-auto object-contain"
           />
         </div>
-
-
         <div className="hidden md:flex items-center gap-2 z-10">
           {navItems.map((item) => (
             <div
               key={item.name}
               onClick={() => handleClick(item)}
-              className="relative px-4 py-2 rounded-xl text-sm font-medium cursor-pointer"
+              className="relative px-4 py-2 rounded-xl text-sm cursor-pointer"
             >
               {active === item.name && (
                 <motion.div
                   layoutId="nav-pill"
-                  className="absolute inset-0 rounded-xl bg-blue-500/10 border border-blue-500/20"
+                  className="absolute inset-0 rounded-xl bg-[#e8d8c3]/60 border border-[#d6c2a8]"
                 />
               )}
 
               <span
-                className={
-                  active === item.name
-                    ? "text-blue-500"
-                    : scrolled
-                    ? "text-gray-700 hover:text-black"
-                    : "text-white/80 hover:text-white"
-                }
+                className={`
+                  tracking-wide font-semibold transition-all duration-300
+                  ${
+                    active === item.name
+                      ? "text-[#8b5e34]"
+                      : scrolled
+                      ? "text-[#5c4432] hover:text-[#2c1f14]"
+                      : "text-[#3e2c20]/80 hover:text-[#1f140d]"
+                  }
+                `}
               >
                 {item.name}
               </span>
             </div>
           ))}
         </div>
-
         <button
-          onClick={() => handleClick({ name: "Contact", refKey: "contact" })}
-          className={`z-10 px-5 py-2 rounded-xl text-sm font-medium transition ${
-            scrolled ? "bg-black text-white" : "bg-white text-black"
+          onClick={() =>
+            handleClick({ name: "Contact", refKey: "contact" })
+          }
+          className={`z-10 px-5 py-2 rounded-xl text-sm font-semibold transition-all duration-300
+          ${
+            scrolled
+              ? "bg-[#8b5e34] text-white hover:bg-[#6f4728]"
+              : "bg-[#f5e9dc] text-[#5c4432] hover:bg-[#e8d8c3]"
           }`}
         >
           Contact
         </button>
-
-
         <button
           onClick={() => setOpen(!open)}
           className={`md:hidden text-2xl z-10 ${
-            scrolled ? "text-black" : "text-white"
+            scrolled ? "text-[#2c1f14]" : "text-[#3e2c20]"
           }`}
         >
           {open ? "✕" : "☰"}
         </button>
       </div>
-
 
       <AnimatePresence>
         {open && (
@@ -189,15 +195,16 @@ const NAV = () => {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="mt-3 mx-auto max-w-7xl bg-white/90 backdrop-blur-xl rounded-2xl p-6"
+            className="mt-3 mx-auto max-w-7xl bg-[#f5e9dc]/95 backdrop-blur-xl rounded-2xl p-6 border border-[#e0cbb0]"
           >
             {navItems.map((item) => (
               <div
                 key={item.name}
                 onClick={() => {
-                  handleClick(item)
-                  setOpen(false)}}
-                className="py-2 text-gray-800 cursor-pointer"
+                  handleClick(item);
+                  setOpen(false);
+                }}
+                className="py-2 text-[#5c4432] font-medium cursor-pointer hover:text-[#2c1f14]"
               >
                 {item.name}
               </div>
