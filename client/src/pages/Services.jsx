@@ -164,14 +164,13 @@ const Services = () => {
       ref={containerRef}
       className="w-screen relative bg-black text-white overflow-x-hidden"
     >
-      {/* TITLE */}
+
       <div className="lg:h-[70vh] flex items-center lg:justify-end justify-start lg:p-70 mb-10">
         <span className="text-7xl lg:text-9xl w-[70vh] font-bold lg:p-0 p-5">
           What we offer?
         </span>
       </div>
 
-      {/* IMAGE DESKTOP */}
       <div
         ref={imageRef}
         className="w-full hidden lg:block lg:absolute h-[40vh] top-10 lg:w-[60%] lg:h-[70vh] p-10"
@@ -182,10 +181,8 @@ const Services = () => {
           className="w-full h-full object-contain"
         />
       </div>
-
-      {/* MAIN SECTION (SCROLL TARGET) */}
       <div
-        ref={serviceRef} // ✅ THIS FIXES NAV SCROLL
+        ref={serviceRef} 
         className="w-full h-screen flex flex-col-reverse lg:pl-30 lg:flex-row lg:items-center lg:justify-between gap-10"
       >
         <div className="flex flex-col justify-content h-[70vh]">
@@ -207,7 +204,6 @@ const Services = () => {
           ))}
         </div>
 
-        {/* IMAGE MOBILE */}
         <div
           ref={imageRef2}
           className="w-full block mt-2 lg:hidden h-[40vh] lg:w-[60%] lg:h-[70vh]"
