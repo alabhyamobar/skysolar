@@ -13,24 +13,27 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
+
 const App = () => {
   useEffect(() => {
     const lenis = new Lenis({
-      lerp: 0.05,
+      lerp: 0.08, 
       smooth: true,
     });
 
-    function raf(time) {
-      lenis.raf(time);
-      ScrollTrigger.update(); // 🔥 THIS FIXES JITTER
-      requestAnimationFrame(raf);
-    }
 
-    requestAnimationFrame(raf);
+    gsap.ticker.add((time) => {
+      lenis.raf(time * 1000);
+    });
 
     lenis.on("scroll", ScrollTrigger.update);
 
-    return () => lenis.destroy();
+    gsap.ticker.lagSmoothing(0);
+
+    return () => {
+      lenis.destroy();
+      gsap.ticker.remove(() => {});
+    };
   }, []);
 
   return (
@@ -47,7 +50,6 @@ const App = () => {
             </div>
           }
         />
-        <Route path="/gallery" element={<Gallary />} />
         <Route path="/calculator" element={<Calculator />} />
         <Route path="/contact" element={<Contact />} />
       </Routes>
