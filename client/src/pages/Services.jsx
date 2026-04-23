@@ -90,7 +90,7 @@ const Services = () => {
             ease: "power3.out",
             scrollTrigger: {
               trigger: serviceRef.current,
-              start: "top center",
+              start: "top 40%",
               end: "bottom center",
               scrub: true,
             },
