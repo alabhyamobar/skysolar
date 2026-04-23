@@ -17,22 +17,27 @@ gsap.registerPlugin(ScrollTrigger);
 const App = () => {
   useEffect(() => {
     const lenis = new Lenis({
-      lerp: 0.08, 
-      smooth: true,
+      lerp: 0.1,
+      smoothWheel: true,
+      syncTouch: false, 
     });
-
-
-    gsap.ticker.add((time) => {
+    const tickerFn = (time) => {
       lenis.raf(time * 1000);
+    };
+
+    gsap.ticker.add(tickerFn);
+    gsap.ticker.lagSmoothing(0);
+
+    lenis.on("scroll", () => {
+      ScrollTrigger.update();
     });
 
-    lenis.on("scroll", ScrollTrigger.update);
-
-    gsap.ticker.lagSmoothing(0);
+    ScrollTrigger.refresh();
 
     return () => {
       lenis.destroy();
-      gsap.ticker.remove(() => {});
+      gsap.ticker.remove(tickerFn); 
+      ScrollTrigger.getAll().forEach((t) => t.kill()); 
     };
   }, []);
 
