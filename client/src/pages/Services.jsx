@@ -114,7 +114,7 @@ const Services = () => {
 
         ScrollTrigger.create({
           trigger: serviceRef.current,
-          start: "top 10%",
+          start: "top 5%",
           end: "bottom center",
           pin: true,
           scrub: 2,
@@ -126,7 +126,7 @@ const Services = () => {
           const tl = gsap.timeline({
             scrollTrigger: {
               trigger: el,
-              start: "top 70%",
+              start: "top 60%",
               end: "top 40%",
               scrub: 1.2,
             },
