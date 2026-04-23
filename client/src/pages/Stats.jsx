@@ -20,7 +20,7 @@ export const Stats = () => {
       ScrollTrigger.create({
         trigger: containerRef.current,
         start: "top top",
-        end: `+=${isMobile ? 1000 : 1500}`,  
+        end: "center top",  
         pin: true,
         pinSpacing: true,
         anticipatePin: 1,
@@ -32,7 +32,7 @@ export const Stats = () => {
         scrollTrigger: {
           trigger: containerRef.current,
           start: "top top",
-          end: `+=${isMobile ? 1000 : 1500}`,
+          end: "center top",
           scrub: isMobile ? 2 : 0.8,   
           invalidateOnRefresh: true,
           onUpdate(self) {
