@@ -48,7 +48,7 @@ export const Stats = () => {
         maskRef.current,
         { scale: 0 },
         {
-          scale: isMobile ? 4 : 6,     
+          scale: isMobile ? 5 : 6,     
           rotate: prefersReduced || isMobile ? 0 : 180, 
           ease: "none",
           force3D: true,               
