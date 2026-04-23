@@ -10,11 +10,9 @@ import Brand from "../Components/Brand";
 import { ScrollProvider } from "../Context/ScrollContext";
 
 const About = () => {
-  // ✅ GET REF FROM CONTEXT
   const { aboutRef } = useContext(ScrollProvider);
   const {homeRef} = useContext(ScrollProvider);
 
-  // animations (unchanged)
   const waveVariant = {
     hidden: { opacity: 0, y: 60 },
     visible: {
@@ -48,7 +46,7 @@ const About = () => {
       </div>
 
       <div
-        ref={aboutRef} // 👈 NAVBAR WILL SCROLL HERE
+        ref={aboutRef} 
         className="w-screen bg-[radial-gradient(circle_at_top,_#fff7ed,_#ffedd5,_#fed7aa)] min-h-screen relative z-10 shadow-[0_-20px_60px_rgba(0,0,0,0.5)] px-6 md:px-24 py-16 flex flex-col md:flex-row gap-12 overflow-x-hidden"
       >
         <Brand />

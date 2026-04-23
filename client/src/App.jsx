@@ -11,6 +11,7 @@ import About from "./pages/About";
 import Lenis from "@studio-freight/lenis";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Loader from "./Components/Loader";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -19,7 +20,7 @@ const App = () => {
     const lenis = new Lenis({
       lerp: 0.1,
       smoothWheel: true,
-      syncTouch: false, 
+      syncTouch: false,
     });
     const tickerFn = (time) => {
       lenis.raf(time * 1000);
@@ -36,29 +37,31 @@ const App = () => {
 
     return () => {
       lenis.destroy();
-      gsap.ticker.remove(tickerFn); 
-      ScrollTrigger.getAll().forEach((t) => t.kill()); 
+      gsap.ticker.remove(tickerFn);
+      ScrollTrigger.getAll().forEach((t) => t.kill());
     };
   }, []);
 
   return (
-    <div className="w-screen overflow-x-hidden">
-      <NAV />
+    <Loader>
+      <div className="w-screen overflow-x-hidden">
+        <NAV />
 
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <div className="w-full overflow-x-hidden">
-              <Landing />
-              <About />
-            </div>
-          }
-        />
-        <Route path="/calculator" element={<Calculator />} />
-        <Route path="/contact" element={<Contact />} />
-      </Routes>
-    </div>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <div className="w-full overflow-x-hidden">
+                <Landing />
+                <About />
+              </div>
+            }
+          />
+          <Route path="/calculator" element={<Calculator />} />
+          <Route path="/contact" element={<Contact />} />
+        </Routes>
+      </div>
+    </Loader>
   );
 };
 

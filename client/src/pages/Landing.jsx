@@ -43,6 +43,9 @@ const Landing = () => {
           className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
             currentVideo === 1 ? "opacity-100" : "opacity-0"
           }`}
+          onCanPlayThrough={() => {
+            if (window.__revealApp) window.__revealApp();
+          }}
           src={`${import.meta.env.BASE_URL}/video/skymobile1.mp4`}
           autoPlay
           muted
