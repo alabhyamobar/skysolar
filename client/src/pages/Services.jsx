@@ -165,7 +165,7 @@ const Services = () => {
       className="w-screen relative bg-black text-white overflow-x-hidden"
     >
 
-      <div className="lg:h-[70vh] flex items-center lg:justify-end justify-start lg:p-70 mb-10">
+      <div className="lg:h-[70vh] sm:h-[20vh] flex items-center lg:justify-end justify-start lg:p-70 mb-10">
         <span className="text-7xl lg:text-9xl w-[70vh] font-bold lg:p-0 p-5">
           What we offer?
         </span>
