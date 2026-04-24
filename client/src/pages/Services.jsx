@@ -185,7 +185,7 @@ const Services = () => {
         ref={serviceRef} 
         className="w-full min-h-screen flex flex-col-reverse lg:pl-30 lg:flex-row lg:items-center lg:justify-between gap-5"
       >
-        <div className="flex flex-col justify-content h-[70vh] pl-5 lg:p-0 bg-purple-400">
+        <div className="flex flex-col justify-content h-[70vh] pl-5 lg:p-0 ">
           {servicesData.map((service, index) => (
             <div
               key={index}
