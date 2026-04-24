@@ -114,7 +114,7 @@ const Services = () => {
 
         ScrollTrigger.create({
           trigger: serviceRef.current,
-          start: "top 5%",
+          start: "top top",
           end: "bottom center",
           pin: true,
           scrub: 2,
@@ -183,7 +183,7 @@ const Services = () => {
       </div>
       <div
         ref={serviceRef} 
-        className="w-full h-screen flex flex-col-reverse lg:pl-30 lg:flex-row lg:items-center lg:justify-between gap-10"
+        className="w-full min-h-screen flex flex-col-reverse lg:pl-30 lg:flex-row lg:items-center lg:justify-between gap-10"
       >
         <div className="flex flex-col justify-content h-[70vh] pl-5 lg:p-0">
           {servicesData.map((service, index) => (
