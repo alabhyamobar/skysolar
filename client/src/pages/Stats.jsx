@@ -19,7 +19,7 @@ export const Stats = () => {
     const ctx = gsap.context(() => {
       ScrollTrigger.create({
         trigger: containerRef.current,
-        start: "top top",
+        start: "top 20%",
         end: "center top",  
         pin: true,
         pinSpacing: true,
