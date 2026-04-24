@@ -21,7 +21,6 @@ export const Stats = () => {
         trigger: containerRef.current,
         start: "top 20%",
         end: "center top",  
-        pin: true,
         pinSpacing: true,
         anticipatePin: 1,
       });
@@ -33,6 +32,7 @@ export const Stats = () => {
           trigger: containerRef.current,
           start: "top top",
           end: "center top",
+          pin: true,
           scrub: isMobile ? 2 : 0.8,   
           invalidateOnRefresh: true,
           onUpdate(self) {
