@@ -1,4 +1,5 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useRef } from "react";
+import gsap from "gsap";
 import { ScrollProvider } from "../Context/ScrollContext";
 
 const images = [
@@ -13,69 +14,84 @@ const images = [
 ];
 
 const Gallary = () => {
+  const sliderRef = useRef(null);
+  const tweenRef = useRef(null);
   const { gallaryRef } = useContext(ScrollProvider);
 
+  useEffect(() => {
+    if (!sliderRef.current) return undefined;
+
+    const slider = sliderRef.current;
+    const totalWidth = slider.scrollWidth / 2;
+
+    gsap.set(slider, { x: -totalWidth });
+
+    tweenRef.current = gsap.to(slider, {
+      x: 0,
+      duration: 24,
+      ease: "none",
+      repeat: -1,
+    });
+
+    const pause = () => tweenRef.current?.pause();
+    const play = () => tweenRef.current?.play();
+
+    slider.addEventListener("mouseenter", pause);
+    slider.addEventListener("mouseleave", play);
+    slider.addEventListener("touchstart", pause, { passive: true });
+    slider.addEventListener("touchend", play);
+
+    return () => {
+      slider.removeEventListener("mouseenter", pause);
+      slider.removeEventListener("mouseleave", play);
+      slider.removeEventListener("touchstart", pause);
+      slider.removeEventListener("touchend", play);
+      tweenRef.current?.kill();
+    };
+  }, []);
+
+  const galleryImages = [...images, ...images];
+
   return (
-    <div
-      ref={gallaryRef} 
-      className="lg:min-h-screen bg-[radial-gradient(circle_at_top,_#fff7ed,_#ffedd5,_#fed7aa)] w-full py-20 overflow-hidden"
+    <section
+      ref={gallaryRef}
+      className="w-full overflow-hidden bg-[radial-gradient(circle_at_top,_#fff7ed,_#ffedd5,_#fed7aa)] py-20 lg:min-h-screen"
     >
-      <h2 className="text-4xl sm:text-6xl font-semibold text-center mb-16">
+      <h2 className="mb-16 text-center text-4xl font-semibold sm:text-6xl">
         Our Work Gallery
       </h2>
 
       <div className="relative w-full overflow-hidden">
-        <div className="flex gap-6 w-max animate-marquee">
-          {[...images, ...images].map((src, index) => (
+        <div
+          ref={sliderRef}
+          className="flex w-max gap-6 px-4 will-change-transform"
+        >
+          {galleryImages.map((src, index) => (
             <div
-              key={index}
-              className="min-w-[250px] sm:min-w-[300px] lg:min-w-[350px] h-[300px] sm:h-[350px] rounded-2xl overflow-hidden relative group"
+              key={`${src}-${index}`}
+              className="group relative h-[300px] min-w-[250px] overflow-hidden rounded-2xl sm:h-[350px] sm:min-w-[300px] lg:min-w-[350px]"
             >
               <img
                 src={src}
                 alt="gallery"
                 loading="lazy"
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
               />
 
               <div
-                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-500
-                bg-[linear-gradient(135deg,
-                  rgba(251,146,60,0.35),
-                  rgba(236,72,153,0.25),
-                  rgba(59,130,246,0.35)
-                )]
-                backdrop-blur-xl border border-white/20"
+                className="absolute inset-0 border border-white/20 opacity-0 backdrop-blur-xl transition duration-500 group-hover:opacity-100
+                bg-[linear-gradient(135deg,rgba(251,146,60,0.35),rgba(236,72,153,0.25),rgba(59,130,246,0.35))]"
               >
                 <div className="absolute bottom-4 left-4 text-white">
-                  <h3 className="text-lg font-semibold">
-                    Solar Installation
-                  </h3>
-                  <p className="text-sm text-white/80">
-                    Clean energy project
-                  </p>
+                  <h3 className="text-lg font-semibold">Solar Installation</h3>
+                  <p className="text-sm text-white/80">Clean energy project</p>
                 </div>
               </div>
             </div>
           ))}
         </div>
       </div>
-
-      <style jsx>{`
-        .animate-marquee {
-          animation: marquee 30s linear infinite;
-        }
-
-        @keyframes marquee {
-          0% {
-            transform: translateX(0);
-          }
-          100% {
-            transform: translateX(-150%);
-          }
-        }
-      `}</style>
-    </div>
+    </section>
   );
 };
 

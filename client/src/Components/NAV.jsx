@@ -29,7 +29,7 @@ const NAV = () => {
     serviceRef,
     testimonialRef,
     contactRef,
-    galleryRef,
+    gallaryRef,
     calculatorRef,
     scrollToView,
   } = useContext(ScrollProvider);
@@ -40,7 +40,7 @@ const NAV = () => {
     services: serviceRef,
     testimonials: testimonialRef,
     contact: contactRef,
-    gallery: galleryRef,
+    gallery: gallaryRef,
     calculator: calculatorRef,
   };
 
