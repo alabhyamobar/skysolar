@@ -49,7 +49,7 @@ const NAV = () => {
 
     const observer = new IntersectionObserver(
       ([entry]) => setScrolled(!entry.isIntersecting),
-      { threshold: 0.2 }
+      { threshold: 0.2 },
     );
 
     observer.observe(homeRef.current);
@@ -132,10 +132,10 @@ const NAV = () => {
           <img
             src="/skysolar/images/logo.png"
             alt="Sky Energy Logo"
-            className="h-8 w-auto object-contain"
+            className="h-8 w-auto object-contain "
           />
         </div>
-        <div className="hidden md:flex items-center gap-2 z-10">
+        <div className="hidden lg:flex items-center gap-2 z-10">
           {navItems.map((item) => (
             <div
               key={item.name}
@@ -156,8 +156,8 @@ const NAV = () => {
                     active === item.name
                       ? "text-[#8b5e34]"
                       : scrolled
-                      ? "text-[#5c4432] hover:text-[#2c1f14]"
-                      : "text-[#3e2c20]/80 hover:text-[#1f140d]"
+                        ? "text-[#5c4432] hover:text-[#2c1f14]"
+                        : "text-[#3e2c20]/80 hover:text-[#1f140d]"
                   }
                 `}
               >
@@ -166,27 +166,27 @@ const NAV = () => {
             </div>
           ))}
         </div>
-        <button
-          onClick={() =>
-            handleClick({ name: "Contact", refKey: "contact" })
-          }
-          className={`z-10 px-5 py-2 rounded-xl text-sm font-semibold transition-all duration-300
+        <div className="flex items-center justify-center gap-5">
+          <button
+            onClick={() => handleClick({ name: "Contact", refKey: "contact" })}
+            className={`z-10 px-5 py-2 rounded-xl text-sm font-semibold transition-all duration-300
           ${
             scrolled
               ? "bg-[#8b5e34] text-white hover:bg-[#6f4728]"
               : "bg-[#f5e9dc] text-[#5c4432] hover:bg-[#e8d8c3]"
           }`}
-        >
-          Contact
-        </button>
-        <button
-          onClick={() => setOpen(!open)}
-          className={`md:hidden text-2xl z-10 ${
-            scrolled ? "text-[#2c1f14]" : "text-[#3e2c20]"
-          }`}
-        >
-          {open ? "✕" : "☰"}
-        </button>
+          >
+            Contact
+          </button>
+          <button
+            onClick={() => setOpen(!open)}
+            className={`lg:hidden text-2xl z-10 ${
+              scrolled ? "text-[#2c1f14]" : "text-[#3e2c20]"
+            }`}
+          >
+            {open ? "✕" : "☰"}
+          </button>
+        </div>
       </div>
 
       <AnimatePresence>

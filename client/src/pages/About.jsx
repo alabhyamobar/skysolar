@@ -8,10 +8,11 @@ import Testimonial from "./Testimonial";
 import Footer from "./Footer";
 import Brand from "../Components/Brand";
 import { ScrollProvider } from "../Context/ScrollContext";
+import LandingContent from "../Components/LandingContent";
 
 const About = () => {
   const { aboutRef } = useContext(ScrollProvider);
-  const {homeRef} = useContext(ScrollProvider);
+  const { homeRef } = useContext(ScrollProvider);
 
   const waveVariant = {
     hidden: { opacity: 0, y: 60 },
@@ -39,15 +40,10 @@ const About = () => {
   };
 
   return (
-    <div className="w-screen min-h-screen absolute top-0 z-20">
-      <div ref={homeRef} className="relative">
-        <div className="h-screen w-screen"></div>
-        <div className="pointer-events-none absolute bottom-0 left-0 w-full h-32 bg-gradient-to-b from-transparent to-black/60" />
-      </div>
-
+    <div className="w-screen min-h-screen ">
       <div
-        ref={aboutRef} 
-        className="w-screen bg-[radial-gradient(circle_at_top,_#fff7ed,_#ffedd5,_#fed7aa)] min-h-screen relative z-10 shadow-[0_-20px_60px_rgba(0,0,0,0.5)] px-6 md:px-24 py-16 flex flex-col md:flex-row gap-12 overflow-x-hidden"
+        ref={aboutRef}
+        className="w-screen bg-[radial-gradient(circle_at_top,_#fff7ed,_#ffedd5,_#fed7aa)] min-h-screen relative z-10 shadow-[0_-20px_60px_rgba(0,0,0,0.5)] px-6 md:px-24 py-16 flex flex-col md:flex-row gap-12 overflow-hidden "
       >
         <Brand />
 
@@ -70,7 +66,9 @@ const About = () => {
             viewport={{ once: true }}
             className="text-gray-700 text-lg mt-6 leading-relaxed"
           >
-            Sky Renewable Energy provides reliable solar solutions that make clean power simple and accessible, helping homes and businesses reduce costs and transition to a sustainable future.
+            Sky Renewable Energy provides reliable solar solutions that make
+            clean power simple and accessible, helping homes and businesses
+            reduce costs and transition to a sustainable future.
           </motion.p>
 
           <motion.h3
@@ -105,6 +103,8 @@ const About = () => {
           </div>
 
           <motion.div
+            data-scroll
+            data-screoll-speed="-2"
             variants={slideLeft}
             custom={5}
             initial="hidden"
@@ -121,6 +121,8 @@ const About = () => {
         </div>
 
         <motion.div
+          data-scroll
+          data-screoll-speed="-2"
           variants={slideLeft}
           custom={2}
           initial="hidden"

@@ -1,6 +1,15 @@
 import app from "./app.js";
+import connectDb from "./src/config/database.js"
 
-
-app.listen(5000, () => {
-    console.log("Server is running on port 5000");
-});
+const port = process.env.PORT || 3000;
+(async ()=>{
+    try {
+        await connectDb();
+        app.listen(port , ()=>{
+            console.log(`app is running on http://localhost:${port}`)
+        })
+    }catch(err){
+        console.log(err);
+        process.exit(1);
+    }
+})();
