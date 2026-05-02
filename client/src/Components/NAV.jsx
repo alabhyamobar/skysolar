@@ -168,7 +168,7 @@ const NAV = () => {
         </div>
         <div className="flex items-center justify-center gap-5">
           <button
-            onClick={() => handleClick({ name: "Contact", refKey: "contact" })}
+            onClick={() => navigate("/contact")}
             className={`z-10 px-5 py-2 rounded-xl text-sm font-semibold transition-all duration-300
           ${
             scrolled
