@@ -3,11 +3,31 @@ import Landing from "./pages/Landing";
 import { Routes, Route } from "react-router-dom";
 import LocomotiveScroll from "locomotive-scroll";
 import About from "./pages/About";
+import { useEffect } from "react";
 
 const App = () => {
-  const locomotiveScroll = new LocomotiveScroll();
+  useEffect(() => {
+
+    const scroll = new LocomotiveScroll({
+      el: document.querySelector("[data-scroll-container]"),
+      smooth: true,
+
+      smartphone: {
+        smooth: true,
+      },
+
+      tablet: {
+        smooth: true,
+      },
+    });
+
+    return () => {
+      scroll.destroy();
+    };
+
+  }, []);
   return (
-    <div className="h-screen w-screen">
+    <div data-scroll-container className="h-screen w-screen ">
       <Routes>
         <Route
           path="/"
