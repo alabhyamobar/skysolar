@@ -11,7 +11,7 @@ const Landing = () => {
       >
         <img
           className="h-full w-full object-cover"
-          src="skysolar/images/space.png"
+          src={`${import.meta.env.BASE_URL}/images/space.png`}
           alt=""
         />
       </div>
