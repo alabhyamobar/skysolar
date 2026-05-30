@@ -1,8 +1,14 @@
 import React from 'react'
+import { RouterProvider } from 'react-router-dom'
+import { router } from "./app.routes.jsx";
+import CustomCursor from './components/CustomCursor';
 
 const App = () => {
   return (
-    <div>App</div>
+    <>
+      <CustomCursor />
+      <RouterProvider router={router}/>
+    </>
   )
 }
 
