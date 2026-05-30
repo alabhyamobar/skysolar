@@ -21,7 +21,7 @@ const Landing = () => {
     };
 
     const currentFrame = (index) =>
-      `${import.meta.env.BASE_URL}/desktopframe/frame_${String(index + 1).padStart(4, "0")}.webp`;
+      `${import.meta.env.BASE_URL}desktopframe/frame_${String(index + 1).padStart(4, "0")}.webp`;
 
     const resizeCanvas = () => {
       canvas.width = window.innerWidth;
