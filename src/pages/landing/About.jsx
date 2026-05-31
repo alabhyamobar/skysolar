@@ -1,74 +1,205 @@
-import React from 'react';
+import React, { useEffect } from "react";
+import Tilt from "react-parallax-tilt";
+import AOS from "aos";
+import "aos/dist/aos.css";
+
+const stats = [
+  { value: "10+", label: "Years Experience" },
+  { value: "500+", label: "Installations" },
+  { value: "98%", label: "Client Satisfaction" },
+  { value: "24/7", label: "Support" },
+];
 
 const About = () => {
-    return (
-        <section className="relative w-full min-h-screen flex items-center justify-center bg-slate-900 text-white overflow-hidden py-20 px-6 lg:px-16">
-            {/* Background glowing effects */}
-            <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0 pointer-events-none">
-                <div className="absolute -top-[30%] -right-[10%] w-[70%] h-[70%] rounded-full bg-teal-500/10 blur-[120px]"></div>
-                <div className="absolute -bottom-[20%] -left-[10%] w-[60%] h-[60%] rounded-full bg-yellow-500/10 blur-[120px]"></div>
+  useEffect(() => {
+    AOS.init({
+      duration: 1200,
+      once: true,
+      offset: 150,
+      easing: "ease-out-cubic",
+      mirror: false,
+    });
+  }, []);
+
+  return (
+    <section className="relative bg-[#050914] text-white overflow-hidden py-24">
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/20 to-black/70" />
+
+        <div
+          className="absolute inset-0 opacity-[0.03]"
+          style={{
+            backgroundImage: `
+              linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px)
+            `,
+            backgroundSize: "80px 80px",
+          }}
+        />
+
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-[#E8A56A]/10 blur-[180px] animate-pulse" />
+      </div>
+
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
+        <div className="inline-flex items-center px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md">
+          <span className="w-2 h-2 rounded-full bg-[#E8A56A] mr-2 animate-pulse"></span>
+          <span className="text-[#E8A56A] font-semibold tracking-wider text-xs sm:text-sm uppercase">
+            About Sky Renewable Energies
+          </span>
+        </div>
+
+        <div data-aos="fade-up">
+          <h2 className="max-w-5xl text-4xl mt-5 sm:text-5xl md:text-6xl lg:text-7xl font-black uppercase leading-none">
+            Building The Future Of
+            <span className="block text-[#E8A56A] mt-2">
+              Energy Infrastructure
+            </span>
+          </h2>
+
+          <p className="mt-8 max-w-3xl text-base md:text-lg text-gray-400 leading-relaxed">
+            Sky Renewable Energies delivers industrial-grade solar systems
+            engineered for long-term performance, operational resilience, and
+            measurable energy savings across residential, commercial, and
+            utility-scale applications.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mt-16">
+          {stats.map((item, index) => (
+            <div
+              key={item.label}
+              data-aos="zoom-in-up"
+              data-aos-delay={index * 100}
+            >
+              <Tilt
+                tiltMaxAngleX={10}
+                tiltMaxAngleY={10}
+                perspective={1200}
+                scale={1.05}
+                glareEnable={true}
+                glareMaxOpacity={0.1}
+              >
+                <div className="group relative overflow-hidden border border-white/10 bg-white/[0.03] backdrop-blur-md p-5 sm:p-8 hover:border-[#E8A56A]/50 transition-all duration-700 hover:shadow-[0_0_40px_rgba(232,165,106,0.15)]">
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                    <div className="absolute -top-10 -right-10 w-32 h-32 rounded-full bg-[#E8A56A]/20 blur-3xl" />
+                  </div>
+
+                  <div className="absolute top-0 left-0 h-[2px] w-0 bg-[#E8A56A] group-hover:w-full transition-all duration-700" />
+
+                  <h3 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#E8A56A]">
+                    {item.value}
+                  </h3>
+
+                  <p className="mt-3 text-xs sm:text-sm text-gray-400">
+                    {item.label}
+                  </p>
+                </div>
+              </Tilt>
             </div>
+          ))}
+        </div>
 
-            <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                
-                {/* Text Content */}
-                <div className="space-y-8">
-                    <div className="inline-flex items-center px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md">
-                        <span className="w-2 h-2 rounded-full bg-teal-400 mr-2 animate-pulse"></span>
-                        <span className="text-teal-400 font-semibold tracking-wider text-xs sm:text-sm uppercase">About Sky Renewable Energies</span>
-                    </div>
-                    
-                    <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight tracking-tight">
-                        Harness the Power of the <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-500">Sun</span>
-                    </h2>
-                    
-                    <p className="text-lg md:text-xl text-slate-300 leading-relaxed font-light">
-                        We are committed to illuminating your world with clean, sustainable, and highly efficient solar energy. 
-                        Whether for your home or your business, Sky Renewable Energies delivers state-of-the-art solar installations tailored to your unique energy needs.
-                    </p>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4">
-                        <div className="p-6 rounded-3xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all duration-300 backdrop-blur-sm group cursor-default shadow-xl">
-                            <div className="w-14 h-14 rounded-2xl bg-teal-500/20 flex items-center justify-center mb-6 group-hover:-translate-y-1 transition-transform duration-300">
-                                <svg className="w-7 h-7 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
-                            </div>
-                            <h3 className="text-xl font-bold text-white mb-3">Domestic Installations</h3>
-                            <p className="text-slate-400 text-sm leading-relaxed">Empower your home with energy independence and significantly reduce utility bills with our elegant residential solar systems.</p>
-                        </div>
-                        
-                        <div className="p-6 rounded-3xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all duration-300 backdrop-blur-sm group cursor-default shadow-xl">
-                            <div className="w-14 h-14 rounded-2xl bg-yellow-500/20 flex items-center justify-center mb-6 group-hover:-translate-y-1 transition-transform duration-300">
-                                <svg className="w-7 h-7 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
-                            </div>
-                            <h3 className="text-xl font-bold text-white mb-3">Commercial Solutions</h3>
-                            <p className="text-slate-400 text-sm leading-relaxed">Boost your bottom line and corporate sustainability with our scalable, high-yield commercial solar panel installations.</p>
-                        </div>
-                    </div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-20">
+          <div data-aos="fade-right">
+            <Tilt
+              tiltMaxAngleX={10}
+              tiltMaxAngleY={10}
+              perspective={1200}
+              scale={1.03}
+              glareEnable={true}
+              glareMaxOpacity={0.08}
+            >
+              <div className="group relative overflow-hidden border border-white/10 bg-white/[0.03] backdrop-blur-md p-8 lg:p-10 hover:border-[#E8A56A]/50 transition-all duration-700 hover:shadow-[0_0_50px_rgba(232,165,106,0.15)]">
+                <div className="absolute top-0 left-0 h-[2px] w-0 bg-[#E8A56A] group-hover:w-full transition-all duration-700" />
+
+                <span className="uppercase tracking-[3px] text-xs text-[#E8A56A] font-semibold">
+                  Residential
+                </span>
+
+                <h3 className="text-2xl sm:text-3xl font-bold mt-4">
+                  Domestic Installations
+                </h3>
+
+                <p className="mt-5 text-gray-400 leading-relaxed">
+                  Advanced rooftop solar systems designed to maximize
+                  efficiency, reduce electricity costs and provide long-term
+                  energy independence.
+                </p>
+              </div>
+            </Tilt>
+          </div>
+
+          <div data-aos="fade-left">
+            <Tilt
+              tiltMaxAngleX={10}
+              tiltMaxAngleY={10}
+              perspective={1200}
+              scale={1.03}
+              glareEnable={true}
+              glareMaxOpacity={0.08}
+            >
+              <div className="group relative overflow-hidden border border-white/10 bg-white/[0.03] backdrop-blur-md p-8 lg:p-10 hover:border-[#E8A56A]/50 transition-all duration-700 hover:shadow-[0_0_50px_rgba(232,165,106,0.15)]">
+                <div className="absolute top-0 left-0 h-[2px] w-0 bg-[#E8A56A] group-hover:w-full transition-all duration-700" />
+
+                <span className="uppercase tracking-[3px] text-xs text-[#E8A56A] font-semibold">
+                  Commercial
+                </span>
+
+                <h3 className="text-2xl sm:text-3xl font-bold mt-4">
+                  Enterprise Solutions
+                </h3>
+
+                <p className="mt-5 text-gray-400 leading-relaxed">
+                  Scalable solar infrastructure built for factories,
+                  institutions, warehouses and large-scale operations.
+                </p>
+              </div>
+            </Tilt>
+          </div>
+        </div>
+
+        {/* Bottom Feature Panel */}
+        <div data-aos="fade-up" className="mt-20">
+          <Tilt
+            tiltMaxAngleX={5}
+            tiltMaxAngleY={5}
+            perspective={1500}
+            scale={1.01}
+          >
+            <div className="border border-white/10 bg-gradient-to-r from-white/[0.02] to-white/[0.04] p-6 sm:p-10 lg:p-14">
+              <div className="grid lg:grid-cols-2 gap-10 items-center">
+                <div>
+                  <span className="uppercase tracking-[3px] text-xs text-[#E8A56A] font-semibold">
+                    Why Choose Us
+                  </span>
+
+                  <h3 className="mt-4 text-3xl md:text-5xl font-black uppercase leading-tight">
+                    Precision Engineered
+                    <span className="block text-[#E8A56A]">
+                      Solar Excellence
+                    </span>
+                  </h3>
                 </div>
 
-                {/* Visual Graphic */}
-                <div className="relative w-full h-[500px] lg:h-[650px] rounded-[2.5rem] overflow-hidden group border border-white/10 shadow-2xl">
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent z-10 pointer-events-none"></div>
-                    <img 
-                        src="https://images.unsplash.com/photo-1509391366360-2e959784a276?q=80&w=2072&auto=format&fit=crop" 
-                        alt="Solar Panels at Sunset" 
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000 ease-out"
-                    />
-                    <div className="absolute bottom-8 left-8 right-8 z-20">
-                        <div className="bg-white/10 backdrop-blur-xl border border-white/20 p-6 rounded-3xl transform translate-y-2 group-hover:translate-y-0 transition-all duration-500 shadow-xl">
-                            <div className="flex items-center space-x-5">
-                                <div className="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-500">10+</div>
-                                <div className="text-sm text-slate-200 font-medium tracking-wide">
-                                    <span className="block text-white font-bold text-base">Years of Experience</span>
-                                    in Solar Excellence
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div>
+                  <p className="text-gray-400 leading-relaxed">
+                    From consultation and design to installation and
+                    maintenance, we deliver complete solar solutions focused on
+                    reliability, efficiency and measurable ROI.
+                  </p>
+
+                  <button className="mt-8 bg-[#E8A56A] text-black px-8 py-4 font-bold uppercase tracking-wider hover:bg-[#f1b983] transition-all duration-300 hover:scale-105">
+                    Explore Solutions
+                  </button>
                 </div>
+              </div>
             </div>
-        </section>
-    );
+          </Tilt>
+        </div>
+      </div>
+    </section>
+  );
 };
 
 export default About;
