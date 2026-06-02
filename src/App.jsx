@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { RouterProvider } from 'react-router-dom'
 import { router } from "./app.routes.jsx";
 import CustomCursor from './components/CustomCursor';
@@ -9,7 +9,7 @@ const App = () => {
     <>
       <CustomCursor />
       <Navbar />
-      <RouterProvider router={router}/>
+      <RouterProvider  router={router}/>
     </>
   )
 }

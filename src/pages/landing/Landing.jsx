@@ -5,6 +5,7 @@ import { preloadImageSequence } from "./imageLoader";
 import About from "./About";
 import Herotext from "./Herotext";
 import Lifecycle from "./Lifecycle";
+import Services from "./Services";
 gsap.registerPlugin(ScrollTrigger);
 
 
@@ -76,7 +77,7 @@ const Landing = () => {
       scrollTrigger: {
         trigger: "#sequence-container",
         start: "top top",
-        end: "+=4000",
+        end: "+=1000",
         scrub: 1, // added a slight scrub delay for smoothness
         pin: true,
       }
@@ -111,6 +112,7 @@ const Landing = () => {
       </section>
       <About/>
       <Lifecycle/>
+      <Services/>
     </div>
   );
 };

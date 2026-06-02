@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useRef, useEffect } from "react";
 import Tilt from "react-parallax-tilt";
-import AOS from "aos";
-import "aos/dist/aos.css";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const stats = [
   { value: "10+", label: "Years Experience" },
@@ -11,18 +11,14 @@ const stats = [
 ];
 
 const About = () => {
-  useEffect(() => {
-    AOS.init({
-      duration: 1200,
-      once: true,
-      offset: 150,
-      easing: "ease-out-cubic",
-      mirror: false,
-    });
-  }, []);
-
+  const sectionRef  = useRef(null);
+  useEffect(()=>{
+    const ctx = gsap.context(()=>{
+        
+    })
+  },[])
   return (
-    <section className="relative bg-[#050914] text-white overflow-hidden py-24">
+    <section  className="relative bg-[#050914] text-white overflow-hidden py-24">
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/20 to-black/70" />
 
@@ -37,18 +33,19 @@ const About = () => {
           }}
         />
 
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-[#E8A56A]/10 blur-[180px] animate-pulse" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-[#E8A56A]/10 blur-[180px]" />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-12">
         <div className="inline-flex items-center px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md">
-          <span className="w-2 h-2 rounded-full bg-[#E8A56A] mr-2 animate-pulse"></span>
+          <span className="w-2 h-2 rounded-full bg-[#E8A56A] mr-2"></span>
+
           <span className="text-[#E8A56A] font-semibold tracking-wider text-xs sm:text-sm uppercase">
             About Sky Renewable Energies
           </span>
         </div>
 
-        <div data-aos="fade-up">
+        <div>
           <h2 className="max-w-5xl text-4xl mt-5 sm:text-5xl md:text-6xl lg:text-7xl font-black uppercase leading-none">
             Building The Future Of
             <span className="block text-[#E8A56A] mt-2">
@@ -65,102 +62,91 @@ const About = () => {
         </div>
 
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mt-16">
-          {stats.map((item, index) => (
-            <div
+          {stats.map((item) => (
+            <Tilt
               key={item.label}
-              data-aos="zoom-in-up"
-              data-aos-delay={index * 100}
+              tiltMaxAngleX={10}
+              tiltMaxAngleY={10}
+              perspective={1200}
+              scale={1.05}
+              glareEnable={true}
+              glareMaxOpacity={0.1}
             >
-              <Tilt
-                tiltMaxAngleX={10}
-                tiltMaxAngleY={10}
-                perspective={1200}
-                scale={1.05}
-                glareEnable={true}
-                glareMaxOpacity={0.1}
-              >
-                <div className="group relative overflow-hidden border border-white/10 bg-white/[0.03] backdrop-blur-md p-5 sm:p-8 hover:border-[#E8A56A]/50 transition-all duration-700 hover:shadow-[0_0_40px_rgba(232,165,106,0.15)]">
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
-                    <div className="absolute -top-10 -right-10 w-32 h-32 rounded-full bg-[#E8A56A]/20 blur-3xl" />
-                  </div>
-
-                  <div className="absolute top-0 left-0 h-[2px] w-0 bg-[#E8A56A] group-hover:w-full transition-all duration-700" />
-
-                  <h3 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#E8A56A]">
-                    {item.value}
-                  </h3>
-
-                  <p className="mt-3 text-xs sm:text-sm text-gray-400">
-                    {item.label}
-                  </p>
+              <div className="group relative overflow-hidden border border-white/10 bg-white/[0.03] backdrop-blur-md p-5 sm:p-8 hover:border-[#E8A56A]/50 transition-all duration-700 hover:shadow-[0_0_40px_rgba(232,165,106,0.15)]">
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                  <div className="absolute -top-10 -right-10 w-32 h-32 rounded-full bg-[#E8A56A]/20 blur-3xl" />
                 </div>
-              </Tilt>
-            </div>
+
+                <div className="absolute top-0 left-0 h-[2px] w-0 bg-[#E8A56A] group-hover:w-full transition-all duration-700" />
+
+                <h3 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#E8A56A]">
+                  {item.value}
+                </h3>
+
+                <p className="mt-3 text-xs sm:text-sm text-gray-400">
+                  {item.label}
+                </p>
+              </div>
+            </Tilt>
           ))}
         </div>
 
-
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-20">
-          <div data-aos="fade-right">
-            <Tilt
-              tiltMaxAngleX={10}
-              tiltMaxAngleY={10}
-              perspective={1200}
-              scale={1.03}
-              glareEnable={true}
-              glareMaxOpacity={0.08}
-            >
-              <div className="group relative overflow-hidden border border-white/10 bg-white/[0.03] backdrop-blur-md p-8 lg:p-10 hover:border-[#E8A56A]/50 transition-all duration-700 hover:shadow-[0_0_50px_rgba(232,165,106,0.15)]">
-                <div className="absolute top-0 left-0 h-[2px] w-0 bg-[#E8A56A] group-hover:w-full transition-all duration-700" />
+          <Tilt
+            tiltMaxAngleX={10}
+            tiltMaxAngleY={10}
+            perspective={1200}
+            scale={1.03}
+            glareEnable={true}
+            glareMaxOpacity={0.08}
+          >
+            <div className="group relative overflow-hidden border border-white/10 bg-white/[0.03] backdrop-blur-md p-8 lg:p-10 hover:border-[#E8A56A]/50 transition-all duration-700 hover:shadow-[0_0_50px_rgba(232,165,106,0.15)]">
+              <div className="absolute top-0 left-0 h-[2px] w-0 bg-[#E8A56A] group-hover:w-full transition-all duration-700" />
 
-                <span className="uppercase tracking-[3px] text-xs text-[#E8A56A] font-semibold">
-                  Residential
-                </span>
+              <span className="uppercase tracking-[3px] text-xs text-[#E8A56A] font-semibold">
+                Residential
+              </span>
 
-                <h3 className="text-2xl sm:text-3xl font-bold mt-4">
-                  Domestic Installations
-                </h3>
+              <h3 className="text-2xl sm:text-3xl font-bold mt-4">
+                Domestic Installations
+              </h3>
 
-                <p className="mt-5 text-gray-400 leading-relaxed">
-                  Advanced rooftop solar systems designed to maximize
-                  efficiency, reduce electricity costs and provide long-term
-                  energy independence.
-                </p>
-              </div>
-            </Tilt>
-          </div>
+              <p className="mt-5 text-gray-400 leading-relaxed">
+                Advanced rooftop solar systems designed to maximize efficiency,
+                reduce electricity costs and provide long-term energy
+                independence.
+              </p>
+            </div>
+          </Tilt>
 
-          <div data-aos="fade-left">
-            <Tilt
-              tiltMaxAngleX={10}
-              tiltMaxAngleY={10}
-              perspective={1200}
-              scale={1.03}
-              glareEnable={true}
-              glareMaxOpacity={0.08}
-            >
-              <div className="group relative overflow-hidden border border-white/10 bg-white/[0.03] backdrop-blur-md p-8 lg:p-10 hover:border-[#E8A56A]/50 transition-all duration-700 hover:shadow-[0_0_50px_rgba(232,165,106,0.15)]">
-                <div className="absolute top-0 left-0 h-[2px] w-0 bg-[#E8A56A] group-hover:w-full transition-all duration-700" />
+          <Tilt
+            tiltMaxAngleX={10}
+            tiltMaxAngleY={10}
+            perspective={1200}
+            scale={1.03}
+            glareEnable={true}
+            glareMaxOpacity={0.08}
+          >
+            <div className="group relative overflow-hidden border border-white/10 bg-white/[0.03] backdrop-blur-md p-8 lg:p-10 hover:border-[#E8A56A]/50 transition-all duration-700 hover:shadow-[0_0_50px_rgba(232,165,106,0.15)]">
+              <div className="absolute top-0 left-0 h-[2px] w-0 bg-[#E8A56A] group-hover:w-full transition-all duration-700" />
 
-                <span className="uppercase tracking-[3px] text-xs text-[#E8A56A] font-semibold">
-                  Commercial
-                </span>
+              <span className="uppercase tracking-[3px] text-xs text-[#E8A56A] font-semibold">
+                Commercial
+              </span>
 
-                <h3 className="text-2xl sm:text-3xl font-bold mt-4">
-                  Enterprise Solutions
-                </h3>
+              <h3 className="text-2xl sm:text-3xl font-bold mt-4">
+                Enterprise Solutions
+              </h3>
 
-                <p className="mt-5 text-gray-400 leading-relaxed">
-                  Scalable solar infrastructure built for factories,
-                  institutions, warehouses and large-scale operations.
-                </p>
-              </div>
-            </Tilt>
-          </div>
+              <p className="mt-5 text-gray-400 leading-relaxed">
+                Scalable solar infrastructure built for factories, institutions,
+                warehouses and large-scale operations.
+              </p>
+            </div>
+          </Tilt>
         </div>
 
-        {/* Bottom Feature Panel */}
-        <div data-aos="fade-up" className="mt-20">
+        <div className="mt-20">
           <Tilt
             tiltMaxAngleX={5}
             tiltMaxAngleY={5}
