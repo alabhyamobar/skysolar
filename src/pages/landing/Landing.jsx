@@ -77,23 +77,23 @@ const Landing = () => {
       scrollTrigger: {
         trigger: "#sequence-container",
         start: "top top",
-        end: "+=1000",
-        scrub: 1, // added a slight scrub delay for smoothness
+        // end: "+2000",
+        scrub: 1,
         pin: true,
       }
     });
 
-    // 1. Animate the image sequence over the entire timeline duration
     tl.to(imageSeq, {
-      frame: FRAME_COUNT - 1, 
+      frame: FRAME_COUNT - 1,
       snap: "frame",
       ease: "none",
       onUpdate: () => render(false),
-    }, 0); // start at time 0
+    }, 0);
 
 
     return () => {
-      ScrollTrigger.getAll().forEach((st) => st.kill());
+      tl.scrollTrigger?.kill();
+      tl.kill();
       window.removeEventListener("resize", resizeCanvas);
     };
   }, []);
@@ -108,11 +108,11 @@ const Landing = () => {
           ref={canvasRef}
           className="absolute inset-0 w-full h-full block z-0 top-0 lg:top-15"
         />
-        <Herotext/>
+        <Herotext />
       </section>
-      <About/>
-      <Lifecycle/>
-      <Services/>
+      <About />
+      <Lifecycle />
+      <Services />
     </div>
   );
 };

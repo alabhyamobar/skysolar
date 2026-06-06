@@ -8,7 +8,7 @@ const App = () => {
   return (
     <>
       <CustomCursor />
-      <Navbar />
+      <Navbar />  
       <RouterProvider  router={router}/>
     </>
   )
