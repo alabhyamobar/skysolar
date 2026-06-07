@@ -6,6 +6,8 @@ import About from "./About";
 import Herotext from "./Herotext";
 import Lifecycle from "./Lifecycle";
 import Services from "./Services";
+import Impact from "./Impact";
+import SolarCalculator from "../Claculator";
 gsap.registerPlugin(ScrollTrigger);
 
 
@@ -113,6 +115,9 @@ const Landing = () => {
       <About />
       <Lifecycle />
       <Services />
+      <Impact/>
+      <SolarCalculator/>
+
     </div>
   );
 };

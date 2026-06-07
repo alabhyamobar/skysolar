@@ -95,7 +95,7 @@ const CustomCursor = () => {
             {/* The main inverse cursor */}
             <div 
                 ref={cursorMainRef}
-                className="fixed top-0 left-0 w-4 h-4 bg-white rounded-full z-[9999] transform -translate-x-1/2 -translate-y-1/2 mix-blend-difference"
+                className="fixed z-[10000] top-0 left-0 w-4 h-4 bg-white rounded-full z-[9999] transform -translate-x-1/2 -translate-y-1/2 mix-blend-difference"
             ></div>
             
             {/* The solar flare aura */}

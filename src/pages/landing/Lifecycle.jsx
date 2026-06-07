@@ -313,7 +313,7 @@ const Lifecycle = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative bg-[#070B14] text-white py-24 md:py-32 overflow-hidden"
+      className="relative lg:sticky top-0  bg-[#070B14] text-white py-24 md:py-32 overflow-hidden"
     >
       {/* Subtle background grid */}
       <div

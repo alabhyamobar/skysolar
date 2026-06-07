@@ -38,7 +38,7 @@ const viewportOptions = { once: true, amount: 0.2 };
 
 const About = () => {
   return (
-    <main className="about relative bg-[#050914] text-white overflow-hidden py-24">
+    <main id="about" className="about relative bg-[#050914] text-white overflow-hidden py-24">
       {/* Background decorations */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/20 to-black/70" />
