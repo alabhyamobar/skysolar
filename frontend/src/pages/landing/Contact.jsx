@@ -56,7 +56,6 @@ const contactInfo = [
   {
     title: "Location",
     value: "Prayagraj, Uttar Pradesh",
-    link: "https://maps.google.com/?q=Prayagraj,Uttar+Pradesh",
     isMap: true,
   },
 ];
