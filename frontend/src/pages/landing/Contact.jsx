@@ -101,7 +101,7 @@ const Contact = () => {
   return (
     <section
       id="contact"
-      className="relative bg-[#070B14] text-white py-24 overflow-hidden"
+      className="relative bg-[#070B14] text-white py-24 overflow-hidden "
     >
       <div className="absolute inset-0">
         <div
@@ -162,7 +162,7 @@ const Contact = () => {
         </motion.div>
 
 
-        <div className="grid lg:grid-cols-2 gap-10 mt-20">
+        <div className="grid lg:grid-cols-2 gap-10 mt-20 ">
 
           <motion.div
             variants={fadeUp}
@@ -176,7 +176,7 @@ const Contact = () => {
               perspective={1200}
               scale={1.01}
             >
-              <div className="border border-white/10 bg-white/[0.03] backdrop-blur-md p-8 lg:p-10">
+              <div className="border border-white/10 bg-white/[0.03] backdrop-blur-md p-10">
 
                 <h3 className="text-2xl font-bold mb-8">
                   Request Consultation
@@ -241,7 +241,7 @@ const Contact = () => {
                   tiltMaxAngleY={8}
                   perspective={1200}
                 >
-                  <div className="group relative border border-white/10 bg-white/[0.03] backdrop-blur-md p-8 hover:border-[#E8A56A]/50 transition-all duration-500">
+                  <div className="group relative border border-white/10 bg-white/[0.03] backdrop-blur-md lg:p-8 p-2 hover:border-[#E8A56A]/50 transition-all duration-500 ">
 
                     <div className="absolute top-0 left-0 h-[2px] w-0 bg-[#E8A56A] group-hover:w-full transition-all duration-700" />
 
@@ -268,9 +268,9 @@ const Contact = () => {
                       <div className="mt-6 overflow-hidden rounded-xl border border-white/10">
                         <iframe
                           title="SkySolar Location"
-                          src="https://maps.app.goo.gl/RzUyrSKKMq7pdbFx8?g_st=awb"
+                          src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3604.1586352903073!2d81.8668!3d25.3995!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x398535984155c48d%3A0x1b02adc8b61fd896!2sFCI%20Rd%2C%20Dandi%2C%20Prayagraj%2C%20Uttar%20Pradesh!5e0!3m2!1sen!2sin!4v1781129394300!5m2!1sen!2sin" 
                           width="100%"
-                          height="200"
+                          height="200px"
                           loading="lazy"
                           allowFullScreen
                           className="w-full"
@@ -312,7 +312,7 @@ const Contact = () => {
                     Projects Delivered
                   </p>
                 </div>
-                <div className="w-full h-[50%] flex jusitify-center items-center gap-5 lg:gap-10">
+                <div className="col-span-2 flex jusitify-center items-center gap-5 lg:gap-10">
                   {socialLinks.map(({ icon: Icon, href }, index) => (
                     <a
                       key={index}
