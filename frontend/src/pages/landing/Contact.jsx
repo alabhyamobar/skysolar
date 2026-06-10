@@ -71,7 +71,7 @@ const Contact = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8000/api/user/query",
+        "https://skysolar.onrender.com/api/user/query",
         {
           userName: name,
           Email: email,
