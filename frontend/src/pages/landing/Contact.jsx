@@ -65,13 +65,14 @@ const Contact = () => {
   const [email, setEmail] = useState("")
   const [phone, setPhone] = useState("")
   const [message, setMessage] = useState("")
+  const API_URL = import.meta.env.VITE_API_URL
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       const response = await axios.post(
-        "https://skysolar.onrender.com/api/user/query",
+        `${API_URL}/api/user/query`,
         {
           userName: name,
           Email: email,
