@@ -46,12 +46,19 @@ const formatINR = (value) => {
   }).format(value);
 };
 
+const SOLAR_BRANDS = [
+  { id: "tata", name: "Tata Power Solar", wattage: 550, pricePerWatt: 42, efficiency: "21.3%" },
+  { id: "adani", name: "Adani Solar", wattage: 540, pricePerWatt: 38, efficiency: "21.0%" },
+  { id: "waaree", name: "Waaree Energies", wattage: 540, pricePerWatt: 36, efficiency: "20.9%" },
+  { id: "loom", name: "Loom Solar", wattage: 450, pricePerWatt: 48, efficiency: "22.5%" },
+  { id: "vikram", name: "Vikram Solar", wattage: 550, pricePerWatt: 37, efficiency: "21.1%" }
+];
+
 const Calculator = () => {
   // Inputs (Indian standard residential/commercial parameters)
   const [monthlyBill, setMonthlyBill] = useState(8000); // Default monthly bill in ₹
   const [rateKwh, setRateKwh] = useState(9); // Default tariff ₹9 per unit
-  const [sunHours, setSunHours] = useState(5.0); // Average solar radiation duration in India
-  const [coverage, setCoverage] = useState(90); // Offsetting target %
+  const [selectedBrand, setSelectedBrand] = useState(SOLAR_BRANDS[0]); // Default solar brand selection
 
   // Calculations state
   const [results, setResults] = useState({
@@ -71,18 +78,20 @@ const Calculator = () => {
     // 1. Calculate monthly usage in units (kWh)
     const monthlyKwh = monthlyBill / rateKwh;
 
-    // 2. Target offset based on coverage percentage
-    const targetKwhOffset = monthlyKwh * (coverage / 100);
+    // 2. Target offset based on coverage percentage (internally hardcoded to max value of 100%)
+    const targetKwhOffset = monthlyKwh * (100 / 100);
 
-    // 3. System size required (kW)
+    // 3. System size required (kW) (internally hardcoded to max daily sun hours of 6.5)
     // Formula: (Target monthly units / 30 days) / peak daily sun hours
-    const sizeNeeded = (targetKwhOffset / 30) / sunHours;
+    const sizeNeeded = (targetKwhOffset / 30) / 6.5;
 
-    // 4. Panels needed (assuming standard 500W premium panels)
-    const panels = Math.ceil((sizeNeeded * 1000) / 500);
+    // 4. Panels needed based on selected brand's panel wattage
+    const panels = Math.ceil((sizeNeeded * 1000) / selectedBrand.wattage);
 
-    // 5. System Costs (typical premium installer rate in India is ~₹68,000 per kW)
-    const grossVal = sizeNeeded * 68000;
+    // 5. System Costs (calculated using the selected brand's price per watt and Balance of System & Installation rate)
+    const panelCost = panels * selectedBrand.wattage * selectedBrand.pricePerWatt;
+    const bosCost = sizeNeeded * 25000; // Balance of System & Installation (Inverter, structure, labor) ~₹25,000 per kW
+    const grossVal = panelCost + bosCost;
 
     // 6. PM Surya Ghar Muft Bijli Yojana Central Government Subsidy (Residential)
     // - Up to 2 kW: ₹30,000 per kW
@@ -101,7 +110,7 @@ const Calculator = () => {
 
     const netInstallationCost = Math.max(0, grossVal - subsidyVal);
 
-    const monthlySavingsVal = monthlyBill * (coverage / 100);
+    const monthlySavingsVal = monthlyBill * (100 / 100);
     const remainingBill = Math.max(0, monthlyBill - monthlySavingsVal);
     const annualSavingsVal = monthlySavingsVal * 12;
 
@@ -117,11 +126,13 @@ const Calculator = () => {
       newBill: Math.round(remainingBill),
       paybackYears: parseFloat(payback.toFixed(1)),
       grossCost: Math.round(grossVal),
+      panelCost: Math.round(panelCost),
+      bosCost: Math.round(bosCost),
       subsidy: Math.round(subsidyVal),
       netCost: Math.round(netInstallationCost),
       co2Offset: parseFloat(co2Val.toFixed(1))
     });
-  }, [monthlyBill, rateKwh, sunHours, coverage]);
+  }, [monthlyBill, rateKwh, selectedBrand]);
 
   return (
     <section id="calculator" className="relative bg-[#070B14] overflow-hidden py-28 text-white">
@@ -241,51 +252,35 @@ const Calculator = () => {
                 </div>
               </div>
 
-              {/* Sun Hours Input */}
+              {/* Solar Panel Brand Dropdown */}
               <div className="space-y-3">
-                <div className="flex justify-between items-center text-sm">
-                  <span className="text-gray-300 font-semibold flex items-center gap-2">
-                    Daily Average Sun Hours
-                  </span>
-                  <span className="text-[#E8A56A] font-black text-lg">{sunHours} hrs</span>
+                <label className="text-gray-300 font-semibold text-sm block">
+                  Solar Panel Brand
+                </label>
+                <div className="relative">
+                  <select
+                    value={selectedBrand.id}
+                    onChange={(e) => {
+                      const brand = SOLAR_BRANDS.find(b => b.id === e.target.value);
+                      setSelectedBrand(brand);
+                    }}
+                    className="w-full bg-[#0d1527]/80 border border-white/10 text-white rounded-lg px-4 py-3.5 text-sm focus:outline-none focus:border-[#E8A56A] cursor-pointer appearance-none transition-all duration-300 hover:border-white/20"
+                  >
+                    {SOLAR_BRANDS.map((brand) => (
+                      <option key={brand.id} value={brand.id} className="bg-[#070B14] text-white">
+                        {brand.name} ({brand.wattage}W @ ₹{brand.pricePerWatt}/W)
+                      </option>
+                    ))}
+                  </select>
+                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-400">
+                    <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                      <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+                    </svg>
+                  </div>
                 </div>
-                <input
-                  type="range"
-                  min="3.5"
-                  max="6.5"
-                  step="0.1"
-                  value={sunHours}
-                  onChange={(e) => setSunHours(Number(e.target.value))}
-                  className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-[#E8A56A]"
-                />
-                <div className="flex justify-between text-2xs text-gray-500">
-                  <span>3.5h (Low)</span>
-                  <span>5.0h (Avg India)</span>
-                  <span>6.5h (High)</span>
-                </div>
-              </div>
-
-              {/* Solar Coverage Target */}
-              <div className="space-y-3">
-                <div className="flex justify-between items-center text-sm">
-                  <span className="text-gray-300 font-semibold">
-                    Target Power Offset
-                  </span>
-                  <span className="text-[#E8A56A] font-black text-lg">{coverage}%</span>
-                </div>
-                <input
-                  type="range"
-                  min="40"
-                  max="100"
-                  step="5"
-                  value={coverage}
-                  onChange={(e) => setCoverage(Number(e.target.value))}
-                  className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-[#E8A56A]"
-                />
-                <div className="flex justify-between text-2xs text-gray-500">
-                  <span>40% Offset</span>
-                  <span>70% Offset</span>
-                  <span>100% Net Zero</span>
+                <div className="flex justify-between text-2xs text-gray-500 px-1">
+                  <span>Efficiency: {selectedBrand.efficiency}</span>
+                  <span>Panel Capacity: {selectedBrand.wattage}W</span>
                 </div>
               </div>
             </div>
@@ -338,7 +333,7 @@ const Calculator = () => {
                       <div className="text-3xl sm:text-4xl font-black text-white mt-3">
                         {results.panelsNeeded} <span className="text-lg text-gray-400 font-bold">Units</span>
                       </div>
-                      <p className="text-2xs text-gray-500 mt-2">Based on premium 500W modules</p>
+                      <p className="text-2xs text-gray-500 mt-2">Based on {selectedBrand.name} {selectedBrand.wattage}W</p>
                     </div>
                   </div>
 
@@ -346,7 +341,7 @@ const Calculator = () => {
                   <div className="bg-white/[0.02] border border-white/5 p-6 rounded-lg space-y-5">
                     <div className="flex justify-between items-center text-xs font-bold uppercase tracking-wider text-gray-400">
                       <span>Monthly Bill Savings</span>
-                      <span className="text-[#E8A56A] font-black">{coverage}% Offset</span>
+                      <span className="text-[#E8A56A] font-black">100% Net Zero Offset</span>
                     </div>
 
                     {/* Old bill vs New bill bars */}
@@ -371,7 +366,7 @@ const Calculator = () => {
                         <div className="w-full bg-white/5 h-2 rounded-full overflow-hidden">
                           <motion.div
                             className="bg-[#E8A56A] h-full"
-                            animate={{ width: `${100 - coverage}%` }}
+                            animate={{ width: "0%" }}
                             transition={{ duration: 0.5, ease: "easeOut" }}
                           />
                         </div>
@@ -386,7 +381,15 @@ const Calculator = () => {
 
                   {/* Pricing and Payback Details */}
                   <div className="space-y-3 bg-white/[0.02] border border-white/5 p-5 rounded-lg text-sm">
-                    <div className="flex justify-between text-gray-400">
+                    <div className="flex justify-between text-gray-400 text-xs">
+                      <span>{selectedBrand.name} Panel Cost ({results.panelsNeeded} × {selectedBrand.wattage}W):</span>
+                      <span className="text-white font-medium">{formatINR(results.panelCost)}</span>
+                    </div>
+                    <div className="flex justify-between text-gray-400 text-xs">
+                      <span>Inverter & Installation:</span>
+                      <span className="text-white font-medium">{formatINR(results.bosCost)}</span>
+                    </div>
+                    <div className="flex justify-between text-gray-400 border-t border-white/5 pt-2">
                       <span>Gross System Cost:</span>
                       <span className="text-white font-semibold">{formatINR(results.grossCost)}</span>
                     </div>

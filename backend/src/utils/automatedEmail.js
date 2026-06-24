@@ -4,6 +4,7 @@ const config = require("../config/config.js")
 const resendInstance = new Resend(config.RESEND_API_KEY);
 
 const automatedEmail = async ({ userName, Email }) => {
+    console.log("EMAIL RECEIVED IN FUNCTION:", Email);
     try {
         const res = await resendInstance.emails.send({
             from: "onboarding@resend.dev",

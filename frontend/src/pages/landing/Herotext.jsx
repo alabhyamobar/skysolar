@@ -43,7 +43,7 @@ const Herotext = () => {
         <div className="flex items-center gap-3 mb-4">
           <p className="w-fit overflow-hidden masker flex items-center justify-center gap-2">
             <div className="w-10 h-[1px] bg-orange-400" />
-            <motion.span initial={{x:"100%"}} animate={{x:0}} transition={{duration:0.8,ease:[0.22, 1, 0.36, 1]}} className="text-[11px] md:text-xs tracking-[4px] uppercase text-orange-300 font-semibold">
+            <motion.span initial={{ x: "100%" }} animate={{ x: 0 }} transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }} className="text-[11px] md:text-xs tracking-[4px] uppercase text-orange-300 font-semibold">
               Precision Solar Engineering
             </motion.span>
           </p>
@@ -63,8 +63,8 @@ const Herotext = () => {
         </motion.h1>
 
         <p className="mt-6 max-w-xl text-sm sm:text-base md:text-lg text-gray-300 leading-relaxed overflow-hidden">
-          <motion.span initial={{x:"200%"}} animate={{x:0}} transition={{duration:0.8,ease:[0.22, 1, 0.36, 1]}}>Deploying tier-1 solar infrastructure designed for industrial</motion.span>
-          <motion.span initial={{x:"200%"}} animate={{x:0}} transition={{duration:0.8,delay:0.3,ease:[0.22, 1, 0.36, 1]}}>resilience,Domestic usage,and grid-scale stability.</motion.span>
+          <motion.span initial={{ x: "200%" }} animate={{ x: 0 }} transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}>Deploying tier-1 solar infrastructure designed for industrial</motion.span>
+          <motion.span initial={{ x: "200%" }} animate={{ x: 0 }} transition={{ duration: 0.8, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}>resilience,Domestic usage,and grid-scale stability.</motion.span>
         </p>
 
         {/* Buttons */}
