@@ -236,11 +236,6 @@ const Contact = () => {
           >
             {contactInfo.map((item, index) => (
               <motion.div key={index} variants={fadeUp}>
-                <Tilt
-                  tiltMaxAngleX={8}
-                  tiltMaxAngleY={8}
-                  perspective={1200}
-                >
                   <div className="group relative border border-white/10 bg-white/[0.03] backdrop-blur-md lg:p-8 p-2 hover:border-[#E8A56A]/50 transition-all duration-500 ">
 
                     <div className="absolute top-0 left-0 h-[2px] w-0 bg-[#E8A56A] group-hover:w-full transition-all duration-700" />
@@ -279,7 +274,6 @@ const Contact = () => {
                     )}
 
                   </div>
-                </Tilt>
               </motion.div>
             ))}
 
