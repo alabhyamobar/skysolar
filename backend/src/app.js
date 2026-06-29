@@ -2,6 +2,7 @@ const express  = require("express");
 const morgan = require("morgan");
 const cors = require("cors");
 const userRouter = require("../src/modules/user/user.routes.js")
+const adminRouter = require("../src/modules/admin/admin.routes.js")
 
 const app = express();
 app.use(express.json());
@@ -18,6 +19,7 @@ app.get("/", (req,res)=>{
 })
 
 app.use("/api/user" , userRouter)
+app.use("/api/admin" , adminRouter)
 
 
 

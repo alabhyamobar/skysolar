@@ -25,7 +25,7 @@ const Navbar = () => {
               </h1>
             </div>
 
-            <div className="hidden md:flex items-center gap-12 lg:gap-16">
+            <div className="hidden lg:flex items-center gap-8 xl:gap-16">
               {navLinks.map((link) => (
                 <a
                   key={link.name}
@@ -37,7 +37,7 @@ const Navbar = () => {
               ))}
             </div>
 
-            <div className="hidden md:block">
+            <div className="hidden lg:block">
               <a
                 href="#calculator"
                 className="bg-[#E8A56A] hover:bg-[#f0b37d] text-[#111827] px-8 py-4 font-bold text-sm uppercase tracking-[1.5px] transition-all duration-300"
@@ -48,7 +48,7 @@ const Navbar = () => {
 
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden flex flex-col gap-1.5"
+              className="lg:hidden flex flex-col gap-1.5"
             >
               <span className="w-6 h-0.5 bg-white"></span>
               <span className="w-6 h-0.5 bg-white"></span>
@@ -59,7 +59,7 @@ const Navbar = () => {
       </header>
 
       <div
-        className={`fixed inset-0 z-[9998] bg-[#050914] transition-all duration-300 md:hidden ${
+        className={`fixed inset-0 z-[9998] bg-[#050914] transition-all duration-300 lg:hidden ${
           isMobileMenuOpen
             ? "opacity-100 visible"
             : "opacity-0 invisible"

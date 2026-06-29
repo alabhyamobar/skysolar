@@ -22,8 +22,18 @@ const querySchema = new mongoose.Schema({
         type: String,
         default: "solar query",
         trim: true
+    },
+    assignedTo: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Employee',
+        default: null
+    },
+    status: {
+        type: String,
+        enum: ['Pending', 'Contacted', 'Converted', 'Dismissed'],
+        default: 'Pending'
     }
-})
+}, { timestamps: true })
 
 
 const QueryModel = mongoose.model("query", querySchema);
