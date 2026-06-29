@@ -3,4 +3,4 @@ Allow: /
 Disallow: /admin/
 Disallow: /api/
 
-Sitemap: https://www.skyrenewableenergies.com/sitemap.xml
+Sitemap:https://skysolar-two.vercel.app/sitemap.xml
