@@ -7,6 +7,7 @@ import Herotext from "./Herotext";
 import Lifecycle from "./Lifecycle";
 import Services from "./Services";
 import Impact from "./Impact";
+import LocationsPartners from "./LocationsPartners";
 import SolarCalculator from "../Claculator";
 import Contact from "./Contact";
 gsap.registerPlugin(ScrollTrigger);
@@ -117,6 +118,7 @@ const Landing = () => {
       <Lifecycle />
       <Services />
       <Impact/>
+      <LocationsPartners/>
       <SolarCalculator/>
       <Contact/>
     </div>

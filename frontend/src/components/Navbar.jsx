@@ -39,7 +39,7 @@ const Navbar = () => {
 
             <div className="hidden lg:block">
               <a
-                href="#calculator"
+                href="#contact"
                 className="bg-[#E8A56A] hover:bg-[#f0b37d] text-[#111827] px-8 py-4 font-bold text-sm uppercase tracking-[1.5px] transition-all duration-300"
               >
                 Get Quote
@@ -78,7 +78,7 @@ const Navbar = () => {
           ))}
 
           <a
-            href="#calculator"
+            href="#contact"
             onClick={() => setIsMobileMenuOpen(false)}
             className="mt-6 bg-[#E8A56A] text-[#111827] px-8 py-4 font-bold uppercase tracking-[2px]"
           >
