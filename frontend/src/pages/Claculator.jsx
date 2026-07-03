@@ -104,8 +104,8 @@ const Calculator = () => {
 
   useEffect(() => {
     const monthlyKwh = monthlyBill / rateKwh;
-    const targetKwhOffset = monthlyKwh;
-    const sizeNeeded = (targetKwhOffset / 30) / 6.5;
+    const dailyUnits = monthlyKwh / 30;
+    const sizeNeeded = Math.round(dailyUnits / 5);
     const roofAreaNeeded = sizeNeeded * 100;
     const monthlySav = monthlyBill;
     const yearlySav = monthlySav * 12;
