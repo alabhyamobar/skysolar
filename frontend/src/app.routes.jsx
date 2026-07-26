@@ -7,6 +7,7 @@ import AdminEmployees from "./pages/admin/AdminEmployees";
 import AdminClients from "./pages/admin/AdminClients";
 
 import MainLayout from "./components/MainLayout";
+import PolicyPage from "./pages/landing/PolicyPage";
 
 export const router = createBrowserRouter([
     {
@@ -23,6 +24,11 @@ export const router = createBrowserRouter([
         path: "/admin/login",
         element: <AdminLogin />
     },
+    {
+        path: "privacy-policy",
+        element: <PolicyPage />,
+    },
+    ,
     {
         path: "/admin",
         element: <AdminLayout />,
