@@ -10,6 +10,8 @@ import Impact from "./Impact";
 import LocationsPartners from "./LocationsPartners";
 import SolarCalculator from "../Claculator";
 import Contact from "./Contact";
+import { useState } from "react";
+import PrivacyPolicy from "./PrivacyPolicy";
 gsap.registerPlugin(ScrollTrigger);
 
 
@@ -114,13 +116,18 @@ const Landing = () => {
         />
         <Herotext />
       </section>
+      {showPrivacy && (
+        <PrivacyPolicy
+          onAccept={() => setShowPrivacy(false)}
+        />
+      )}
       <About />
       <Lifecycle />
       <Services />
-      <Impact/>
-      <LocationsPartners/>
-      <SolarCalculator/>
-      <Contact/>
+      <Impact />
+      <LocationsPartners />
+      <SolarCalculator />
+      <Contact />
     </div>
   );
 };
