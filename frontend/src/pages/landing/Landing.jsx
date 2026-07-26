@@ -21,6 +21,7 @@ const FRAME_COUNT = isMobile ? 240 : 300;
 
 const Landing = () => {
   const canvasRef = useRef(null);
+  const [showPrivacy, setShowPrivacy] = useState(true);
 
   useEffect(() => {
     const canvas = canvasRef.current;
